@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+    --primary-color: #0f1a2c;
+    --secondary-color: #f6ac0f;
+    --text-dark: #0f172a;
+    --text-light: #64748b;
+    --extra-light: #f8fafc;
+    --white: #ffffff;
+    --max-width: 1200px;
+    --header-font: "Playfair Display", serif;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.header {
+    padding-block: 5rem;
+    background-image:url("Mountains.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+  
+.header__container .section__subheader {
+    color: #0f172a;
+}
+  
+.header__container h1 {
+    margin-bottom: 2rem;
+    font-size: 6rem;
+    font-weight: 800;
+    line-height: 7rem;
+    font-family: var(--header-font);
+    color: #0f172a;
+}
