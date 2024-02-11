@@ -17,14 +17,14 @@
 }
 .header {
     padding-block: 5rem;
-    background-image:url("Mountains.jpg");
+    background-image:url("Nepal.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
   
 .header__container .section__subheader {
-    color: #0f172a;
+    color: #000000;
 }
   
 .header__container h1 {
@@ -33,5 +33,5 @@
     font-weight: 800;
     line-height: 7rem;
     font-family: var(--header-font);
-    color: #0f172a;
+    color: #ffffff;
 }
