@@ -28,14 +28,26 @@
             <li><a href="#">Features</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">List Your Property</a></li>
-            {% if user_is_authenticated %}
+            {% if user.is_authenticated %}
             <li><a href="#">Profile</a></li>
             {% else %}
             <li><a href="login">Login</a></li>
             {% endif %}
+            {% comment %} <li><a href="login" id="loginButton">Login</a></li> {% endcomment %}
           </ul>
         </div>
       </nav>
     </header>
+
+    {% comment %} <script>
+      window.onload = function() {
+        var button = document.getElementById("loginButton");
+        var buttonText = "{{ button_text }}";
+        if (buttonText === "Profile") {
+          button.value = "Profile";
+        }
+      }; {% endcomment %}
+    </script>
   </body>
 </html>
+

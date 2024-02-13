@@ -17,7 +17,7 @@
 }
 .header {
     padding-block: 5rem;
-    background-image:url("Nepal.jpg");
+    background-image:url("image.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -34,4 +34,41 @@
     line-height: 7rem;
     font-family: var(--header-font);
     color: #ffffff;
+}
+
+.booking {
+    background-color: var(--primary-color);
+}
+  
+.booking__container form {
+    max-width: 350px;
+    margin: auto;
+    display: grid;
+    gap: 2rem;
+}
+  
+.input__group {
+    display: grid;
+    gap: 1rem;
+}
+  
+.input__group label {
+    font-weight: 600;
+    color: var(--white);
+}
+  
+.input__group input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: var(--white);
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--text-light);
+    border-radius: 5px;
+}
+
+.input__group input::placeholder {
+    color: var(--text-light);
 }

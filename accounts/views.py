@@ -106,6 +106,8 @@ def registration_view(request):
 #     return render(request, 'login.html')
 
 def login_view(request):
+    user_is_authenticated = False
+    button_text = "Login"
     if request.method == 'POST':
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
@@ -138,27 +140,57 @@ def login_view(request):
         elif user.is_superuser and user.is_staff:
             login(request, user)
             return redirect("/admin/")
-        elif user.is_user:  # Assuming is_user is a custom attribute to check if the user is a regular user
-            login(request, user)
-            user_info = {
+        elif user.is_user:  
+             login(request, user)
+             user_info = {
                 "is_authenticated": True,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
                 "is_admin": user.is_superuser,
                 "is_customer": user.is_user,
-                "role": "User"  # Assuming the role for regular users is "User"
+                "role": "User"
             }
-            request.session['user_info'] = user_info
-            messages.success(request, 'Login Successful')
-            return redirect("/")
+             request.session['user_info'] = user_info
+             messages.success(request, 'Login Successful')
+             return redirect("/")
     else:
-     if request.user.is_authenticated:
-         user_is_authenticated = True
-         button_text = "Profile"
-         print("Authentication")
-     else:
-         user_is_authenticated = False
-         button_text = "Login"
-         print("geeda")
-     return render(request, 'login.html', {'user_is_authenticated': user_is_authenticated, 'button_text': button_text})
+        if request.user.is_authenticated:
+            user_is_authenticated = True
+            button_text = "Profile"
+    return render(request, 'login.html', {'user_is_authenticated': user_is_authenticated, 'button_text': button_text})
+
+# def login_view(request):
+#     if request.user.is_authenticated:
+#     #     # If user is already authenticated, redirect them to the homepage or profile page
+#         return redirect("/")  # or return redirect("profile")
+
+#     if request.method == 'POST':
+#         username_or_email = request.POST.get('username_or_email')
+#         password = request.POST.get('password')
+
+#         # Check if the provided username_or_email is an email or username
+#         if '@' in username_or_email:
+#             try:
+#                 user = User.objects.get(email=username_or_email)
+#                 username = user.username
+#             except User.DoesNotExist:
+#                 user = None
+#         else:
+#             user = authenticate(username=username_or_email, password=password)
+#             username = username_or_email
+
+#         if user is None:
+#             # Authentication failed
+#             messages.error(request, 'Invalid username or password')
+#         elif user.is_superuser or user.is_staff:
+#             # Authentication successful
+#             login(request, user)
+#             messages.success(request, 'Login successful')
+#             return redirect("/admin/")  # Redirect to the homepage or profile page after successful login
+#         elif user.is_user:
+#             # Authentication successful
+#             login(request, user)
+#             messages.success(request, 'Login successful')
+#             return redirect("/")  # Redirect to the homepage or profile page after successful login
+#     return render(request, 'login.html')

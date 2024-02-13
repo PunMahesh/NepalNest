@@ -20,7 +20,7 @@
 .section__container {
   max-width: var(--max-width);
   margin: auto;
-  padding: 5rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .section__subheader {
@@ -87,8 +87,8 @@
 }
 
 .logo img {
-    width: 100px;
-    height: auto; 
+  width: 100px;
+  height: auto;
 }
 
 img,
@@ -267,6 +267,30 @@ nav {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .about__image:nth-child(1) {
+    grid-area: 1/2/2/3;
+  }
+
+  .about__image:nth-child(1),
+  .about__card:nth-child(4) {
+    transform: translateY(2rem);
+  }
+
+  .feature__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu__images {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu__banner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .news__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   .footer__container {
     grid-template-columns: repeat(2, 1fr);
@@ -314,6 +338,58 @@ nav {
     background-color: transparent;
   }
 
+  .booking__container form {
+    max-width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+  }
+
+  .about::before {
+    height: 75%;
+    width: 75%;
+  }
+
+  .about__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  .room__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .intro__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+  }
+
+  .feature__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .menu__header {
+    flex-direction: row;
+  }
+
+  .menu__items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu__images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .menu__banner {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .news__header {
+    flex-direction: row;
+  }
+
+  .news__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   .footer__container {
     grid-template-columns: 2fr repeat(2, 1fr);
@@ -321,5 +397,24 @@ nav {
 
   .footer__col:first-child {
     grid-column: unset;
+  }
+}
+
+@media (width > 1024px) {
+  .about__grid {
+    gap: 2rem;
+  }
+
+  .room__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .menu__images {
+    gap: 2rem;
+  }
+
+  .news__grid {
+    gap: 2rem;
   }
 }
