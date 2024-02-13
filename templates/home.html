@@ -1,14 +1,37 @@
-{% extends "components/base.html" %}
-{% load static %}
-
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css">
+{% extends "components/base.html" %} {% load static %} {% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
 <header class="header" id="home">
-    <div class="section__container header__container">
-        <p class="section__subheader">Your Next Space</p>
-        <h1>Discover<br />Nepal</h1>
-    </div>
+  <div class="section__container header__container">
+    <p class="section__subheader">Your Next Space</p>
+    <h1>Discover<br />Nepal</h1>
+  </div>
 </header>
+
+<section class="booking">
+  <div class="section__container booking__container">
+    <form action="/">
+      <div class="input__group">
+        <label for="arrival">Arrival Date</label>
+        <input type="text" placeholder="Your Arrival Date" />
+      </div>
+      <div class="input__group">
+        <label for="departure">Departure Date</label>
+        <input type="text" placeholder="Your Departure Date" />
+      </div>
+      <div class="input__group">
+        <label for="guests">Guests</label>
+        <input type="text" placeholder="No Of Guests" />
+      </div>
+      <button class="btn">Check Availability</button>
+    </form>
+  </div>
+</section>
+
+<section class = "Top_Destiantion">
+  <div class="section_container Top_Destiantion">
+    <h1>Top Destination</h1>
+  </div>
+</section>
 
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="{% static 'js/home.js' %}"></script>
