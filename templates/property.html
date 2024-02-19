@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/listProperty.css" /><link/>
+
+    <title>Property</title>
+</head>
+<body>
+    <div class="section__property__info">
+        <div class="property__info__title">
+        <h1>Let's Get Started</h1>
+        <p>No.1 Describe Your Property</p>
+        <p>No.2 Give More Details</p>
+        <p>No.3 Confirm and Pricing</p>
+        </div>
+       <div class="proprty__info__step1">
+        <div class="step1__property__title">
+            <h1>Step 1</h1>
+            <p>Tell Us About Your Propert</p>
+        </div>
+            <div name="container__property__type">
+                <h3>What Best Describe Your Property</h3>
+                <label>
+                <input type="radio" name="property__type" value="House">
+                House
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Apartment">
+                Apartment
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Hotel">
+                Hotel
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Tent">
+                Tent
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Guest__House">
+                Guest House
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Bed__and__Breakfast">
+                Bed and Breakfast
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="HomeStay">
+                HomeStay
+              </label><br>
+              <label>
+                <input type="radio" name="property__type" value="Cabin">
+                Cabin
+              </label><br>
+            </div>      
+
+            <div name="container__guest__room">
+                <h3>What type of place will guest have?</h3>
+                <label>
+                <input type="radio" name="guest__room" value="entire__place">
+                Entire Place
+              </label>
+              <p>Guest can have the entire place for themselves.</p>
+              <br>
+              <label>
+                <input type="radio" name="guest__room" value="a__room">
+                A Room
+              </label>
+              <p>Guest will have a sing le room.</p>
+              <br>
+              <label>
+                <input type="radio" name="guest__room" value="shared__room">
+                Shared Room
+              </label>
+              <p>Guest will have to share it with someone.</p>
+              <br>
+            </div>  
+            
+            <div class="container__guest__number">
+                <h3>How many guest can stay ?</h3>
+                <label for="guest__number">Number of Guest:</label><br>
+                <input type="number" id="guest__number" name="guest__number" step="1" min="0" max="10">
+
+                <h3>How many bedrooms are available ?</h3>
+                <label for="bedroom__number">Number of Bedrooms:</label><br>
+                <input type="number" id="bedroom__number" name="bedroom__number" step="1" min="0" max="10">
+
+                <h3>How many beds are available ?</h3>
+                <label for="bed__number">Number of Beds:</label><br>
+                <input type="number" id="bed__number" name="bed__number" step="1" min="0" max="10">
+            </div>
+
+            <div class="container__bathroom__info">
+                <h3>What type of bathroom are available to guest ?</h3>
+                <label>
+                <input type="radio" name="guest__bathroom" value="private__bathroom">
+                Private and Attached
+              </label>
+              <p>There is attached bathroom only for guest to use.</p>
+              <br>
+              <label>
+                <input type="radio" name="guest__bathroom" value="dedicated__bathroom">
+                Dedicated
+              </label>
+              <p>Bathroom is accessible through a common area like hall.</p>
+              <br>
+              <label>
+                <input type="radio" name="guest__bathroom" value="shared__bathroom">
+                Shared
+              </label>
+              <p>Guest will have to share it with someone.</p>
+              <br>
+            </div>
+        </div>
+
+        <div class="property__info__step2">
+            <div class="step2__property__title">
+             <h1>Step 2</h1>
+             <p>Give More Details</p>
+            </div>
+             <div class="container__features__offer">
+                <h3>Tell what your place has to offer</h3>
+                <p>You can add more ammenities after you published your listing.</p>
+                <form>
+                    <input type="checkbox" id="wifi" name="choices" value="wifi">
+                    <label for="wifi">Wifi</label><br>
+                    <input type="checkbox" id="TV" name="choices" value="TV">
+                    <label for="TV">TV</label><br>
+                    <input type="checkbox" id="Kitchen" name="choices" value="Kitchen">
+                    <label for="Kitchen">Kitchen</label><br>
+                    <input type="checkbox" id="Washer" name="choices" value="Washer">
+                    <label for="Washer">Washer</label><br>
+                    <input type="checkbox" id="FreeParking" name="choices" value="FreeParking">
+                    <label for="FreeParking">Free parking on premises</label><br>
+                    <input type="checkbox" id="PaidParking" name="choices" value="PaidParking">
+                    <label for="PaidParking">Paid parking on premises</label><br>
+                    <input type="checkbox" id="AirConditioning" name="choices" value="AirConditioning">
+                    <label for="AirConditioning">Air Conditioning</label><br>
+                    <input type="checkbox" id="Workspace" name="choices" value="Workspace">
+                    <label for="Workspace">Dedicated workspace</label><br>
+                  </form> 
+             </div>
+
+             <div class="container__ammenities__offer">
+                <p>Do you have other ammenities ?</p>
+                  <form>
+                    <input type="checkbox" id="Pool" name="choices" value="Pool">
+                    <label for="Pool">Pool</label><br>
+                    <input type="checkbox" id="Hottub" name="choices" value="Hottub">
+                    <label for="Hottub">Hot Tub</label><br>
+                    <input type="checkbox" id="Patio" name="choices" value="Patio">
+                    <label for="Patio">Patio</label><br>
+                    <input type="checkbox" id="BBQGrill" name="choices" value="BBQGrill">
+                    <label for="BBQGrill">BBQ Grill</label><br>
+                    <input type="checkbox" id="OutdoorDiningArea" name="choices" value="OutdoorDiningArea">
+                    <label for="OutdoorDiningArea">Outdoor Dining Area</label><br>
+                    <input type="checkbox" id="FirePit" name="choices" value="FirePit">
+                    <label for="FirePit">Fire Pits</label><br>
+                    <input type="checkbox" id="PoolTable" name="choices" value="PoolTable">
+                    <label for="PoolTable">Pool Table</label><br>
+                    <input type="checkbox" id="IndoorFirePlace" name="choices" value="IndoorFirePlace">
+                    <label for="IndoorFirePlace">Indoor Fire Place</label><br>
+                    <input type="checkbox" id="Piano" name="choices" value="Piano">
+                    <label for="Piano">Piano</label><br>
+                    <input type="checkbox" id="ExcersieEquiment" name="choices" value="ExcersieEquiment">
+                    <label for="ExcersieEquiment">Excersie Equiment</label><br>
+                    <input type="checkbox" id="LakeAccess" name="choices" value="LakeAccess">
+                    <label for="LakeAccess">Lake Access</label><br>
+                    <input type="checkbox" id="Ski" name="choices" value="Ski">
+                    <label for="Ski">Ski-in/Ski-out</label><br>
+                    <input type="checkbox" id="OutdoorShower" name="choices" value="OutdoorShower">
+                    <label for="OutdoorShower">Outdoor Shower</label><br>
+                  </form> 
+             </div>
+
+             <div class="container__safety__features">
+                <p>Do you have these safety items ?</p>
+                  <form>
+                    <input type="checkbox" id="SmokeAlaram" name="choices" value="SmokeAlaram">
+                    <label for="SmokeAlaram">Smoke Alaram</label><br>
+                    <input type="checkbox" id="FirstAid" name="choices" value="FirstAid">
+                    <label for="FirstAid">First Aid Kit</label><br>
+                    <input type="checkbox" id="FireExtinguisher" name="choices" value="FireExtinguisher">
+                    <label for="FireExtinguisher">Fire Extinguisher</label><br>
+                    <input type="checkbox" id="CarbonMono" name="choices" value="CarbonMono">
+                    <label for="CarbonMono">Carbon Monooxide Alaram</label><br>
+                  </form> 
+             </div>
+
+             <div class="container__property__images">
+                <h3>Add some photos here</h3>
+                <form>
+                    <label for="imageUpload">Upload Images (at least 5):</label>
+                    <input type="file" id="imageUpload" name="images" multiple>
+                  </form>
+             </div>
+
+             <div class="container_property__title">
+                <h3>Let's give your property a title</h3>
+                <form>
+                    <label for="textField">Give a short title. You can always update it later.</label><br>
+                    <input type="text" id="textField" name="text" maxlength="40">
+                </form>  
+             </div>
+
+             <div class="container__property__discription">
+                <h3>Now, lets describe your property</h3>
+                <form>
+                    <label for="textField">Share about your property to guest.</label><br>
+                    <input type="text" id="textField" name="text" maxlength="500">
+                </form>  
+             </div>
+        </div>
+
+        <div class="property__info__step3">
+            <div class="step3__property__title">
+                <h1>Step 3</h1>
+                <p>Let's finish up and publish</p>
+            </div>
+
+            <div class="container__property__price">
+                <h3>What is the price of your property?</h3>
+                <form>
+                    <label for="price">Price:</label><br>
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="number" id="price" name="price" step="1" min="0" max="10000">
+                    </div>
+                </form>
+            </div>
+            
+            <div class="container__property__last">
+                <h3>Just One Step</h3>
+                <p>Does your property have any of these ?</p>
+                <form>
+                    <input type="checkbox" id="camera" name="choices" value="camera">
+                    <label for="camera">Security Camera</label><br>
+                    <input type="checkbox" id="Weapons" name="choices" value="Weapons">
+                    <label for="Weapons">Weapons</label><br>
+                    <input type="checkbox" id="Animals" name="choices" value="Animals">
+                    <label for="Animals">Dangerous Animals</label><br>
+                </form>
+            </div>
+            
+            <div class="container__property__review">
+                <h3>Review Your Listing</h3>
+                <p>Make sure everything looks good.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

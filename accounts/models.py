@@ -19,15 +19,8 @@ def validate_contact(value):
 class User(AbstractUser):
     first_name = models.CharField(max_length=225)
     last_name = models.CharField(max_length=225)
+    address = models.CharField(max_length=225)
     contact = models.CharField(max_length=10,validators=[validate_contact])
-    address = models.CharField(max_length=225,default="")
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other')
-    )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
-    dob = models.DateField(null=True, blank=True)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
 
