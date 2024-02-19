@@ -79,17 +79,11 @@ class RegisterForm(UserCreationForm):
             }
         )
     )
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other')
-    )
-    gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect)
 
     dob = forms.DateField(label='Date of birth')
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2','first_name','last_name','contact','address','gender','dob')
+        fields = ('username', 'email', 'password1', 'password2','first_name','last_name','contact','address','dob')
 
 
 class UserProfileForm(UserChangeForm):

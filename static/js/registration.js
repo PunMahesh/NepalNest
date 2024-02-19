@@ -10,9 +10,6 @@ const lastnameError = document.querySelector('.lastname-error');
 const emailField = document.getElementById('email-field');
 const emailError = document.querySelector('.email-error');
 
-const dobField = document.getElementById('dob-field');
-const dobError = document.querySelector('.dob-error');
-
 const addressField = document.getElementById('address-field');
 const addressError = document.querySelector('.address-error');
 
@@ -28,7 +25,7 @@ const password2Error = document.querySelector('.password2-error');
 const submitBtn = document.querySelector('#submit-btn');
 const registerForm = document.querySelector('form');
 
-let usernameIsValid, firstnameIsValid, lastnameIsValid, emailIsValid, dobIsValid, addressIsValid, contactIsValid, password1IsValid, password2IsValid;
+let usernameIsValid, firstnameIsValid, lastnameIsValid, emailIsValid, addressIsValid, contactIsValid, password1IsValid, password2IsValid;
 
 // function to check is string contains @
 function checkForAtSign(string) {
