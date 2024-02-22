@@ -57,8 +57,8 @@
     <span class="close-btn material-symbols-rounded">close</span>
     <div class="form-box login">
         <div class="form-details">
-            <h2>Welcome Back</h2>
-            <p>Please log in using your personal information to stay connected with us.</p>
+            <h2>Welcome </h2>
+            <p>Please log in to be connected with us.</p>
         </div>
         <div class="form-content">
             <h2>LOGIN</h2>
@@ -102,8 +102,8 @@
             <form action="{% url 'registration' %}" method="POST">
               {% csrf_token %}
               <div class="input-field required">
-                <label for="username">Username</label>
                 <input type="text" name="username" id="username-field" value="{% if username %}{{ username }}{% endif %}"/>
+                <label for="username">Username</label>
                 <div class="error-render username-error">
                     {% if username_error %}
                         {{ username_error }}

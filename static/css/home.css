@@ -172,17 +172,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: url(login.jpg);
+  background: url(image.png);
   background-size: cover;
   background-position: center;
 }
 .login .form-details{
-  background: url(login.jpg);
+  background: url(image.png);
   background-size: cover;
   background-position: center;
 }
 .signup .form-details{
-  background: url(signup.jpg);
+  background: url(Kathmandu.jpg);
   background-size: cover;
   background-position: center;
 }

@@ -57,16 +57,13 @@ def login_view(request):
         password = request.POST.get('password')
 
         if not username_or_email or not password:
-            # messages.error(request, 'Please fill in all fields')
-            # context = {
-            #     "username_or_email": username_or_email,
-            #     "password": password,
-            #     "error": "Please fill in all fields"
-            # }
-            # return render(request, 'home.html', context)
-            error_message = "Please fill in all fields"
-            return JsonResponse({'error': error_message})
-
+            messages.error(request, 'Please fill in all fields')
+            context = {
+                "username_or_email": username_or_email,
+                "password": password,
+                "error": "Please fill in all fields"
+            }
+            return render(request, 'home.html', context)
         if is_email(username_or_email):
             username = User.objects.get(email=username_or_email).username
             user_exists = User.objects.filter(email=username_or_email).exists()
