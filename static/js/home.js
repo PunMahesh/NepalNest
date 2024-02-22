@@ -55,7 +55,21 @@ ScrollReveal().reveal(".news__card", {
 
 
 
+// Get all input fields
+var inputFields = document.querySelectorAll('.input-field input');
 
+// Add event listeners to each input field
+inputFields.forEach(function(input) {
+    input.addEventListener('input', function() {
+        // If input field is not empty, hide its label
+        if (input.value.trim() !== '') {
+            input.parentNode.querySelector('label').style.display = 'none';
+        } else {
+            // If input field is empty, show its label
+            input.parentNode.querySelector('label').style.display = 'block';
+        }
+    });
+});
 
 
 
@@ -98,40 +112,4 @@ signUpBtn.addEventListener("click", () => {
 hidePopupBtn.addEventListener("click", () => {
     document.body.classList.remove("show-popup");
     formPopup.classList.remove("show-signup");
-});
-
-
-
-
-
-
-//json response
-
-// JavaScript code to handle form submission and display error messages
-document.querySelector('#login-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  // Fetch data from form fields
-  const formData = new FormData(event.target);
-  
-  // Send form data to the server using AJAX
-  fetch('/login/', {
-      method: 'POST',
-      body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-      if (data.error) {
-          // Update pop-up content with error message
-          const errorRender = document.querySelector('.error-render');
-          errorRender.textContent = data.error;
-          errorRender.style.display = 'block'; // Make the error message visible
-      } else {
-          // Proceed with login process
-          // For example, close the pop-up or redirect to another page
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  });
 });

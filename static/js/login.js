@@ -144,3 +144,41 @@ loginForm.addEventListener('submit', (e) => {
         loginForm.submit();
     }
 });
+
+
+
+
+
+//stay in same pop up page
+
+// Prevent default form submission
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevents the default form submission behavior
+
+    // Get form data
+    const formData = new FormData(loginForm);
+
+    // Send form data asynchronously using AJAX
+    fetch(loginForm.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json()) // assuming server returns JSON
+    .then(data => {
+        // Handle server response
+        if (data.error) {
+            // Update the pop-up form with the error message
+            // For example, you can update a <div> element with the error message
+            const errorMessageElement = document.querySelector('.error-message');
+            errorMessageElement.textContent = data.error;
+        } else {
+            // If no error, handle successful login (e.g., close the pop-up)
+            // Optionally, you can redirect to another page or perform other actions
+            closeModal(); // Example function to close the pop-up
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle any errors that occur during the fetch request
+    });
+});
