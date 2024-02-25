@@ -16,10 +16,8 @@ def is_email(string):
 def registration_view(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
         email = request.POST.get('email')
-        address = request.POST.get('address')
+        full_name = request.POST.get("full_name")
         contact = request.POST.get('contact')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -29,25 +27,23 @@ def registration_view(request):
             messages.error(request, 'Username already exists')
             context = {
                 "username": username,
-                "first_name": first_name,
-                "last_name": last_name,
                 "email": email,
-                "address": address,
+                "full_name": full_name,
                 "contact": contact,
                 "password1": password1,
                 "password2": password2,
                 "username_error": "User already exists"
             }
-            return render(request, 'home.html', context=context)
+            return render(request, 'login.html', context=context)
 
         if password1 == password2:
-            user = User(username=username, first_name=first_name, last_name=last_name,
-                        email=email, address=address, contact=contact)
+            user = User(username=username, full_name=full_name, 
+                        email=email, contact=contact)
             user.set_password(password1)
             user.save()
             messages.success(request, 'Registration Successful')
-            return redirect('home')
-    return render(request, 'home.html')
+            return redirect('login')
+    return render(request, 'login.html')
 
 def login_view(request):
     user_is_authenticated = False
@@ -56,14 +52,15 @@ def login_view(request):
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
 
-        if not username_or_email or not password:
-            messages.error(request, 'Please fill in all fields')
-            context = {
-                "username_or_email": username_or_email,
-                "password": password,
-                "error": "Please fill in all fields"
-            }
-            return render(request, 'home.html', context)
+        # if not username_or_email or not password:
+        #     print ("User does not exist")
+        #     messages.error(request, 'Please fill in all fields')
+        #     context = {
+        #         "username_or_email": username_or_email,
+        #         "password": password,
+        #         "error": "Please fill in all fields"
+        #     }
+            # return render(request, 'login.html', context)
         if is_email(username_or_email):
             username = User.objects.get(email=username_or_email).username
             user_exists = User.objects.filter(email=username_or_email).exists()
@@ -72,13 +69,14 @@ def login_view(request):
             username = username_or_email
 
         if not user_exists:
+            print ("User does not exist")
             messages.error(request, 'User does not exist')
             context = {
                 "username_or_email": username_or_email,
                 "password": password,
                 "error": "User does not exist"
             }
-            return render(request, 'home.html', context)
+            return render(request, 'login.html', context)
 
         user = authenticate(request, username=username, password=password)
         if user is None:
@@ -88,29 +86,29 @@ def login_view(request):
                 "password": password,
                 "pwerror": "Invalid Credentials"
             }
-            return render(request, 'home.html', context)
+            return render(request, 'login.html', context)
         elif user.is_superuser and user.is_staff:
             login(request, user)
             return redirect("/admin/")
         elif user.is_user:  
              login(request, user)
-            #  user_info = {
-            #     "is_authenticated": True,
-            #     "first_name": user.first_name,
-            #     "last_name": user.last_name,
-            #     "email": user.email,
-            #     "is_admin": user.is_superuser,
-            #     "is_customer": user.is_user,
-            #     "role": "User"
-            # }
-            #  request.session['user_info'] = user_info
+             user_info = {
+                "is_authenticated": True,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "is_admin": user.is_superuser,
+                "is_customer": user.is_user,
+                "role": "User"
+            }
+             request.session['user_info'] = user_info
              messages.success(request, 'Login Successful')
              return redirect("/")
     else:
         if request.user.is_authenticated:
             user_is_authenticated = True
             button_text = "Profile"
-    return render(request, 'home.html', {'user_is_authenticated': user_is_authenticated, 'button_text': button_text})
+    return render(request, 'login.html', {'user_is_authenticated': user_is_authenticated, 'button_text': button_text})
 
 
 def logout_view(request):
