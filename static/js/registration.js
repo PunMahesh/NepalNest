@@ -56,10 +56,10 @@ usernameField.addEventListener('input', () => {
     validateUsername();
 });
 
-function validateFirstname() {
+function validateFullname() {
     firstnameIsValid = false;
     if (firstnameField.value === '') {
-        firstnameError.textContent = 'Firstname is required';
+        firstnameError.textContent = 'Name is required';
         submitBtn.setAttribute('disabled', '');
         return;
     }

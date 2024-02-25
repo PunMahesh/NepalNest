@@ -1,0 +1,29 @@
+{% extends 'forgotPassword/base.html' %}
+{% block title %}Password Reset Page{% endblock %}
+{% block content %}
+<style>
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 10px;
+        border-radius: 7px;
+        border: 1px solid rgb(168, 168, 168);
+        width: 250px;
+        outline: none;
+    }
+</style>
+  <!--Forms-->
+  <div class="box-2">
+    <div class="login-form-container">
+      <h1>Enter new Password</h1>
+      <br><br>
+      <form method="POST">
+        {% csrf_token %} {{ form.as_p }}
+        <br><br>
+        <button type="submit" class="login-button"  value="Log In" id="submit-btn">Submit</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

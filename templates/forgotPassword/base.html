@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/forgot.css' %}" />
+    <title>NepalNest</title>
+  </head>
+  <body>
+    <div class="container">
+      <!--Data or Content-->
+      <div class="box-1">
+        <div class="content-holder">
+          <h2>NepalNest.com</h2>
+          <p>Follow Instruction to reset your password</p>
+        </div>
+      </div>
+      {% block content %} {% endblock content %}
+    </div>
+  </body>
+</html>
