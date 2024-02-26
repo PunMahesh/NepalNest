@@ -9,15 +9,19 @@
     <title>Property</title>
   </head>
   <body>
-    <div class="section__container form-container">
+    <div class="form-container">
       <form id="property_info"  method="post" enctype="multipart/form-data" action="{% url 'Property_list' %}">
       {% csrf_token %}
       <div class="form-part" id="startSection">
         <h1>Let's Get Started</h1>
+        <div class="form-part-p">
         <p>No.1 Describe Your Property</p>
         <p>No.2 Give More Details</p>
         <p>No.3 Confirm and Pricing</p>
-        <button id="startBtn">Let's Get Started</button>
+        </div>
+        <div class="form-part-b">
+        <button class="startButton" id="startBtn">Let's Get Started</button>
+        </div>
       </div> 
 
       <!-- step-1 -->
