@@ -28,6 +28,10 @@ body {
   padding: 50px;
 }
 
+.content-holder a {
+  color: white;
+}
+
 .content-holder h2 {
   font-size: 34px;
   margin: 20px auto;
@@ -144,4 +148,3 @@ body {
   font-size: 11px;
   letter-spacing: 1px;
 }
-/* Hello how are you */

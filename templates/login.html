@@ -14,8 +14,8 @@
     <div class="box-1">
         <div class="content-holder">
             <h2>NepalNest.com</h2>
-            <p class="Signup_Para">Don't have an account ? <a class="button-1" onclick="signup()">Sign up</a></p>
-            <p class="login_Para" style="display: none;">Already have an Account ? <a class="button-2" onclick="login()">Login</a></p>
+            <p class="Signup_Para">Don't have an account ? <a class="button-1 signup-link" onclick="signup()" href="#">Sign up</a></p>
+            <p class="login_Para" style="display: none;">Already have an Account ? <a class="button-2" onclick="login()" href="#">Login</a></p>
         </div>
     </div>
 
@@ -65,7 +65,7 @@
           <div class="error-render email-error"></div>
           <br><br>
           <input type="text" placeholder="Full Name" class="input-field" id="fullname-field" name="full_name" value="{% if email %}{{ email }}{% endif %}"> 
-          {% comment %} <div class="error-render email-error"></div> {% endcomment %}
+          <div class="error-render fullname-error"></div>
           <br><br>
           <input type="text" placeholder="Contact" class="input-field" id="contact-field" name="contact" value="{% if contact %}{{ contact }}{% endif %}">
           <div class="error-render contact-error"></div>
