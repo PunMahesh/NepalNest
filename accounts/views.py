@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import User
 from django.http import JsonResponse
+from .helpers import send_forget_password_mail
+import uuid
+from .models import Profile
+
 
 
 # check if string is email
@@ -52,15 +56,6 @@ def login_view(request):
         username_or_email = request.POST.get('username_or_email')
         password = request.POST.get('password')
 
-        # if not username_or_email or not password:
-        #     print ("User does not exist")
-        #     messages.error(request, 'Please fill in all fields')
-        #     context = {
-        #         "username_or_email": username_or_email,
-        #         "password": password,
-        #         "error": "Please fill in all fields"
-        #     }
-            # return render(request, 'login.html', context)
         if is_email(username_or_email):
             username = User.objects.get(email=username_or_email).username
             user_exists = User.objects.filter(email=username_or_email).exists()
@@ -118,3 +113,67 @@ def logout_view(request):
 
 def home(request):
     return render(request,'home.html')
+
+def ChangePassword(request , token):
+    context = {}
+    
+    
+    try:
+        profile_obj = Profile.objects.filter(forget_password_token = token).first()
+        context = {'user_id' : profile_obj.user.id}
+        
+        if request.method == 'POST':
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('reconfirm_password')
+            user_id = request.POST.get('user_id')
+            
+            if user_id is  None:
+                messages.success(request, 'No user id found.')
+                return redirect(f'/change-password/{token}/')
+                
+            
+            if  new_password != confirm_password:
+                messages.success(request, 'both should  be equal.')
+                return redirect(f'/changePassword/{token}/')
+                         
+            
+            user_obj = User.objects.get(id = user_id)
+            user_obj.set_password(new_password)
+            user_obj.save()
+            return redirect('/login/')
+            
+            
+            
+        
+        
+    except Exception as e:
+        print(e)
+    return render(request , 'changePassword.html' , context)
+
+
+import uuid
+def ForgetPassword(request):
+    try:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            
+            if not User.objects.filter(username=username).first():
+                messages.success(request, 'Not user found with this username.')
+                return redirect('ForgetPassword')
+            
+            user_obj = User.objects.get(username = username)
+            token = str(uuid.uuid4())
+            profile_obj= Profile.objects.get(user = user_obj)
+            profile_obj.forget_password_token = token
+            profile_obj.save()
+            send_forget_password_mail(user_obj.email , token)
+            messages.success(request, 'An email is sent.')
+            return redirect('ForgetPassword')
+                
+    
+    
+    except Exception as e:
+        print(e)
+    return render(request , 'forgetPassword.html')
+def forgotMessage(request):
+    return render(request, 'forgotMessage.html')

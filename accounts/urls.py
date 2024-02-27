@@ -7,12 +7,14 @@ from django.urls import re_path
 # handler404 = 'accounts.views.custom_404'
 
 urlpatterns = [
-    # path("login",views.login_view,name="login"),
-    # path("registration",views.registration_view,name="registration"),
-    path('logout/', views.logout_view, name='logout'),
     path('', views.home, name='home'),
 
     path('login', views.login_view, name='login'),
     path('registration', views.registration_view, name='registration'),
+    path('logout/', views.logout_view, name='logout'),
+
+    path('ForgetPassword', views.ForgetPassword, name='ForgetPassword'),
+    path('forgotMessage', views.forgotMessage, name='forgotMessage'),
+    path('ChangePassword/<token>/', views.ChangePassword, name='ChangePassword'),
 
 ]

@@ -24,8 +24,9 @@ body {
   font-size: 14px;
   font-weight: lighter;
   letter-spacing: 2px;
-  margin-top: 15%;
+  margin-top: 15%; 
   padding: 50px;
+  height: auto;
 }
 
 .content-holder a {
@@ -144,7 +145,7 @@ body {
 }
 
 .error-render {
-  color: red;
+  color: rgb(255, 0, 0);
   font-size: 11px;
   letter-spacing: 1px;
 }
