@@ -8,6 +8,15 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="static/css/base.css" type="text/css" />
+    <script src="static/js/header.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $(".dropbtn").click(function(){
+              $(".dropdown-content").toggle();
+          });
+      });
+      </script>      
     <title>NepalNest</title>
   </head>
   <body>
@@ -29,17 +38,18 @@
             <li><a href="#">About</a></li>
             <li><a href="{% url 'Property_list' %}">List Your Property</a></li>
             {% if user.is_authenticated %}
-            <li>
-              <a href="#">Profile</a>
-            <ul class="dropdown">
-              <li><a href="{% url 'logout' %}">Logout</a></li>
-              <li><a href="#">My Account</a></li>
-              <li><a href="#">My Property</a></li>
-              <li><a href="#">Setting</a></li>
-            </li>
-            {% else %}
-            <li><a   href="{% url 'login' %}">Login</a></li>
-            {% endif %}
+    <li class="dropdown">
+        <a href="#" class="dropbtn">Profile</a>
+        <div class="dropdown-content">
+            <a href="#">My Account</a>
+            <a href="#">My Property</a>
+            <a href="#">Settings</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </li>
+    {% else %}
+    <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
           </ul>
           {% comment %} <div class="header-btn">
             {% if user.is_authenticated %}

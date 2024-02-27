@@ -24,3 +24,11 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    forgot_password_token = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.user.username
+

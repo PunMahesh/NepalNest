@@ -11,21 +11,27 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr;
   background-color: red;
-  background: linear-gradient(to bottom, rgb(45, 6, 108), rgb(61, 95, 168));
-  width: 800px;
+  background: linear-gradient(to bottom, rgb(81, 16, 152), rgb(14, 48, 122));
+  width: 900px;
   height: auto;
   margin: 10% auto;
   border-radius: 5px;
 }
 
 .content-holder {
-  text-align: center;
+  /* text-align: center; */
   color: white;
   font-size: 14px;
   font-weight: lighter;
   letter-spacing: 2px;
-  margin-top: 15%;
+  /* margin-top: 15%; */
   padding: 50px;
+  height: auto;
+  margin-bottom: 10%;
+}
+
+.content-holder a {
+  color: white;
 }
 
 .content-holder h2 {
@@ -55,7 +61,6 @@ body {
 
 .login-form-container {
   text-align: center;
-  margin-top: 10%;
 }
 
 .login-form-container h1 {
@@ -73,7 +78,6 @@ body {
   width: 250px;
   outline: none;
 }
-
 .login-button {
   box-sizing: border-box;
   color: white;
@@ -83,5 +87,66 @@ body {
   border: none;
   width: 250px;
   outline: none;
-  background-color: rgba(78, 25, 210, 0.826);
+  background-color: rgb(56, 102, 189);
+  margin: 20px;
+}
+
+.view-show {
+  width: 28px;
+  content: url("../images/eye_show.svg");
+  background-color: rgba(204, 204, 204, 0.4);
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  top: 31px;
+  right: 5px;
+  cursor: pointer;
+}
+.view-hide {
+  width: 28px;
+  content: url("../images/eye_hide.svg");
+  background-color: rgba(204, 204, 204, 0.4);
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  top: 31px;
+  right: 5px;
+  cursor: pointer;
+}
+
+.button-2 {
+  display: none;
+}
+
+.signup-form-container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  text-align: center;
+  display: none;
+}
+
+.signup-form-container h1 {
+  color: black;
+  font-size: 24px;
+  padding: 20px;
+}
+
+.signup-button {
+  box-sizing: border-box;
+  color: white;
+  font-size: 14px;
+  padding: 13px;
+  border-radius: 7px;
+  border: none;
+  width: 250px;
+  outline: none;
+  background-color: rgb(56, 189, 149);
+}
+
+.error-render {
+  color: rgb(255, 0, 0);
+  font-size: 11px;
+  letter-spacing: 1px;
 }

@@ -42,7 +42,7 @@
                     {% endif %}
                 </div>
               <br><br>
-              <a href="{% url 'reset_password' %}" id="login-link">Forgot Password ?</a>
+              <a href="#" id="login-link">Forgot Password ?</a>
               <br><br>
               <button type="submit" class="login-button"  value="Log In" id="submit-btn">Log In</button>
               </form>
@@ -52,29 +52,29 @@
       <div class="signup-form-container">
 
           <h1>Sign Up Form</h1>
-          <form action="{% url 'registration' %}" method="POST">
+          <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateForm()" method="POST">
             {% csrf_token %}
           <input type="text" placeholder="Username" class="input-field" id="username-field" name="username" value="{% if username %}{{ username }}{% endif %}">
-          <div class="error-render username-error">
+          <div class="error-render"  id="username-error">
             {% if username_error %}
                 {{ username_error }}
             {% endif %}
-        </div>
+          </div>
           <br><br>
           <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
-          <div class="error-render email-error"></div>
+          <div class="error-render" id="email-error"></div>
           <br><br>
           <input type="text" placeholder="Full Name" class="input-field" id="fullname-field" name="full_name" value="{% if email %}{{ email }}{% endif %}"> 
-          <div class="error-render fullname-error"></div>
+          <div id="fullname-error" class="error-render"></div>
           <br><br>
           <input type="text" placeholder="Contact" class="input-field" id="contact-field" name="contact" value="{% if contact %}{{ contact }}{% endif %}">
-          <div class="error-render contact-error"></div>
+          <div class="error-render" id="contact-error"></div>
           <br><br>
           <input type="password" placeholder="Create Password" class="input-field" id="password1-field" name="password1" value="{% if password1 %}{{ password1 }}{% endif %}">
-          <div class="error-render password1-error"></div>
+          <div class="error-render" id="password-error"></div>
           <br><br>
           <input type="password" placeholder="Confirm Password" class="input-field"  id="password2-field" name="password2" value="{% if password2 %}{{ password2 }}{% endif %}">
-          <div class="error-render password2-error"></div>
+          <div class="error-render" id="confirm-password-error"></div>
           <br><br>
           <button  class="signup-button" value="Register" id="submit-btn" type="submit">Sign Up</button>
           </form>
