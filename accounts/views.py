@@ -114,66 +114,56 @@ def logout_view(request):
 def home(request):
     return render(request,'home.html')
 
-def ChangePassword(request , token):
-    context = {}
-    
-    
+def ChangePassword(request, token):
     try:
-        profile_obj = Profile.objects.filter(forget_password_token = token).first()
-        context = {'user_id' : profile_obj.user.id}
-        
+        profile_obj = Profile.objects.get(forget_password_token=token)
+        user = profile_obj.user
+        print("ya samma ta aaija")
         if request.method == 'POST':
             new_password = request.POST.get('new_password')
-            confirm_password = request.POST.get('reconfirm_password')
-            user_id = request.POST.get('user_id')
+            confirm_password = request.POST.get('confirm_password')
+            ("Passowrd liyo ki nai")
+            if new_password != confirm_password:
+                messages.error(request, 'Passwords do not match.')
+                return render(request, 'change-password.html', {'token': token})
+            print("herma hai")
+            user.set_password(new_password)
+            user.save()
             
-            if user_id is  None:
-                messages.success(request, 'No user id found.')
-                return redirect(f'/change-password/{token}/')
-                
+            # Clear forget password token
+            profile_obj.forget_password_token = ''
+            profile_obj.save()
             
-            if  new_password != confirm_password:
-                messages.success(request, 'both should  be equal.')
-                return redirect(f'/changePassword/{token}/')
-                         
-            
-            user_obj = User.objects.get(id = user_id)
-            user_obj.set_password(new_password)
-            user_obj.save()
-            return redirect('/login/')
-            
-            
-            
-        
-        
+            messages.success(request, 'Password changed successfully. Please login with your new password.')
+            return redirect('login')
+    except Profile.DoesNotExist:
+        messages.error(request, 'Invalid token.')
+        return redirect('/forget-password/')
     except Exception as e:
+        messages.error(request, 'An error occurred.')
         print(e)
-    return render(request , 'changePassword.html' , context)
+    
+    return render(request, 'change-password.html', {'token': token})
 
 
-import uuid
 def ForgetPassword(request):
-    try:
         if request.method == 'POST':
             username = request.POST.get('username')
             
-            if not User.objects.filter(username=username).first():
-                messages.success(request, 'Not user found with this username.')
-                return redirect('ForgetPassword')
-            
-            user_obj = User.objects.get(username = username)
-            token = str(uuid.uuid4())
-            profile_obj= Profile.objects.get(user = user_obj)
-            profile_obj.forget_password_token = token
-            profile_obj.save()
-            send_forget_password_mail(user_obj.email , token)
-            messages.success(request, 'An email is sent.')
-            return redirect('ForgetPassword')
-                
-    
-    
-    except Exception as e:
-        print(e)
-    return render(request , 'forgetPassword.html')
-def forgotMessage(request):
-    return render(request, 'forgotMessage.html')
+            if not User.objects.filter(username=username).exists():
+                messages.error(request, 'No user found with this username.')
+                return redirect('/forget-password/')
+            else:
+                user_obj = User.objects.get(username=username)
+                token = str(uuid.uuid4())
+                profile_obj, created = Profile.objects.get_or_create(user=user_obj)
+                print("yaha samma aayo hai")
+                profile_obj.forget_password_token = token
+                profile_obj.save()
+                send_forget_password_mail(user_obj.email, token)
+                return redirect('forget_Message')
+
+        return render(request, 'forget-password.html')
+
+def ForgetMessage(request):
+    return render(request, 'forget-message.html')

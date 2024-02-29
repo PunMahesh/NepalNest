@@ -13,8 +13,8 @@ urlpatterns = [
     path('registration', views.registration_view, name='registration'),
     path('logout/', views.logout_view, name='logout'),
 
-    path('ForgetPassword', views.ForgetPassword, name='ForgetPassword'),
-    path('forgotMessage', views.forgotMessage, name='forgotMessage'),
-    path('ChangePassword/<token>/', views.ChangePassword, name='ChangePassword'),
+    path('forget_Message', views.ForgetMessage, name='forget_Message'),
+    path('forget-password/' , views.ForgetPassword , name="forget_password"),
+    path('change-password/<token>/' , views.ChangePassword , name="change_password"),
 
 ]

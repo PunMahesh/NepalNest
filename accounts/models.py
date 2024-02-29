@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 #Create your model here
 
@@ -26,9 +27,10 @@ class User(AbstractUser):
         return self.username
     
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    forgot_password_token = models.CharField(max_length=100)
+    user = models.OneToOneField(User , on_delete=models.CASCADE)
+    forget_password_token = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.user.username
 
