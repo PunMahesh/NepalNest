@@ -469,6 +469,19 @@ nav {
   display: block;
 }
 
+.icon {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #f1f1f1;
+  color: #000;
+  text-align: center;
+  line-height: 30px;
+  border-radius: 50%;
+  font-size: 1.2em;
+}
+
+
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #f1f1f1}
 

@@ -19,10 +19,10 @@ def Property_list(request):
         price = request.POST.get('price')
         
         # Handling many-to-many fields
-        amenities = request.POST.getlist('choices')
-        other_amenities = request.POST.getlist('choices')
-        safety_items = request.POST.getlist('choices')
-        extra_items = request.POST.getlist('choices')
+        amenities = request.POST.getlist('amenities')
+        other_amenities = request.POST.getlist('other_amenities')
+        safety_items = request.POST.getlist('safety_items')
+        extra_items = request.POST.getlist('extra_items')
 
         if guest_number == "":
             guest_number = 1
@@ -51,10 +51,6 @@ def Property_list(request):
         property_info.other_ammenities.add(*other_amenities)
         property_info.safety_items.add(*safety_items)
         property_info.extra_items.add(*extra_items)
-        
-        # Handling image upload
-        if 'imageUpload' in request.FILES:
-            property_info.images = request.FILES['imageUpload']
         
         # Save the property_info object
         property_info.save()

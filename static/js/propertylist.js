@@ -55,12 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
   nextBtn.addEventListener("click", function (e) {
     e.preventDefault();
     document.getElementById("title_preview").textContent = Property_info.elements.title.value || "N/A";
+    document.getElementById("description_preview").textContent = Property_info.elements.description.value || "N/A";
+    document.getElementById("price_preview").textContent = Property_info.elements.price.value || "N/A";
+    document.getElementById("images_preview").textContent = Property_info.elements.images.value || "N/A";
 
-
-    // // Get the value of the title input field
-    // const titleValue = document.querySelector('input[name="title"]').value;
-
-    // // Update the content of the title preview element
-    // document.getElementById("title_preview").textContent = titleValue || "N/A";
   });
 });

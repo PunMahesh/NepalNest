@@ -11,8 +11,8 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr;
   background-color: red;
-  background: linear-gradient(to bottom, rgb(81, 16, 152), rgb(14, 48, 122));
-  width: 900px;
+  background: linear-gradient(to bottom, rgb(28, 6, 108), rgb(14, 48, 122));
+  width: 800px;
   height: auto;
   margin: 10% auto;
   border-radius: 5px;
@@ -24,11 +24,10 @@ body {
   font-size: 14px;
   font-weight: lighter;
   letter-spacing: 2px;
-  /* margin-top: 15%; */
+  margin-top: auto; 
   padding: 50px;
   height: auto;
-  margin-bottom: 10%;
-}
+} 
 
 .content-holder a {
   color: white;
