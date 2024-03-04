@@ -47,10 +47,10 @@ def Property_list(request):
         )
         
         # Adding many-to-many relationships
-        property_info.ammenities.add(*amenities)
-        property_info.other_ammenities.add(*other_amenities)
-        property_info.safety_items.add(*safety_items)
-        property_info.extra_items.add(*extra_items)
+        property_info.ammenities.add(amenities)
+        property_info.other_ammenities.add(other_amenities)
+        property_info.safety_items.add(safety_items)
+        property_info.extra_items.add(extra_items)
         
         # Save the property_info object
         property_info.save()

@@ -27,7 +27,7 @@
               <h1>Login</h1>
               <form action="{% url 'login' %}" method="POST">
                 {% csrf_token %}
-              <input type="text" placeholder="Username" class="input-field" id="username-input-field" name="username_or_email"   value="{% if username_or_email %}{{ username_or_email }}{% endif %}">
+              <input type="text" placeholder="Email" class="input-field" id="username-input-field" name="email"   value="{% if username_or_email %}{{ username_or_email }}{% endif %}">
               <div class="error-render username-error">
                 {% if error %}
                     {{ error }}
@@ -54,13 +54,6 @@
           <h1>Sign Up Form</h1>
           <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateForm()" method="POST">
             {% csrf_token %}
-          <input type="text" placeholder="Username" class="input-field" id="username-field" name="username" value="{% if username %}{{ username }}{% endif %}">
-          <div class="error-render"  id="username-error">
-            {% if username_error %}
-                {{ username_error }}
-            {% endif %}
-          </div>
-          <br><br>
           <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
           <div class="error-render" id="email-error"></div>
           <br><br>

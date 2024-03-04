@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import User
-from django.http import JsonResponse
 from .helpers import send_forget_password_mail
 import uuid
 from .models import Profile
@@ -19,30 +18,26 @@ def is_email(string):
 
 def registration_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
         full_name = request.POST.get("full_name")
+        email = request.POST.get('email')
         contact = request.POST.get('contact')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
         # check if user exists
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists')
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists')
             context = {
-                "username": username,
-                "email": email,
                 "full_name": full_name,
+                "email": email,
                 "contact": contact,
                 "password1": password1,
                 "password2": password2,
-                "username_error": "User already exists"
             }
-            return render(request, 'login.html', context=context)
+            return render(request, 'home.html', context=context)
 
         if password1 == password2:
-            user = User(username=username, full_name=full_name, 
-                        email=email, contact=contact)
+            user = User(email=email, full_name=full_name, contact=contact)
             user.set_password(password1)
             user.save()
             messages.success(request, 'Registration Successful')
@@ -53,47 +48,42 @@ def login_view(request):
     user_is_authenticated = False
     button_text = "Login"
     if request.method == 'POST':
-        username_or_email = request.POST.get('username_or_email')
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        if is_email(username_or_email):
-            username = User.objects.get(email=username_or_email).username
-            user_exists = User.objects.filter(email=username_or_email).exists()
-        else:
-            user_exists = User.objects.filter(username=username_or_email).exists()
-            username = username_or_email
+       # Check if a user with the given email exists
+        user_exists = User.objects.filter(email=email).exists()
 
         if not user_exists:
-            print ("User does not exist")
             messages.error(request, 'User does not exist')
             context = {
-                "username_or_email": username_or_email,
+                "email": email,
                 "password": password,
                 "error": "User does not exist"
             }
             return render(request, 'login.html', context)
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
         if user is None:
             messages.error(request, 'Invalid Credentials')
             context = {
-                "username_or_email": username_or_email,
+                "email": email,
                 "password": password,
                 "pwerror": "Invalid Credentials"
             }
             return render(request, 'login.html', context)
-        elif user.is_superuser and user.is_staff:
+        elif user is not None and user.is_superuser:
             login(request, user)
             return redirect("/admin/")
-        elif user.is_user:  
+        elif user is not None and user.is_user:  
              login(request, user)
              user_info = {
                 "is_authenticated": True,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
+                "full_name": user.full_name,
+                "contact": user.contact,
                 "email": user.email,
                 "is_admin": user.is_superuser,
-                "is_customer": user.is_user,
+                "is_user": user.is_user,
                 "role": "User"
             }
              request.session['user_info'] = user_info
