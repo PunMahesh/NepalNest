@@ -79,7 +79,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   font-weight: 500;
   color: var(--text-light);
   letter-spacing: 2px;
@@ -311,7 +311,7 @@ nav {
 
 @media (width > 768px) {
   nav {
-    position: static;
+    position: fixed;
     padding-inline: 1rem;
     background-color: var(--primary-color);
   }

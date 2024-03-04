@@ -16,7 +16,7 @@
   box-sizing: border-box;
 }
 .header {
-  padding-block: 5rem;
+  padding-block: 7.5rem;
   background-image: url("../images/image.png");
   background-position: center;
   background-size: cover;

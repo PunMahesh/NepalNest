@@ -53,11 +53,7 @@ function validateForm() {
   if (contact.trim() === "") {
     contactErrorField.innerText = "Please enter your contact number.";
     return false;
-  } else if (
-    contact.length < 10 ||
-    isNaN(contact) ||
-    !contact.startsWith("98")
-  ) {
+  } else if (contact.length < 10 || isNaN(contact) || contact.startsWith("98")) {
     contactErrorField.innerText = "Please enter a valid contact number.";
     return false;
   } else {
@@ -69,8 +65,7 @@ function validateForm() {
     passwordErrorField.innerText = "Please enter password.";
     return false;
   } else if (password.length < 8) {
-    passwordErrorField.innerText =
-      "Password must be at least 8 characters long.";
+    passwordErrorField.innerText ="Password must be at least 8 characters long.";
     return false;
   } else {
     passwordErrorField.innerText = "";
