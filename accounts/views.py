@@ -138,13 +138,13 @@ def ChangePassword(request, token):
 
 def ForgetPassword(request):
         if request.method == 'POST':
-            username = request.POST.get('username')
+            email = request.POST.get('email')
             
-            if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
                 messages.error(request, 'No user found with this username.')
                 return redirect('/forget-password/')
             else:
-                user_obj = User.objects.get(username=username)
+                user_obj = User.objects.get(email=email)
                 token = str(uuid.uuid4())
                 profile_obj, created = Profile.objects.get_or_create(user=user_obj)
                 print("yaha samma aayo hai")

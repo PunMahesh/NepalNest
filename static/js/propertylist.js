@@ -58,6 +58,24 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("description_preview").textContent = Property_info.elements.description.value || "N/A";
     document.getElementById("price_preview").textContent = Property_info.elements.price.value || "N/A";
     document.getElementById("images_preview").textContent = Property_info.elements.images.value || "N/A";
+    const pp_photo = Property_info.elements.PropertyPhot;
+  readURL(pp_photo);
+});
 
-  });
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      const pp_render = getElemById("pp_photo");
+      pp_render.style.height = "150px";
+      pp_render.style.width = "150px";
+      pp_render.style.objectFit = "cover";
+      pp_render.setAttribute('src', e.target.result);
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 });

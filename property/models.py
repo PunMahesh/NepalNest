@@ -58,7 +58,7 @@ class PropertyInfo(models.Model):
     ammenities = models.ManyToManyField(Ammenities)
     other_ammenities = models.ManyToManyField(Other_Ammenities)
     safety_items = models.ManyToManyField(Safety_Items)
-    images = models.ImageField(upload_to="images/Photo", blank=True)
+    PropertyPhoto = models.ImageField(upload_to="Photo", blank=True)
     title = models.CharField(max_length=50, null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     price = models.IntegerField(default=0, null=True)
