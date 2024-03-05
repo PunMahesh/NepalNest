@@ -25,10 +25,10 @@
       <div class="box-2">
           <div class="login-form-container">
               <h1>Login</h1>
-              <form action="{% url 'login' %}" method="POST">
+              <form action="{% url 'login' %}" name="loginForm" onsubmit="return validateLoginForm()" method="POST">
                 {% csrf_token %}
               <input type="text" placeholder="Email" class="input-field" id="username-input-field" name="email"   value="{% if username_or_email %}{{ username_or_email }}{% endif %}">
-              <div class="error-render username-error">
+              <div class="error-render" id="email-error">
                 {% if error %}
                     {{ error }}
                 {% endif %}
@@ -36,7 +36,7 @@
               <br><br>
               <input type="password" placeholder="Password" class="input-field" id="password-input-field"  name="password" value="{% if password %}{{ password }}{% endif %}">
               <img src="" alt="" id="show-icon" class="view-show">
-                <div class="error-render password-error">
+                <div class="error-render" id="password-error">
                     {% if pwerror %}
                         {{ pwerror }}
                     {% endif %}
@@ -52,7 +52,7 @@
       <div class="signup-form-container">
 
           <h1>Sign Up Form</h1>
-          <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateForm()" method="POST">
+          <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateRegistrationForm()" method="POST">
             {% csrf_token %}
           <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
           <div class="error-render" id="email-error"></div>

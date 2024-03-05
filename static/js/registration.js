@@ -1,4 +1,4 @@
-function validateForm() {
+function validateRegistrationForm() {
   var username = document.forms["registrationForm"]["username"].value;
   var usernameErrorField = document.getElementById("username-error");
   var fullname = document.forms["registrationForm"]["full_name"].value;
