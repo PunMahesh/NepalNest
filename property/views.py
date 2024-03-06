@@ -8,7 +8,7 @@ from .models import PropertyInfo, Ammenities, Other_Ammenities, Safety_Items,Ext
 
 # Create your views here.
 
-# @login_required
+@login_required
 def Property_list(request):
     if request.method == 'POST':
         property_type = request.POST.get('property__type')
@@ -50,13 +50,30 @@ def Property_list(request):
             PropertyPhoto=PropertyPhoto,
             price=price
         )
-        # Retrieve the instances of the models that correspond to the names
-        amenities = Ammenities.objects.filter(name__in=amenities_names)
-        other_amenities = Other_Ammenities.objects.filter(name__in=other_amenities_names)
-        safety_items = Safety_Items.objects.filter(name__in=safety_items_names)
-        extra_items = Extra_Items.objects.filter(name__in=extra_items_names)
+        # Handling many-to-many relationship for amenities
+        amenities = []
+        for amenity_name in amenities_names:
+            amenity, created = Ammenities.objects.get_or_create(name=amenity_name)
+            amenities.append(amenity)
 
-        
+        # Handling many-to-many relationship for other amenities
+        other_amenities = []
+        for other_amenity_name in other_amenities_names:
+            other_amenity, created = Other_Ammenities.objects.get_or_create(name=other_amenity_name)
+            other_amenities.append(other_amenity)
+
+        # Handling many-to-many relationship for safety items
+        safety_items = []
+        for safety_item_name in safety_items_names:
+            safety_item, created = Safety_Items.objects.get_or_create(name=safety_item_name)
+            safety_items.append(safety_item)
+
+        # Handling many-to-many relationship for extra items
+        extra_items = []
+        for extra_item_name in extra_items_names:
+            extra_item, created = Extra_Items.objects.get_or_create(name=extra_item_name)
+            extra_items.append(extra_item)
+
         # Adding many-to-many relationships
         property_info.ammenities.set(amenities)
         property_info.other_ammenities.set(other_amenities)
@@ -68,6 +85,7 @@ def Property_list(request):
         return redirect('Property_list')
     return render(request, 'property.html')
 
+@login_required
 def myProperty(request):
     # Assuming you have a user object retrieved from your database
     user = User.objects.get(id=request.user.id)  # Adjust this according to your user retrieval logic
