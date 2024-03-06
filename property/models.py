@@ -3,25 +3,25 @@ from django.db import models
 # Create your models here.
 
 class Ammenities(models.Model):
-    name = models.CharField(max_length=225)
+    name = models.CharField(max_length=225, unique=True)
 
     def __str__(self):
         return self.name
     
 class Other_Ammenities(models.Model):
-    name = models.CharField(max_length=225)
+    name = models.CharField(max_length=225, unique=True )
 
     def __str__(self):
         return self.name
 
 class Safety_Items(models.Model):
-    name = models.CharField(max_length=225)
+    name = models.CharField(max_length=225, unique=True)
 
     def __str__(self):
         return self.name
     
 class Extra_Items(models.Model):
-    name = models.CharField(max_length=225)
+    name = models.CharField(max_length=225, unique=True)
 
     def __str__(self):
         return self.name

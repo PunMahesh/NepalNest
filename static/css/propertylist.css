@@ -18,13 +18,13 @@
 }
 
 .form-step {
-  display: none;
+  /* display: none; */
 }
 
 .form-step,
 #prevBtn,
 #nextBtn {
-  display: none;
+  /* display: none; */
 }
 
 /* .form-part {

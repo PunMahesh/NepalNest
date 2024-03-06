@@ -1,77 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'components/onlyheader.html' %}
+{% block content %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css/newLogin.css" />
     <script src="static/js/login.js"></script>
+    <script src="static/js/showpass.js"></script>
     <script src="static/js/registration.js"></script>
     <title>NepalNest</title>
 </head>
 <body>
-</div> <div class="container">
-    <!--Data or Content-->
-    <div class="box-1">
-        <div class="content-holder">
-            <h2>NepalNest.com</h2>
-            <p class="Signup_Para">Don't have an account ? <a class="button-1 signup-link" onclick="signup()" href="#">Sign up</a></p>
-            <p class="login_Para" style="display: none;">Already have an Account ? <a class="button-2" onclick="login()" href="#">Login</a></p>
-        </div>
-    </div>
-
-      
-    
-      <!--Forms-->
-      <div class="box-2">
-          <div class="login-form-container">
-              <h1>Login</h1>
-              <form action="{% url 'login' %}" name="loginForm" onsubmit="return validateLoginForm()" method="POST">
-                {% csrf_token %}
-              <input type="text" placeholder="Email" class="input-field" id="username-input-field" name="email"   value="{% if username_or_email %}{{ username_or_email }}{% endif %}">
-              <div class="error-render" id="email-error">
-                {% if error %}
-                    {{ error }}
-                {% endif %}
+<section class="section1">
+    <div class="container">
+        <!--Data or Content-->
+        <div class="box-1">
+            <div class="content-holder">
+                <h2>NepalNest.com</h2>
+                <p class="Signup_Para">Don't have an account ? <a class="button-1 signup-link" onclick="signup()" href="#">Sign up</a></p>
+                <p class="login_Para" style="display: none;">Already have an Account ? <a class="button-2" onclick="login()" href="#">Login</a></p>
             </div>
-              <br><br>
-              <input type="password" placeholder="Password" class="input-field" id="password-input-field"  name="password" value="{% if password %}{{ password }}{% endif %}">
-              <img src="" alt="" id="show-icon" class="view-show">
-                <div class="error-render" id="password-error">
-                    {% if pwerror %}
-                        {{ pwerror }}
+        </div>
+          <!--Forms-->
+          <div class="box-2">
+              <div class="login-form-container">
+                  <h1>Login</h1>
+                  <form action="{% url 'login' %}" name="loginForm" onsubmit="return validateLoginForm()" method="POST">
+                    {% csrf_token %}
+                  <input type="text" placeholder="Email" class="input-field" id="username-input-field" name="email"   value="{% if username_or_email %}{{ username_or_email }}{% endif %}">
+                  <div class="error-render" id="email-error">
+                    {% if error %}
+                        {{ error }}
                     {% endif %}
-                </div>
-              <br><br>
-              <a href="{% url 'forget_password' %}" id="login-link">Forgot Password ?</a>
-              <br><br>
-              <button type="submit" class="login-button"  value="Log In" id="submit-btn">Log In</button>
-              </form>
+                  </div>
+                  <br><br>
+                  <div class="password-container">
+                    <input type="password" placeholder="Password" class="input-field" id="password-input-field"  name="password" value="{% if password %}{{ password }}{% endif %}">
+                    <img src="" alt="" id="show-icon" class="view-show">
+                  </div>
+                    <div class="error-render" id="password-error">
+                      {% if pwerror %}
+                      {{ pwerror }}
+                      {% endif %}
+                    </div>
+                  <br><br>
+                  <a href="{% url 'forget_password' %}" id="login-link">Forgot Password ?</a>
+                  <br><br>
+                  <button type="submit" class="login-button"  value="Log In" id="submit-btn">Log In</button>
+                  </form>
           </div>
 
-<!--Create Container for Signup form-->
-      <div class="signup-form-container">
+          <!--Create Container for Signup form-->
+          <div class="signup-form-container">
 
-          <h1>Sign Up Form</h1>
-          <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateRegistrationForm()" method="POST">
-            {% csrf_token %}
-          <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
-          <div class="error-render" id="email-error"></div>
-          <br><br>
-          <input type="text" placeholder="Full Name" class="input-field" id="fullname-field" name="full_name" value="{% if email %}{{ email }}{% endif %}"> 
-          <div id="fullname-error" class="error-render"></div>
-          <br><br>
-          <input type="text" placeholder="Contact" class="input-field" id="contact-field" name="contact" value="{% if contact %}{{ contact }}{% endif %}">
-          <div class="error-render" id="contact-error"></div>
-          <br><br>
-          <input type="password" placeholder="Create Password" class="input-field" id="password1-field" name="password1" value="{% if password1 %}{{ password1 }}{% endif %}">
-          <div class="error-render" id="password-error"></div>
-          <br><br>
-          <input type="password" placeholder="Confirm Password" class="input-field"  id="password2-field" name="password2" value="{% if password2 %}{{ password2 }}{% endif %}">
-          <div class="error-render" id="confirm-password-error"></div>
-          <br><br>
-          <button  class="signup-button" value="Register" id="submit-btn" type="submit">Sign Up</button>
-          </form>
-      </div>
+              <h1>Sign Up Form</h1>
+              <form action="{% url 'registration' %}" name="registrationForm" onsubmit="return validateRegistrationForm()" method="POST">
+                {% csrf_token %}
+              <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
+              <div class="error-render" id="email-error"></div>
+              <br><br>
+              <input type="text" placeholder="Full Name" class="input-field" id="fullname-field" name="full_name" value="{% if email %}{{ email }}{% endif %}"> 
+              <div id="fullname-error" class="error-render"></div>
+              <br><br>
+              <input type="text" placeholder="Contact" class="input-field" id="contact-field" name="contact" value="{% if contact %}{{ contact }}{% endif %}">
+              <div class="error-render" id="contact-error"></div>
+              <br><br>
+              <input type="password" placeholder="Create Password" class="input-field" id="password1-field" name="password1" value="{% if password1 %}{{ password1 }}{% endif %}">
+              <div class="error-render" id="password-error"></div>
+              <br><br>
+              <input type="password" placeholder="Confirm Password" class="input-field"  id="password2-field" name="password2" value="{% if password2 %}{{ password2 }}{% endif %}">
+              <div class="error-render" id="confirm-password-error"></div>
+              <br><br>
+              <button  class="signup-button" value="Register" id="submit-btn" type="submit">Sign Up</button>
+              </form>
+          </div>
     </div>
+</section>
 </body>
 </html>
+{% endblock content %}

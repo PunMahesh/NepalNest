@@ -6,7 +6,9 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+nav {
+  position: initial;
+}
 .container {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -24,7 +26,7 @@ body {
   font-size: 14px;
   font-weight: lighter;
   letter-spacing: 2px;
-  margin-top: 15%; 
+  margin-top: 15%;
   padding: 50px;
   height: auto;
 }
@@ -73,7 +75,8 @@ body {
   padding: 10px;
   border-radius: 7px;
   border: 1px solid rgb(168, 168, 168);
-  width: 250px;
+  max-width: 280px;
+  width: 100%;
   outline: none;
 }
 .login-button {
@@ -87,28 +90,31 @@ body {
   outline: none;
   background-color: rgb(56, 102, 189);
   margin: 20px;
+  cursor: pointer;
 }
 
+.password-container {
+  position: relative;
+  max-width: 280px;
+  text-align: center;
+  margin: 0 auto;
+}
 .view-show {
-  width: 28px;
+  width: 20px;
   content: url("../images/eye_show.svg");
-  background-color: rgba(204, 204, 204, 0.4);
-  border-radius: 50%;
-  padding: 5px;
   position: absolute;
-  top: 31px;
-  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 6px;
   cursor: pointer;
 }
 .view-hide {
-  width: 28px;
+  width: 20px;
   content: url("../images/eye_hide.svg");
-  background-color: rgba(204, 204, 204, 0.4);
-  border-radius: 50%;
-  padding: 5px;
   position: absolute;
-  top: 31px;
-  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 6px;
   cursor: pointer;
 }
 
@@ -117,7 +123,7 @@ body {
 }
 
 .signup-form-container {
-  margin-top:10px;
+  margin-top: 10px;
   position: relative;
   top: 50%;
   left: 50%;
@@ -142,6 +148,7 @@ body {
   width: 250px;
   outline: none;
   background-color: rgb(56, 189, 149);
+  cursor:pointer
 }
 
 .error-render {

@@ -17,14 +17,26 @@
 
 .section__container {
   max-width: var(--max-width);
-  margin-left: 150px;
-  padding: 2rem 1rem;
+  margin: 0 auto;
+  padding: 80px 20px;
 }
 
+.section_header {
+  text-align: center;
+  padding-bottom: 25px;
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: 500;
+}
 .section__header {
-  max-width: 1000px;
-  margin-left: 150px;
-  padding: 2rem 1rem;
+  max-width: var(--max-width);
+  width : 100%; 
+  margin:0 auto;
+  padding-top: 94px;
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: var(--header-font);
+  color: var(--text-dark);
 }
 
 .section__subheader {
@@ -34,12 +46,6 @@
   color: var(--text-light);
 }
 
-.section__header {
-  font-size: 3rem;
-  font-weight: 800;
-  font-family: var(--header-font);
-  color: var(--text-dark);
-}
 
 .section__description {
   margin-top: 1rem;
