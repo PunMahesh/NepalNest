@@ -30,7 +30,7 @@
                         {{ error }}
                     {% endif %}
                   </div>
-                  <br><br>
+                  <br>
                   <div class="password-container">
                     <input type="password" placeholder="Password" class="input-field" id="password-input-field"  name="password" value="{% if password %}{{ password }}{% endif %}">
                     <img src="" alt="" id="show-icon" class="view-show">
@@ -40,9 +40,9 @@
                       {{ pwerror }}
                       {% endif %}
                     </div>
-                  <br><br>
+                  <br>
                   <a href="{% url 'forget_password' %}" id="login-link">Forgot Password ?</a>
-                  <br><br>
+                  <br>
                   <button type="submit" class="login-button"  value="Log In" id="submit-btn">Log In</button>
                   </form>
           </div>
@@ -55,19 +55,25 @@
                 {% csrf_token %}
               <input type="email" placeholder="Email" class="input-field" id="email-field" name="email" value="{% if full_name %}{{ full_name }}{% endif %}">
               <div class="error-render" id="email-error"></div>
-              <br><br>
+              <br>
               <input type="text" placeholder="Full Name" class="input-field" id="fullname-field" name="full_name" value="{% if email %}{{ email }}{% endif %}"> 
               <div id="fullname-error" class="error-render"></div>
-              <br><br>
+              <br>
               <input type="text" placeholder="Contact" class="input-field" id="contact-field" name="contact" value="{% if contact %}{{ contact }}{% endif %}">
               <div class="error-render" id="contact-error"></div>
-              <br><br>
+              <br>
+            <div class="password-container">
               <input type="password" placeholder="Create Password" class="input-field" id="password1-field" name="password1" value="{% if password1 %}{{ password1 }}{% endif %}">
+              <img src="" alt="" id="show-icon1" class="view-show">
+            </div>
               <div class="error-render" id="password-error"></div>
-              <br><br>
+              <br>
+            <div class="password-container">
               <input type="password" placeholder="Confirm Password" class="input-field"  id="password2-field" name="password2" value="{% if password2 %}{{ password2 }}{% endif %}">
+              <img src="" alt="" id="show-icon2" class="view-show">
+            </div>
               <div class="error-render" id="confirm-password-error"></div>
-              <br><br>
+              <br>
               <button  class="signup-button" value="Register" id="submit-btn" type="submit">Sign Up</button>
               </form>
           </div>

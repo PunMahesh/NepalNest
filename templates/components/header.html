@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,7 +8,7 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="static/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/base.css'%}" type="text/css" />
     <title>NepalNest</title>
   </head>
   <body>
@@ -17,7 +18,7 @@
           <div class="nav__header">
             <div class="logo nav__logo">
               <a href="{% url 'home' %}">
-              <img src="static/images/logo.png" alt="Logo Image" /></a>
+              <img src="{% static 'images/logo.png'%}" alt="Logo Image" /></a>
               <span><a href="{% url 'home' %}">NepalNest</a></span>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
