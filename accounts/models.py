@@ -14,6 +14,7 @@ class CustomUserManager(BaseUserManager):
 
     def create_superuser(self, email, full_name, contact, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('is_staff', True)
         return self.create_user(email, full_name, contact, password, **extra_fields)
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -23,6 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)  # Add the is_staff attribute
 
     # Add any additional fields you need for your user model
 
