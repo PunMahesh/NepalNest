@@ -19,11 +19,11 @@
       </div>
       <div class="input__group">
         <label for="arrival">Arrival Date</label>
-        <input type="date" placeholder="Your Arrival Date" />
+        <input type="date" placeholder="Your Arrival Date"  min="{{ today|date:'Y-m-d' }}" />
       </div>
       <div class="input__group">
         <label for="departure">Departure Date</label>
-        <input type="date" placeholder="Your Departure Date" />
+        <input type="date" placeholder="Your Departure Date"  min="{{ today|date:'Y-m-d' }}" />
       </div>
       <div class="input__group">
         <label for="guests">Guests</label>
