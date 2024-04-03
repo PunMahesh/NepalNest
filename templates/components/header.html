@@ -18,24 +18,25 @@
           <div class="nav__header">
             <div class="logo nav__logo">
               <a href="{% url 'home' %}">
-              <img src="{% static 'images/logo.png'%}" alt="Logo Image" /></a>
-              <span><a href="{% url 'home' %}">NepalNest</a></span>
+              <img src="{% static 'images/logo.png'%}" alt="Logo Image" />
+              <span>NepalNest</span></a>
             </div>
             <div class="nav__menu__btn" id="menu-btn">
               <i class="ri-menu-line"></i>
             </div>
           </div>
           <ul class="nav__links" id="nav-links">
-            <li><a href="#">Stays</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="{% url 'stays' %}">Stays</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'Property_list' %}">List Your Property</a></li>
             {% if user.is_authenticated %}
     <li class="dropdown">
-      <a href="#" class="dropbtn icon">{{ user.full_name|slice:":1" }}</a>
+      <a href="#" class="dropbtn icon profile" style="background-image: url({% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/default_profile_pic.jpg' %}{% endif %})"></a>
+      {% comment %} {{ user.full_name|slice:":1" }}       {% endcomment %}
       <div class="dropdown-content">
-            <a href="#">My Account</a>
+            <a href="{% url 'update_profile' %}">My Account</a>
             <a href="{% url 'myProperty' %}">My Property</a>
-            <a href="#">Settings</a>
+            {% comment %} <a href="#">Settings</a> {% endcomment %}
             <a href="{% url 'logout' %}">Logout</a>
         </div>
     </li>
