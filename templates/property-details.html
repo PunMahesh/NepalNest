@@ -1,0 +1,156 @@
+{% extends "components/base.html" %} {% block content %} {% load static %}
+
+<link
+  rel="stylesheet"
+  href="{% static 'css/property-details.css' %}"
+  type="text/css"
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="{% static 'js/property-details.js' %}"></script>
+<section class="section__property_info">
+  <div class="container__property_details">
+
+    <div class="heading">
+      <h1>{{property.title}}</h1>
+    </div>
+
+    <div class="property_images">
+      <div class="first_image">
+      {% with property.property_photo.first as photo %}
+      <img src="{{ photo.photo.url }}" alt="Property Photo" />
+      {% endwith %}
+      </div>
+      <div class="other_images">
+        {% for photo in property.property_photo.all|slice:"1:5" %}
+        <div class="grid_image">
+          <img src="{{ photo.photo.url }}" alt="Property Photo">
+        </div>        
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="info_book">
+
+      <div class="all_info">
+
+    <div class="basic_info">
+      <h3>At </h3>{% comment %}<span>{{ property.location }}</span> {% endcomment %}
+      <p>{{ property.Guest_number }} Guest. {{ property.bedrooms }} Rooms. {{ property.bed }} Bed  </p>
+      {% comment %} <div class"By_user"> {% endcomment %}
+      <h5>By <span class="username">{{ property.user.full_name }}</span></h5>
+    </div>
+
+
+      <div class="additional_info">
+        <h1>What this Place Offers?</h1>
+      <ul class="amenity">
+        {% for amenity in property.ammenities.all %}
+        <li>{{ amenity.name }}</li>
+        {% endfor %}
+      </ul>
+      <h1>What more are there?</h1>
+      <ul class="other_amenity">
+        {% for other_amenity in property.other_ammenities.all %}
+        <li>{{ other_amenity.name }}</li>
+        {% endfor %}
+      </ul>
+      <h1>Seafety features that are available?</h1>
+      <ul class="safety_item">
+        {% for safety_item in property.safety_items.all %}
+        <li>{{ safety_item.name }}</li>
+        {% endfor %}
+      </ul>
+        <h1>Be mindeful of!</h1>
+      <ul class="extra_item">
+        {% for extra_item in property.extra_items.all %}
+        <li>{{ extra_item.name }}
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="review_rating">
+
+      {% comment %} <div class="review">
+        <h3>Review</h3>
+
+        <ul>
+          {% for review in reviews %}
+              <li>
+                  <strong>{{ review.user.full_name }}</strong>
+                  <p>{{ review.text }}</p>
+              </li>
+          {% empty %}
+              <li>No reviews yet.</li>
+          {% endfor %}
+      </ul> {% endcomment %}
+      <form method="post" action="{% url 'submit_review' property.id %}">
+        {% csrf_token %}
+          <div>
+            <label>How do you rate this product?</label>
+            <div class="rate">
+            <input type="radio" name="rating" id="rating10" value="5"/><label for="rating10" title="5"></label>
+            <input type="radio" name="rating" id="rating9" value="4.5"/><label for="rating9" title="4.5" class="half"></label>
+            <input type="radio" name="rating" id="rating8" value="4"/><label for="rating8" title="4"></label>
+            <input type="radio" name="rating" id="rating7" value="3.5"/><label for="rating7" title="3.5" class="half"></label>
+            <input type="radio" name="rating" id="rating6" value="3"/><label for="rating6" title="3"></label>
+            <input type="radio" name="rating" id="rating5" value="2.5"/><label for="rating5" title="2.5" class="half"></label>
+            <input type="radio" name="rating" id="rating4" value="2"/><label for="rating4" title="2"></label>
+            <input type="radio" name="rating" id="rating3" value="1.5"/><label for="rating3" title="1.5" class="half"></label>
+            <input type="radio" name="rating" id="rating2" value="1"/><label for="rating2" title="1"></label>
+            <input type="radio" name="rating" id="rating1" value="0.5"/><label for="rating1" title="0.5" class="half"></label>
+            </div>
+            <h5>Write Your Review</h5>
+            <textarea name="review" rows="4"></textarea>
+
+          </div>
+          {% if user.is_authenticated %}
+          <input type="submit" value="Submit Review" class="btn"/>
+          {% else %}
+          <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
+          {% endif %}
+          {% comment %} {% include "include/alerts.html" %} {% endcomment %}
+          </form>
+
+      {% comment %} </div> {% endcomment %}
+    </div>
+  </div>
+    <div class="book_box">
+      <form method="post" action="{% url 'property_detail' property_id=property.id %}">
+        {% csrf_token %}
+        <div class="book_price">
+            <h3>Rs.{{ property.price }}<span>/night</span></h3>
+        </div>
+        <div class="book_date">
+            <div class="dates">
+                <label for="arrival">Check-in Date</label>
+                <input type="date" id="arrival" name="arrival" placeholder="Your Check In Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()"/>
+                
+                <label for="departure">Check-out Date</label>
+                <input type="date" id="departure" name="departure" placeholder="Your Check Out Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()"/>
+            </div>
+            <div class="guests">
+                <label for="num_guests">Guests</label>
+                <input type="text" id="num_guests" name="num_guests" placeholder="No Of Guests" />
+            </div>
+            <p class="numOfdays flex">Number of days: <span id="num_days"></span></p>
+            <input type="hidden" id="num_of_days" name="num_of_days">
+            <p class="room_price flex">Price (Rs): <span id="room_price">{{ property.price }}</span></p>
+            <p class="before_service_price flex">Before Service Cost (Rs): <span id="before_service_price"></span></p>
+            <input type="hidden" id="before_service_fee" name="before_service_fee">
+            <p class="service_fee flex">Service fee (Rs): <span id="service_fee"></span></p>
+            <input type="hidden" id="service_price" name="service_price">
+            <p class="after_service_price flex">Total cost (Rs): <span id="after_service_price"></span></p>
+            <input type="hidden" id="total_price" name="total_price">
+        </div>
+    
+        <div class="book_button">
+            <button class="book_btn" type="submit">Reserve</button>
+        </div>
+    </form>
+    </div>
+
+  </div>
+
+  </div>
+</section>
+{% endblock content %}
