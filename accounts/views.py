@@ -6,8 +6,17 @@ from .models import User
 from .helpers import send_forget_password_mail
 import uuid
 from .models import Profile
+from datetime import date
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
+from django.conf import settings
+import os
 
 
+
+def home(request):
+    today = date.today()
+    return render(request,'home.html',{'today':today})
 
 # check if string is email
 def is_email(string):
@@ -101,9 +110,6 @@ def logout_view(request):
     # Redirect to a success page.
     return redirect('login')
 
-def home(request):
-    return render(request,'home.html')
-
 def ChangePassword(request, token):
     try:
         profile_obj = Profile.objects.get(forget_password_token=token)
@@ -157,3 +163,80 @@ def ForgetPassword(request):
 
 def ForgetMessage(request):
     return render(request, 'forget-message.html')
+
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        # Process profile update form data
+        email = request.POST.get('email')
+        full_name = request.POST.get('full_name')
+        contact = request.POST.get('contact')
+        address = request.POST.get('address')
+        
+        # Update user profile
+        user = request.user
+        user.email = email
+        user.full_name = full_name
+        user.contact = contact
+        user.address = address
+        user.save()
+        
+        messages.success(request, 'Profile updated successfully!')
+        return redirect('update_profile')
+
+    return render(request, 'my_account.html')
+
+@login_required
+def update_password(request):
+    error_message = None  # Initialize error_message to None
+    
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password1 = request.POST.get('new_password1')
+        new_password2 = request.POST.get('new_password2')
+
+        user = request.user
+
+        # Check if the old password matches the password in the database
+        if check_password(old_password, user.password):
+            # Check if the new passwords match
+            if new_password1 == new_password2:
+                # Update the user's password
+                user.set_password(new_password1)
+                user.save()
+                messages.success(request, 'Your password was successfully updated!')
+                return redirect('update_profile')
+            else:
+                messages.error(request, 'New passwords do not match.')
+        else:
+            # Set error_message for invalid old password
+            error_message = 'Invalid old password.'
+
+    # Pass error_message to the template context
+    return render(request, 'my_account.html', {'error_message': error_message})
+
+def update_profile_pic(request):
+    if request.method == 'POST':
+        profile_pic = request.FILES.get('profile_pic')
+        
+        # Check if a file was uploaded
+        if profile_pic:
+            # Define the directory where profile pictures will be stored
+            profile_pic_dir = os.path.join(settings.MEDIA_ROOT, 'User_profile')
+            
+            # Save the uploaded file to the directory
+            with open(os.path.join(profile_pic_dir, profile_pic.name), 'wb+') as destination:
+                for chunk in profile_pic.chunks():
+                    destination.write(chunk)
+            
+            # Update the user's profile picture field with the file path
+            request.user.profile_pic = os.path.join('User_profile', profile_pic.name)
+            request.user.save()
+            
+            messages.success(request, 'Profile picture updated successfully!')
+            return redirect('update_profile')
+        else:
+            messages.error(request, 'No file uploaded.')
+    
+    return render(request, 'my_account.html')
