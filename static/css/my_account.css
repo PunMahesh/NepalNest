@@ -1,0 +1,170 @@
+.update_profile {
+  padding: 150px 20px 80px 20px;
+  max-width: 1240px;
+  position: relative;
+  left: 55%;
+  transform: translateX(-50%);
+}
+
+.update_profile h1 {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+.update_profile .container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+  width: 100%;
+  justify-content: space-between;
+}
+.form-wrap {
+  width: calc(50% - 60px);
+}
+.update_profile form {
+  display: flex;
+  max-width: 600px;
+  margin: auto;
+  width: 100%;
+  flex-direction: column;
+}
+.form-fields {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  margin: 10px 0;
+}
+.update_profile input {
+  box-sizing: border-box;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 7px;
+  border: 1px solid rgb(168, 168, 168);
+  width: 100%;
+  outline: none;
+}
+
+.password-container {
+    position: relative;
+    /* max-width: 280px; */
+    text-align: center;
+    margin: 0 auto;
+  }
+
+.view-show {
+  width: 20px;
+  content: url("../images/eye_show.svg");
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 6px;
+  cursor: pointer;
+}
+.view-hide {
+  width: 20px;
+  content: url("../images/eye_hide.svg");
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 6px;
+  cursor: pointer;
+}
+
+input[type="file"] {
+  border: 0;
+  margin-bottom: 20px;
+  padding-left: 0;
+}
+
+button[type="submit"] {
+  box-sizing: border-box;
+  color: white;
+  font-size: 14px;
+  padding: 13px;
+  border-radius: 7px;
+  border: none;
+  width: 180px;
+  outline: none;
+  margin-top: 25px;
+  background-color: rgb(33, 87, 233);
+  cursor: pointer;
+}
+.container_update_profile_pic {
+  position: sticky;
+  top: 150px;
+}
+
+button.btn-profile-pic {
+  margin-top: 0;
+}
+
+.edit-btn {
+  box-sizing: border-box;
+  color: white;
+  font-size: 14px;
+  padding: 13px;
+  border-radius: 7px;
+  border: none;
+  width: 180px;
+  outline: none;
+  margin-top: 25px;
+  background-color: rgb(33, 87, 233);
+  cursor: pointer;
+}
+
+/* CSS for the modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  /* background-color: rgba(0,0,0,0.4);  */
+  backdrop-filter: blur(10px); /* Apply blur effect to the background */
+}
+
+/* Modal content */
+.modal-content {
+  /* display: none; */
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 24px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  height: 550px;
+  z-index: 9999;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 0;
+  right: 6px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.error-render{
+  font-size: 12px;
+  color: red;
+}

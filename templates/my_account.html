@@ -1,0 +1,167 @@
+{% extends "components/base.html" %} 
+{% load static %} 
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/my_account.css' %}">
+<script type="text/javascript" src="{% static 'js/showpass.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/my_account.js' %}"></script>
+
+<section class="update_profile">
+    <div class="container">
+        <div class="container_update_profile form-wrap">
+            <h1>Update Profile</h1>
+            <form method="post" action="{% url 'update_profile' %}" name="profileForm" onsubmit="return validateprofileForm()">
+                {% csrf_token %}
+                <div class="form_fields">
+                <label for="email">Email:</label>
+                <input type="email" id="email-field" name="email" value="{{ user.email }}">
+                <div class="error-render" id="email-error"></div>
+                </div>
+                    
+                <div class="form_fields">
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="fullname-field" name="full_name" value="{{ user.full_name }}">
+                <div id="fullname-error" class="error-render"></div>
+            </div>
+    
+                <div class="form_fields">
+                <label for="contact">Contact:</label>
+                <input type="text" id="contact-field" name="contact" value="{{ user.contact }}">
+                <div class="error-render" id="contact-error"></div>
+            </div>
+
+                <div class="form_fields">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" value="{{ user.address }}">
+                <div id="address-error" class="error-render"></div>
+            </div>
+    
+                <button type="submit">Update Profile</button>
+            </form>
+        </div>
+        <div class="container_update_profile_pic form-wrap">
+            <label for="profile_pic">Profile Picture:</label>
+            {% if user.profile_pic %}
+            <img id="no_preview_image" src="{{ user.profile_pic.url }}" alt="Profile Picture Preview" style="width: 300px; height: 300px;">
+        {% else %}
+            <img id="default_profile_pic" src="{% static 'images/default_profile_pic.jpg' %}" alt="Default Profile Picture" style="width: 300px; height: 300px;">
+        {% endif %}
+            <button class="edit-btn" id="edit_profile_pic_button">Edit Profile Picture</button>
+        </div>
+        
+    
+        <div class="container_update_password form-wrap">
+            <h1>Update Password</h1>
+            <form method="post" action="{% url 'update_password' %}" name="passwordForm" onsubmit="return validatePasswordForm()">
+                {% csrf_token %}
+                
+            <div class="form_fields">
+                <label for="old_password">Old Password:</label>
+                <div class="password-container">
+                <input type="password" id="password-input-field" name="old_password">
+                <img src="" alt="" id="show-icon" class="view-show">
+                </div>
+                {% if error_message %}
+                <div class="error-render">
+                  {{ error_message }}
+                </div>
+                {% endif %}                
+            </div>
+    
+                <div class="form_fields">
+                <label for="new_password1">New Password:</label>
+                <div class="password-container">
+                <input type="password" id="password1-field" name="new_password1">
+                <img src="" alt="" id="show-icon1" class="view-show">
+                <div class="error-render" id="password-error"></div>
+                </div>
+            </div>
+    
+                <div class="form_fields">
+                <label for="new_password2">Confirm New Password:</label>
+                <div class="password-container">
+                <input type="password" id="password2-field" name="new_password2">
+                <img src="" alt="" id="show-icon2" class="view-show">
+                <div class="error-render" id="confirm-password-error"></div>
+                </div>
+            </div>
+    
+                <button type="submit">Update Password</button>
+            </form>
+        </div>
+        
+    </div>
+</section>
+<div id="profile_pic_modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form method="post" action="{% url 'update_profile_pic' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+        
+            {% if user.profile_pic %}
+            <img id="preview_image" src="{{ user.profile_pic.url }}" alt="Profile Picture Preview" style="width: 500px; height: 400px;">
+        {% else %}
+            <img id="default_profile_pic" src="{% static 'images/default_profile_pic.jpg' %}" alt="Default Profile Picture" style="width: 500px; height: 400px;">
+        {% endif %}
+            <input type="file" id="profile_pic" name="profile_pic">
+            <button class="btn-profile-pic" type="submit">Update Profile Picture</button>
+        </form>
+    </div>
+</div>
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to update?</p>
+      <button onclick="confirmAction()">Yes</button>
+      <button onclick="cancelAction()">No</button>
+    </div>
+  </div>
+  
+<script>
+    // Function to preview the selected image
+    function previewImage(input) {
+        var preview = document.getElementById('preview_image');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Attach the previewImage function to the file input onchange event
+    document.getElementById('profile_pic').onchange = function() {
+        previewImage(this);
+    };
+
+
+
+
+
+// Get the modal element
+var modal = document.getElementById("profile_pic_modal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("edit_profile_pic_button");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+{% endblock content %}
