@@ -1,0 +1,181 @@
+{% extends "components/base.html" %} {% block content %} {% load static %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
+<link rel="stylesheet" href="{% static 'css/stays.css' %}" type="text/css" />
+
+{% comment %}
+<header class="header" id="home">
+  <div class="section__header header__container">
+    <p class="section__subheader">Your Next Space</p>
+    <h1>Discover<br />Nepal</h1>
+  </div>
+</header>
+{% endcomment %} {% comment %}
+<section class="heading">
+  <div class="heading">
+    <h1>Hi {{ first_name }},</h1>
+  </div>
+</section>
+{% endcomment %}
+<section class="section__small_nav">
+  <div class="small_nav">
+    <ul class="small_nav_list">
+      <li><a href="{% url 'stays_type' 'All' %}">All</a></li>
+      <li><a href="{% url 'stays_type' 'House' %}">House</a></li>
+      <li><a href="{% url 'stays_type' 'Apartment' %}">Apartment</a></li>
+      <li><a href="{% url 'stays_type' 'Hotel' %}">Hotel</a></li>
+      <li><a href="{% url 'stays_type' 'Tent' %}">Tent</a></li>
+      <li><a href="{% url 'stays_type' 'Guest__House' %}">Guest House</a></li>
+      <li><a href="{% url 'stays_type' 'Bed_and_Breakfast' %}">Bed and Breakfast</a></li>
+      <li><a href="{% url 'stays_type' 'HomeStay' %}">HomeStay</a></li>
+      <li><a href="{% url 'stays_type' 'Cabin' %}">Cabin</a></li>
+    </ul>
+
+    <div class="Search">
+      <form action="{% url 'search' %}" method="get">
+        <input type="text" name="search" placeholder="Search" />
+        <input type="submit" id="search_button" value="Search" />
+      </form>
+    </div>
+
+    <div class="filer"> 
+      <button id="openPopupBtn">Filter</button>
+    </div>
+  </div>
+</section>
+
+<!-- The pop-up window -->
+<div id="filterPopup" class="popup">
+  <div class="popup-content">
+    <div class="popup-filter">
+      <h3 class="title-filter">Filter</h3>
+      <span class="close" onclick="closePopup()">X</span>
+    </div>
+    <form id="filterForm" method="post">
+      {% csrf_token %}
+      <!-- Add your filter options here -->
+      <div class="popup-fields">
+        <label for="property_type">Property Type:</label>
+        <select id="property_type" name="property_type">
+          <option value="">All</option>
+          <option value="House">House</option>
+          <option value="Apartment">Apartment</option>
+          <option value="Hotel">Hotel</option>
+          <!-- Add other options as needed -->
+        </select>
+        <label for="guest_room">Guest Room:</label>
+        <select id="guest_room" name="guest_room">
+          <option value="">All</option>
+          <option value="entire_place">Entire Place</option>
+          <option value="a_room">A Room</option>
+          <!-- Add other options as needed -->
+        </select>
+        <label for="guest_number">Guest Number:</label>
+        <input type="number" id="guest_number" name="guest_number" />
+        <label for="bedrooms">Bedrooms:</label>
+        <input type="number" id="bedrooms" name="bedrooms" />
+        <label for="bed">Beds:</label>
+        <input type="number" id="bed" name="bed" />
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" />
+      </div>
+      <!-- Add more fields as needed -->
+      <button type="submit">Apply Filters</button>
+    </form>
+  </div>
+</div>
+
+<section class="section_stays">
+  <div class="cards">
+    {% if filtered_properties %}
+      {% for item in filtered_properties %}
+        <div class="card">
+          <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+            {% with item.property_photo.first as photo %}
+                {% if photo %}
+                    <img src="{{ photo.photo.url }}" alt="Property Photo">
+                {% else %}
+                    <p>No photo available</p>
+                {% endif %}
+            {% endwith %}
+
+            <div class="info">
+              <h2>Title: {{ item.title }}</h2>
+              <p>Description: {{ item.description }}</p>
+              <p>Location: {{ item.location }}</p>
+              <p>Price: {{ item.price }}</p>
+            </div>
+            <div class="like-icon"></div>
+          </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% for item in data %}
+        <div class="card">
+          <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+            {% with item.property_photo.first as photo %}
+            {% if photo %}
+                    <img src="{{ photo.photo.url }}" alt="Property Photo">
+                {% else %}
+                    <p>No photo available</p>
+                {% endif %}
+            {% endwith %}
+
+            <div class="info">
+              <h2>Title: {{ item.title }}</h2>
+              <p>Description: {{ item.description }}</p>
+              <p>Location: {{ item.location }}</p>
+              <p>Price: {{ item.price }}</p>
+            </div>
+            <div class="like-icon"></div>
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+
+
+<section class="section_stays">
+  <div class="cards_search" id="search_results">  
+    {% if search_performed %}
+    {% if Search_properties %}
+      {% for item in Search_properties %}
+        <div class="card_search">
+          <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+            {% with item.property_photo.first as photo %}
+            {% if photo %}
+                    <img src="{{ photo.photo.url }}" alt="Property Photo">
+                {% else %}
+                    <p>No photo available</p>
+                {% endif %}
+            {% endwith %}
+
+            <div class="info_search"> 
+            <h2>Title: {{ item.title }}</h2>
+            <p>Description: {{ item.description }}</p>
+            <p>Location: {{ item.location }}</p>
+            <p>Price: {{ item.price }}</p>
+          </div>
+          <div class="like-icon_search"></div>
+        </a>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No results found</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+<!--ScrollReveal-->
+<script src="https://unpkg.com/scrollreveal"></script>
+
+<script src="{% static 'js/home.js' %}"></script>
+<script src="{% static 'js/stays.js' %}"></script>
+
+{% endblock content %}
