@@ -21,6 +21,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, validators=[validate_email])
     full_name = models.CharField(max_length=335)
     contact = models.CharField(max_length=10)
+    address = models.CharField(max_length=225, blank=True, null=True)
+    profile_pic = models.ImageField(upload_to="User_profile",blank=True, null=True)
+
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
