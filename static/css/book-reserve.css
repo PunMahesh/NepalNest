@@ -1,0 +1,149 @@
+.section_book{
+    max-width: 1200px;
+    position: relative;
+    padding-top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.container_book{
+    display: flex;
+    flex-direction: column;
+}
+.overlay {
+    /* Position and size */
+    position: fixed; /* Fixed/sticky position */
+    top: 0; 
+    left: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    z-index: 999; /* Sit on top */
+
+    /* Add a blur effect */
+    backdrop-filter: blur(8px);
+
+    /* Semi-black background */
+    /* background-color: rgba(0,0,0,0.5); */
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 24px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    width: 400px;
+    height: 395px;
+    z-index: 9999;
+}
+.popup-content{
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.popup-content btn{
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    color: var(--white);
+    background-color: var(--secondary-color);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+.margin{
+    margin: 10px 0;
+}
+.popup-content input{
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: black;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--text-light);
+    border-radius: 5px;
+}
+
+.popup-content label{
+    margin-top: 10px;
+}
+
+.popup_dates_info{
+    border-bottom: solid 1px;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.container_book h1{
+    margin: 20px 0;
+}
+
+.container_dates{
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container_guests{
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.container_main{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+/* for price info box */
+.container_price_info {
+    position: sticky;
+    background-color: white;
+    color: black; 
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+    display: block;
+    width: 400px;
+    height: 300px;
+    top: 140px;
+  }
+
+.room_price {
+  margin: 10px 0;
+}
+.before_service_price{
+  margin: 10px 0;
+}
+.service_fee{
+  margin-bottom: 10px;
+  border-bottom: solid 1px;
+}
+.after_service_price{
+  margin-bottom: 20px;
+}
+
+.property_info{
+    display: flex;
+    justify-content: space-between;
+}
