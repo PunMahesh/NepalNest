@@ -1,0 +1,77 @@
+section.section_heading {
+  padding-top: 150px;
+  max-width: 1240px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.heading h1 {
+  padding: 0 20px;
+  font-size: 35px;
+  font-weight: 500;
+  font-family: inherit;
+  margin-bottom: 20px;
+}
+
+.section_all_listings {
+  max-width: 1240px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px 20px;
+}
+
+.container_reservation h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.reservation_list {
+  list-style: none;
+}
+
+/* CSS for the modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+  backdrop-filter: blur(10px); /* Apply blur effect to the background */
+}
+
+/* Modal content */
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 24px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  z-index: 9999;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 0;
+  right: 6px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
