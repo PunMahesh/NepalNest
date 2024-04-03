@@ -1,0 +1,159 @@
+.cards {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 26px;
+  /* padding-bottom: 50px; */
+  padding-top: 220px;
+  flex-wrap: wrap;
+
+}
+.card {
+  /* margin-top: 150px; */
+  position: relative;
+  width: calc(25% - 20px);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.info {
+  padding: 10px;
+}
+
+.like-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+}
+
+/* For Search Option  */
+
+.cards_search {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 20px;
+  padding-bottom: 50px;
+  /* padding-top: 220px; */
+  flex-wrap: wrap;
+}
+.card_search {
+  /* margin-top: 150px; */
+  position: relative;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card_search img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.info_search {
+  padding: 10px;
+}
+
+.like-icon_search {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+}
+
+
+/* For Small Quick Search for property type */
+
+
+.small_nav {
+  border-bottom: solid 1px;
+  max-width: 1200px;
+  margin-top: 112px;
+  /* padding-top: 150px; */
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: #fff;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.small_nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  font-size: 15px;
+  /* justify-content: space-between; */
+  /* align-items: center; */
+  /* margin: 0 auto;*/
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* height: 100%; */
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.popup-content {
+  margin-top:120px;
+  margin-left:250px;
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #717171;
+  border-radius: 2%;
+  max-width: 1000px;
+}
+.popup-fields{  
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 50px;
+}
+
+.popup-filter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.close {
+  /* float: right; */
+  cursor: pointer;
+}
+
+input[name="search"]{
+    padding: 4px;
+    height: 25px;
+    border-radius: 5px;
+    font-size: 15px;
+    width: 220px;
+    border: solid 1px rgb(168, 168, 168);
+    outline: none;
+} 
+
+.a_item {
+  color: black;
+
+}
