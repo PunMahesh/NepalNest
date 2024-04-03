@@ -37,7 +37,7 @@ nav {
 
 .content-holder h2 {
   font-size: 34px;
-  margin: 20px auto;
+  /* margin: 20px auto; */
 }
 
 .content-holder p {
@@ -77,7 +77,7 @@ nav {
   border: 1px solid rgb(168, 168, 168);
   max-width: 280px;
   width: 100%;
-  outline: none;
+  outline: none;  
 }
 .login-button {
   box-sizing: border-box;
