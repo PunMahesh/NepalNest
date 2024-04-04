@@ -16,4 +16,7 @@ urlpatterns = [
     path('accept-reservation/<int:booking_id>/', views.accept_reservation, name='accept_reservation'),
     path('decline-reservation/<int:booking_id>/', views.decline_reservation, name='decline_reservation'),
     # path('confirm-reservation/<int:booking_id>/', views.confirm_reservation, name='confirm_reservation'),
+
+    path('filter_property', views.filter_property, name='filter_property'),
+
 ]
