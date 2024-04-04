@@ -64,6 +64,8 @@ class PropertyInfo(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.IntegerField(default=0, null=True)
     extra_items = models.ManyToManyField(Extra_Items)
+    booked = models.BooleanField(default=False, null=True)
+    reserved = models.BooleanField(default=False, null=True)
 
 class PropertyPhoto(models.Model):
     property_info = models.ForeignKey(PropertyInfo, related_name="property_photo", on_delete=models.CASCADE)
