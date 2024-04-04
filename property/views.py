@@ -114,34 +114,60 @@ def myProperty(request):
     return render(request, 'myProperty.html', {'first_name': first_name, 'pending_requests': pending_requests})
 
 def accept_reservation(request, booking_id):
+
     booking = Booking.objects.get(id=booking_id)
     booking.status = 'accepted'
     booking.save()
+
+    property_obj = booking.property
+    property_obj.reserved = True
+    property_obj.save()
+
     messages.success(request, 'Reservation accepted successfully.')
+    user_email = booking.user.email
+    property_title = booking.property.title
+    guest_name = booking.user.full_name
+    send_reservation_notification_email(user_email, 'accepted', property_title, guest_name)
     return redirect('myProperty')
 
 def decline_reservation(request, booking_id):
+
     booking = Booking.objects.get(id=booking_id)
     booking.status = 'declined'
     booking.save()
+
     messages.info(request, 'Reservation declined.')
+    user_email = booking.user.email
+    property_title = booking.property.title
+    guest_name = booking.user.full_name
+    send_reservation_notification_email(user_email, 'declined', property_title, guest_name)   
     return redirect('myProperty')
+
+def send_reservation_notification_email(user_email, status, property_title, guest_name):
+    subject = 'Reservation Notification'
+
+    if status == 'accepted':
+        message = f"Hello,\n\nYour reservation request for property '{property_title}' has been accepted.\n\nRegards,\nThe NepalNest Team"
+    elif status == 'declined':
+        message = f"Hello,\n\nYour reservation request for property '{property_title}' has been declined.\n\nRegards,\nThe NepalNest Team"
+
+    send_mail(subject, message, "info.NepalNest@gmail.com", [user_email])
 
 def stays_type(request, property_type):
     if property_type == 'All':
-        filtered_properties = PropertyInfo.objects.all()
+        filtered_properties = PropertyInfo.objects(reserved=False)
     else:
-        filtered_properties = PropertyInfo.objects.filter(property_type=property_type)
+        filtered_properties = PropertyInfo.objects.filter(property_type=property_type, reserved=False)
     
     return render(request, 'stays.html', {'filtered_properties': filtered_properties})
 
 def stays(request):
-    data = PropertyInfo.objects.all()
+    data = PropertyInfo.objects.filter(reserved=False)
     return render(request, 'stays.html', {'data': data})
 
 def search(request):
     query = request.GET.get('search')
-    search_performed = bool(query)  # True if a query was provided, False otherwise
+    search_performed = bool(query) 
     if query:
         Search_properties = PropertyInfo.objects.filter(
             Q(title__icontains=query) |
@@ -151,7 +177,8 @@ def search(request):
             Q(safety_items__name__icontains=query) |
             Q(extra_items__name__icontains=query) |
             Q(description__icontains=query) |
-            Q(price__icontains=query) 
+            Q(price__icontains=query),
+            reserved=False
             ).distinct()    
     else:
         Search_properties = PropertyInfo.objects.none()
@@ -278,7 +305,7 @@ def book(request, booking_id):
 def notify_host(host_email, property_title,guest_name):
     subject = f"New Reservation for "
     message = f"Hello,\n\nYou have a new reservation request for your property '{property_title}' from {guest_name} .\n\nPlease login to your account to accept or decline the reservation.\n\nRegards,\nThe NepalNest Team"
-    sender_email = "info.NepalNest@gmail.com.com"  # Update with your email
+    sender_email = "info.NepalNest@gmail.com"
     recipient_email = host_email
     send_mail(subject, message, sender_email, [recipient_email])
 
@@ -378,3 +405,44 @@ def about(request):
 
 #     result = generate_signature(total_amount, transaction_uuid, product_code, secret_key)
 #     print("Result:", result)
+
+
+
+def filter_property(request):
+    # Retrieve all properties
+    properties = PropertyInfo.objects.all()
+
+    # Filter properties based on user input
+    if request.method == 'GET':
+        property_type = request.GET.get('property_type')
+        guest_room = request.GET.get('guest_room')
+        Guest_number = request.GET.get('guest_number')
+        bedrooms = request.GET.get('bedrooms')
+        bed = request.GET.get('bed')
+        min_price = request.GET.get('min_price')
+        max_price = request.GET.get('max_price')
+
+        if property_type:
+            properties = properties.filter(property_type=property_type)
+        if guest_room:
+    # Map the guest room value to its corresponding choice in the model
+            guest_room_choice = dict(PropertyInfo.GUEST_ROOM_CHOICES).get(guest_room)
+    # Filter properties based on the mapped choice
+            properties = properties.filter(guest_room=guest_room_choice)
+            print(properties)
+        if Guest_number:
+            properties = properties.filter(Guest_number=Guest_number)
+        if bedrooms:
+            properties = properties.filter(bedrooms=bedrooms)
+        if bed:
+            properties = properties.filter(bed=bed)
+        if min_price:
+            properties = properties.filter(price__gte=min_price)
+        if max_price:
+            properties = properties.filter(price__lte=max_price)
+
+    context = {
+        'properties': properties
+    }
+
+    return render(request, 'stays.html', context)
