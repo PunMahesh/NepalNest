@@ -1,181 +1,339 @@
-{% extends "components/base.html" %} {% block content %} {% load static %}
+  {% extends "components/base.html" %} {% block content %} {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
-<link rel="stylesheet" href="{% static 'css/stays.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
+  <link rel="stylesheet" href="{% static 'css/stays.css' %}" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  {% comment %}
+  <header class="header" id="home">
+    <div class="section__header header__container">
+      <p class="section__subheader">Your Next Space</p>
+      <h1>Discover<br />Nepal</h1>
+    </div>
+  </header>
+  {% endcomment %} {% comment %}
+  <section class="heading">
+    <div class="heading">
+      <h1>Hi {{ first_name }},</h1>
+    </div>
+  </section>
+  {% endcomment %}
+  <section class="section__small_nav">
+    <div class="small_nav">
+      <ul class="small_nav_list">
+        <li><a href="{% url 'stays_type' 'All' %}">All</a></li>
+        <li><a href="{% url 'stays_type' 'House' %}">House</a></li>
+        <li><a href="{% url 'stays_type' 'Apartment' %}">Apartment</a></li>
+        <li><a href="{% url 'stays_type' 'Hotel' %}">Hotel</a></li>
+        <li><a href="{% url 'stays_type' 'Tent' %}">Tent</a></li>
+        <li><a href="{% url 'stays_type' 'Guest__House' %}">Guest House</a></li>
+        <li><a href="{% url 'stays_type' 'Bed_and_Breakfast' %}">Bed and Breakfast</a></li>
+        <li><a href="{% url 'stays_type' 'HomeStay' %}">HomeStay</a></li>
+        <li><a href="{% url 'stays_type' 'Cabin' %}">Cabin</a></li>
+      </ul>
 
-{% comment %}
-<header class="header" id="home">
-  <div class="section__header header__container">
-    <p class="section__subheader">Your Next Space</p>
-    <h1>Discover<br />Nepal</h1>
-  </div>
-</header>
-{% endcomment %} {% comment %}
-<section class="heading">
-  <div class="heading">
-    <h1>Hi {{ first_name }},</h1>
-  </div>
+      <div class="Search">
+        <form action="{% url 'search' %}" method="get" class="search-form">
+          <!-- Text input field for search -->
+          <input type="text" name="search" placeholder="Search" class="search-input" />
+          <!-- Icon button for search -->
+          <button type="submit" id="search_button" class="search-button">
+            <!-- Font Awesome search icon -->
+            <i class="fas fa-search"></i>
+          </button>
+        </form>       
+      </div>
+
+      <div class="filter"> 
+        <button id="openPopupBtn">
+            <i class="fas fa-filter"></i> Filter
+        </button>
+    </div>
+    
+    </div>
+  </section>
+
+  <section class="section_all_stays">
+    <div class="cards">
+      {% if filtered_properties %}
+        {% for item in filtered_properties %}
+          <div class="card">
+            <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+              {% with item.property_photo.first as photo %}
+                  {% if photo %}
+                      <img src="{{ photo.photo.url }}" alt="Property Photo">
+                  {% else %}
+                      <p>No photo available</p>
+                  {% endif %}
+              {% endwith %}
+
+              <div class="info">
+                <h2>Title: {{ item.title }}</h2>
+                <p>Description: {{ item.description }}</p>
+                <p>Location: {{ item.location }}</p>
+                <p>Price: {{ item.price }}</p>
+              </div>
+              {% comment %} <div class="like-icon"></div> {% endcomment %}
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for item in data %}
+          <div class="card">
+            <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+              {% with item.property_photo.first as photo %}
+              {% if photo %}
+                      <img src="{{ photo.photo.url }}" alt="Property Photo">
+                  {% else %}
+                      <p>No photo available</p>
+                  {% endif %}
+              {% endwith %}
+
+              <div class="info">
+                <h2>Title: {{ item.title }}</h2>
+                <p>Description: {{ item.description }}</p>
+                <p>Location: {{ item.location }}</p>
+                <p>Price: {{ item.price }}</p>
+              </div>
+              <div class="like-icon"></div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section_search_stays">
+    <div class="cards_search" id="filter_search_results">  
+      {% if search_performed %}
+      {% if Search_properties %}
+        {% for item in Search_properties %}
+          <div class="card_search">
+            <a class="a_item" href="{% url 'property_detail' item.id %}">
+
+              {% with item.property_photo.first as photo %}
+              {% if photo %}
+                      <img src="{{ photo.photo.url }}" alt="Property Photo">
+                  {% else %}
+                      <p>No photo available</p>
+                  {% endif %}
+              {% endwith %}
+
+              <div class="info_search"> 
+              <h2>Title: {{ item.title }}</h2>
+              <p>Description: {{ item.description }}</p>
+              <p>Location: {{ item.location }}</p>
+              <p>Price: {{ item.price }}</p>
+            </div>
+            <div class="like-icon_search"></div>
+          </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No results found</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="section_filter_stays">
+    <div class="cards_search" id="filter_search_results">  
+        {% if properties %}
+            {% for item in properties %}
+                <div class="card_search">
+                    <a class="a_item" href="{% url 'property_detail' item.id %}">
+                        {% with item.property_photo.first as photo %}
+                            {% if photo %}
+                                <img src="{{ photo.photo.url }}" alt="Property Photo">
+                            {% else %}
+                                <p>No photo available</p>
+                            {% endif %}
+                        {% endwith %}
+                        <div class="info_search"> 
+                            <h2>Title: {{ item.title }}</h2>
+                            <p>Description: {{ item.description }}</p>
+                            <p>Location: {{ item.location }}</p>
+                            <p>Price: {{ item.price }}</p>
+                        </div>
+                        <div class="like-icon_search"></div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if properties_searched %}
+                <p>No results found</p>
+            {% endif %}
+        {% endif %}
+    </div>
 </section>
-{% endcomment %}
-<section class="section__small_nav">
-  <div class="small_nav">
-    <ul class="small_nav_list">
-      <li><a href="{% url 'stays_type' 'All' %}">All</a></li>
-      <li><a href="{% url 'stays_type' 'House' %}">House</a></li>
-      <li><a href="{% url 'stays_type' 'Apartment' %}">Apartment</a></li>
-      <li><a href="{% url 'stays_type' 'Hotel' %}">Hotel</a></li>
-      <li><a href="{% url 'stays_type' 'Tent' %}">Tent</a></li>
-      <li><a href="{% url 'stays_type' 'Guest__House' %}">Guest House</a></li>
-      <li><a href="{% url 'stays_type' 'Bed_and_Breakfast' %}">Bed and Breakfast</a></li>
-      <li><a href="{% url 'stays_type' 'HomeStay' %}">HomeStay</a></li>
-      <li><a href="{% url 'stays_type' 'Cabin' %}">Cabin</a></li>
-    </ul>
 
-    <div class="Search">
-      <form action="{% url 'search' %}" method="get">
-        <input type="text" name="search" placeholder="Search" />
-        <input type="submit" id="search_button" value="Search" />
+  
+
+
+  <section class="section_popup">
+    <!-- The pop-up window -->
+  <div id="filterPopup" class="popup">
+    <div class="popup-content">
+      <div class="popup-filter">
+        <h3 class="title-filter">Filter</h3>
+        <span class="close" onclick="closePopup()">X</span>
+      </div>
+      <form id="filterForm" method="GET" action="{% url 'filter_property' %}">
+        {% csrf_token %}
+        <!-- Add your filter options here -->
+        <div class="pop-up_price">
+          <h2>Price Range</h2>
+          <p>Select price range before tax and service charges.</p>
+          
+          <label for="min-price">Minimum Price:</label>
+          <input type="number" id="min-price" name="min_price">
+      
+          <label for="max-price">Maximum Price:</label>
+          <input type="number" id="max-price" name="max_price">
+        </div>
+
+
+        <div class="pop-up_room-type">
+          <h2>Room Type</h2>
+          <p>Select entire place, single room or shared room.</p>
+        <div class="pop-up_room">
+          <input type="radio" id="Entire_Room" name="guest_room" value="entire_place">
+          <label for="Entire_Room" class="radio-label">Entire Room</label>
+          
+          <input type="radio" id="A_room" name="guest_room" value="a_room">
+          <label for="A_room" class="radio-label">A Room</label>
+          
+          <input type="radio" id="Shared_Room" name="guest_room" value="shared_room">
+          <label for="Shared_Room" class="radio-label">Shared Room</label>
+          </div>
+      </div>
+      
+
+      <div class="pop-up_room-type">
+        <h2>Property Type</h2>
+        <p>Select a property type that suits you best.</p>
+        <div class="pop-up_room">
+        <input type="radio" id="House" name="property_type" value="House">
+        <label for="House" class="radio-label">House</label>
+    
+        <input type="radio" id="Apartment" name="property_type" value="Apartment">
+        <label for="Apartment" class="radio-label">Apartment</label>
+    
+        <input type="radio" id="Hotel" name="property_type" value="Hotel">
+        <label for="Hotel" class="radio-label">Hotel</label>
+
+        <input type="radio" id="Tent" name="property_type" value="Tent">
+        <label for="Tent" class="radio-label">Tent</label>
+    
+        <input type="radio" id="Guest__House" name="property_type" value="Guest__House">
+        <label for="Guest__House" class="radio-label">Guest House</label>
+    
+        <input type="radio" id="Bed_and_Breakfast" name="property_type" value="Bed_and_Breakfast">
+        <label for="Bed_and_Breakfast" class="radio-label">Bed and Breakfast</label>
+
+        <input type="radio" id="HomeStay" name="property_type" value="HomeStay">
+        <label for="HomeStay" class="radio-label">HomeStay</label>
+    
+        <input type="radio" id="Cabin" name="property_type" value="Cabin">
+        <label for="Cabin" class="radio-label">Cabin</label>
+        </div>
+      </div>
+
+      <div class="pop-up_rooms_beds">
+          <h2>Guest and beds.</h2>
+
+          <div class="pop-up_guests_wrap">
+            <p>Guests.</p>
+            <div class="pop-up_bedrooms">
+            <input type="radio" id="any_guests" name="guest_number" value="all">
+            <label for="any_guests" class="radio-number-label">Any</label>
+            <input type="radio" id="guests_1" name="guest_number" value="1">
+            <label for="guests_1" class="radio-number-label">1</label>
+            <input type="radio" id="guests_2" name="guest_number" value="2">
+            <label for="guests_2" class="radio-number-label">2</label>
+            <input type="radio" id="guests_3" name="guest_number" value="3">
+            <label for="guests_3" class="radio-number-label">3</label>
+            <input type="radio" id="guests_4" name="guest_number" value="4">
+            <label for="guests_4" class="radio-number-label">4</label>
+            <input type="radio" id="guests_5" name="guest_number" value="5">
+            <label for="guests_5" class="radio-number-label">5</label>
+            <input type="radio" id="guests_6" name="guest_number" value="6">
+            <label for="guests_6" class="radio-number-label">6</label>
+            <input type="radio" id="guests_7" name="guest_number" value="7">
+            <label for="guests_7" class="radio-number-label">7</label>
+            <input type="radio" id="guests_8" name="guest_number" value="8">
+            <label for="guests_8" class="radio-number-label">8</label>
+            <input type="radio" id="guests_9+" name="guest_number" value="9+">
+            <label for="guests_9+" class="radio-number-label">9+</label>
+            </div>
+          </div>
+
+        <div class="pop-up_bedrooms_wrap">
+          <p>Bedrooms.</p>
+          <div class="pop-up_bedrooms">
+          <input type="radio" id="any_room" name="bedrooms" value="all">
+          <label for="any_room" class="radio-number-label">Any</label>
+          <input type="radio" id="room_1" name="bedrooms" value="1">
+          <label for="room_1" class="radio-number-label">1</label>
+          <input type="radio" id="room_2" name="bedrooms" value="2">
+          <label for="room_2" class="radio-number-label">2</label>
+          <input type="radio" id="room_3" name="bedrooms" value="3">
+          <label for="room_3" class="radio-number-label">3</label>
+          <input type="radio" id="room_4" name="bedrooms" value="4">
+          <label for="room_4" class="radio-number-label">4</label>
+          <input type="radio" id="room_5" name="bedrooms" value="5">
+          <label for="room_5" class="radio-number-label">5</label>
+          <input type="radio" id="room_6" name="bedrooms" value="6">
+          <label for="room_6" class="radio-number-label">6</label>
+          <input type="radio" id="room_7" name="bedrooms" value="7">
+          <label for="room_7" class="radio-number-label">7</label>
+          <input type="radio" id="room_8" name="bedrooms" value="8">
+          <label for="room_8" class="radio-number-label">8</label>
+          <input type="radio" id="room_9+" name="bedrooms" value="9+">
+          <label for="room_9+" class="radio-number-label">9+</label>
+          </div>
+        </div>
+
+          <div class="pop-up_beds_wrap">
+            <p>Beds.</p>
+            <div class="pop-up_bedrooms">
+            <input type="radio" id="any_beds" name="bed" value="all">
+            <label for="any_beds" class="radio-number-label">Any</label>
+            <input type="radio" id="beds_1" name="bed" value="1">
+            <label for="beds_1" class="radio-number-label">1</label>
+            <input type="radio" id="beds_2" name="bed" value="2">
+            <label for="beds_2" class="radio-number-label">2</label>
+            <input type="radio" id="beds_3" name="bed" value="3">
+            <label for="beds_3" class="radio-number-label">3</label>
+            <input type="radio" id="beds_4" name="bed" value="4">
+            <label for="beds_4" class="radio-number-label">4</label>
+            <input type="radio" id="beds_5" name="bed" value="5">
+            <label for="beds_5" class="radio-number-label">5</label>
+            <input type="radio" id="beds_6" name="bed" value="6">
+            <label for="beds_6" class="radio-number-label">6</label>
+            <input type="radio" id="beds_7" name="bed" value="7">
+            <label for="beds_7" class="radio-number-label">7</label>
+            <input type="radio" id="beds_8" name="bed" value="8">
+            <label for="beds_8" class="radio-number-label">8</label>
+            <input type="radio" id="beds_9+" name="bed" value="9+">
+            <label for="beds_9+" class="radio-number-label">9+</label>
+            </div>
+          </div>
+      </div>
+        <!-- Add more fields as needed -->
+        <div class="button-container">
+          <button type="submit">Apply Filters</button>
+        </div>  
       </form>
     </div>
-
-    <div class="filer"> 
-      <button id="openPopupBtn">Filter</button>
-    </div>
   </div>
-</section>
+  </section>
 
-<!-- The pop-up window -->
-<div id="filterPopup" class="popup">
-  <div class="popup-content">
-    <div class="popup-filter">
-      <h3 class="title-filter">Filter</h3>
-      <span class="close" onclick="closePopup()">X</span>
-    </div>
-    <form id="filterForm" method="post">
-      {% csrf_token %}
-      <!-- Add your filter options here -->
-      <div class="popup-fields">
-        <label for="property_type">Property Type:</label>
-        <select id="property_type" name="property_type">
-          <option value="">All</option>
-          <option value="House">House</option>
-          <option value="Apartment">Apartment</option>
-          <option value="Hotel">Hotel</option>
-          <!-- Add other options as needed -->
-        </select>
-        <label for="guest_room">Guest Room:</label>
-        <select id="guest_room" name="guest_room">
-          <option value="">All</option>
-          <option value="entire_place">Entire Place</option>
-          <option value="a_room">A Room</option>
-          <!-- Add other options as needed -->
-        </select>
-        <label for="guest_number">Guest Number:</label>
-        <input type="number" id="guest_number" name="guest_number" />
-        <label for="bedrooms">Bedrooms:</label>
-        <input type="number" id="bedrooms" name="bedrooms" />
-        <label for="bed">Beds:</label>
-        <input type="number" id="bed" name="bed" />
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" />
-      </div>
-      <!-- Add more fields as needed -->
-      <button type="submit">Apply Filters</button>
-    </form>
-  </div>
-</div>
+  <!--ScrollReveal-->
+  <script src="https://unpkg.com/scrollreveal"></script>
 
-<section class="section_stays">
-  <div class="cards">
-    {% if filtered_properties %}
-      {% for item in filtered_properties %}
-        <div class="card">
-          <a class="a_item" href="{% url 'property_detail' item.id %}">
+  <script src="{% static 'js/home.js' %}"></script>
+  <script src="{% static 'js/stays.js' %}"></script>
 
-            {% with item.property_photo.first as photo %}
-                {% if photo %}
-                    <img src="{{ photo.photo.url }}" alt="Property Photo">
-                {% else %}
-                    <p>No photo available</p>
-                {% endif %}
-            {% endwith %}
-
-            <div class="info">
-              <h2>Title: {{ item.title }}</h2>
-              <p>Description: {{ item.description }}</p>
-              <p>Location: {{ item.location }}</p>
-              <p>Price: {{ item.price }}</p>
-            </div>
-            <div class="like-icon"></div>
-          </a>
-        </div>
-      {% endfor %}
-    {% else %}
-      {% for item in data %}
-        <div class="card">
-          <a class="a_item" href="{% url 'property_detail' item.id %}">
-
-            {% with item.property_photo.first as photo %}
-            {% if photo %}
-                    <img src="{{ photo.photo.url }}" alt="Property Photo">
-                {% else %}
-                    <p>No photo available</p>
-                {% endif %}
-            {% endwith %}
-
-            <div class="info">
-              <h2>Title: {{ item.title }}</h2>
-              <p>Description: {{ item.description }}</p>
-              <p>Location: {{ item.location }}</p>
-              <p>Price: {{ item.price }}</p>
-            </div>
-            <div class="like-icon"></div>
-          </a>
-        </div>
-      {% endfor %}
-    {% endif %}
-  </div>
-</section>
-
-
-
-<section class="section_stays">
-  <div class="cards_search" id="search_results">  
-    {% if search_performed %}
-    {% if Search_properties %}
-      {% for item in Search_properties %}
-        <div class="card_search">
-          <a class="a_item" href="{% url 'property_detail' item.id %}">
-
-            {% with item.property_photo.first as photo %}
-            {% if photo %}
-                    <img src="{{ photo.photo.url }}" alt="Property Photo">
-                {% else %}
-                    <p>No photo available</p>
-                {% endif %}
-            {% endwith %}
-
-            <div class="info_search"> 
-            <h2>Title: {{ item.title }}</h2>
-            <p>Description: {{ item.description }}</p>
-            <p>Location: {{ item.location }}</p>
-            <p>Price: {{ item.price }}</p>
-          </div>
-          <div class="like-icon_search"></div>
-        </a>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p>No results found</p>
-    {% endif %}
-  </div>
-  {% endif %}
-</section>
-
-<!--ScrollReveal-->
-<script src="https://unpkg.com/scrollreveal"></script>
-
-<script src="{% static 'js/home.js' %}"></script>
-<script src="{% static 'js/stays.js' %}"></script>
-
-{% endblock content %}
+  {% endblock content %}
