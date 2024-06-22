@@ -1,0 +1,116 @@
+{% extends "components/base.html" %} 
+{% block content %}
+{% load static %} 
+
+<link rel="stylesheet" href="{% static 'css/myReservation.css' %}" type="text/css" />
+
+<section class="section_heading">
+    <div class="heading">
+        <h1>Welcome {{ first_name }},</h1>
+    </div>
+</section>
+
+<section class="section_reservation_options">
+    <div class="container_reservation">
+    {% comment %} <h1>Your Reservations</h1> {% endcomment %}
+
+    <div class="nav_reservation">
+        <ul>
+            <li><a href="{% url 'pending_requests' %}">Pending Reservation Requests</a></li>
+            <li><a href="{% url 'upcoming_reservations' %}">Upcoming Reservations</a></li>
+            <li><a href="{% url 'currently_hosting' %}">Currently Hosting</a></li>
+            <li><a href="{% url 'checked_out' %}">Checked Out</a></li>
+        </ul>
+    </div>
+    {% include components/messages.html %}
+
+    {% if pending_requests %}
+    <ul class="reservation_list">
+        {% for request in pending_requests %}
+            <li>
+                {{ request.property.title }} - {{ request.check_in_date }} to {{ request.check_out_date }}
+                Requested by: {{ request.user.full_name }}
+                <a href="#" class="view_details" id="view_user_details" data-user-id="{{ request.user.id }}">View details</a>
+
+                <div class="reservation_form_actions">
+                <!-- Accept Form -->
+                <form method="post" action="{% url 'accept_reservation' request.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="accept">
+                    <button class="accept-btn" type="submit">Accept</button>
+                </form>
+
+                <!-- Decline Form -->
+                <form method="post" action="{% url 'decline_reservation' request.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="decline">
+                    <button class="decline-btn" type="submit">Decline</button>
+                </form> 
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pending reservation requests found.</p>
+{% endif %}
+
+</div>
+</section>
+{% for request in pending_requests %}   
+<div id="profile_pic_modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form method="post" action="#">
+            <h2>User Profile</h2>
+            <div class="user_info">
+                <p>Full Name: {{ request.user.full_name }}</p>
+                <p>Email: {{ request.user.email }}</p>
+                <p>Contact: {{ request.user.contact }}</p>
+            </div>
+            <!-- Additional user information can be displayed here -->
+
+            <!-- Example: Button to download PDF -->
+            <button class="btn download_pdf" type="button">Download PDF</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+
+
+
+
+
+{% comment %} for pop up details {% endcomment %}
+
+
+
+    <script>
+    // Get the modal element
+    var modal = document.getElementById("profile_pic_modal");
+    
+    // Get the button that opens the modal
+    var btn = document.getElementById("view_user_details");
+    
+    // Get the <span> element that closes the modals
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    
+    </script>
+
+{% endblock content %}

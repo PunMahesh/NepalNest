@@ -1,15 +1,10 @@
-{% extends 'components/onlyheader.html' %}
-{% block content %}
+{% extends "components/base.html" %} 
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/forgot.css' %}" />
-    <title>NepalNest</title>
-  </head>
-  <body>
+{% block style %} 
+<link rel="stylesheet" href="{% static 'css/forgot.css' %}" />
+{% endblock %}
+
+{% block content %}
     <div class="container">
       <!--Data or Content-->
       <div class="box-1">
@@ -27,6 +22,5 @@
             <p>Please check your email for further instructions</p>
         </div>
     </div>
-  </body>
-</html>
-{% endblock %}
+  </div>
+{% endblock content %}

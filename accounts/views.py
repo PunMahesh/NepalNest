@@ -33,6 +33,7 @@ def registration_view(request):
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
 
+        print("Registration")
         # check if user exists
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists')
@@ -43,7 +44,7 @@ def registration_view(request):
                 "password1": password1,
                 "password2": password2,
             }
-            return render(request, 'home.html', context=context)
+            return render(request, 'login.html', context=context)
 
         if password1 == password2:
             user = User(email=email, full_name=full_name, contact=contact)
@@ -216,6 +217,7 @@ def update_password(request):
     # Pass error_message to the template context
     return render(request, 'my_account.html', {'error_message': error_message})
 
+@login_required
 def update_profile_pic(request):
     if request.method == 'POST':
         profile_pic = request.FILES.get('profile_pic')

@@ -2,62 +2,63 @@
 {% load static %} 
 {% block content %}
 
-{% comment %} <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" /> {% endcomment %}
 <link rel="stylesheet" href="{% static 'css/about.css' %}" type="text/css" />
-{% comment %} <header class="header" id="home">
-<div class="section__header header__container">
-    <p class="section__subheader">Your Next Space</p>
-    <h1>Discover<br />Nepal</h1>
-  </div>
-</header> {% endcomment %}
 <div class="container_image">
     <div class="image">
 <img src="{% static 'images/Nepal.jpg' %}" alt="banner_image">
     </div>
     <div class="mission">
-<h2>Our Mission</h2>
+<h2>About Us</h2>
 <p>NepalNest.com is dedicated to providing travelers with authentic and unforgettable experiences in the beautiful country of Nepal. Our mission is to connect travelers with a diverse range of accommodations, from cozy guesthouses nestled in the Himalayas to vibrant city apartments in Kathmandu.</p>
     </div>
 </div>
-<div class="container">
-    <h2>Our Mission</h2>
-    <p>NepalNest.com is dedicated to providing travelers with authentic and unforgettable experiences in the beautiful country of Nepal...</p>
-
-    <h2>Discover the Beauty of Nepal</h2>
-    <p>NepalNest.com offers a curated selection of accommodations that showcase the rich culture, stunning landscapes, and warm hospitality of Nepal...</p>
-
-    <h2>Why Choose NepalNest.com?</h2>
-    <ul>
-        <li>Local Expertise</li>
-        <li>Wide Range of Options</li>
-        <li>Secure Booking</li>
-        <li>Support Local Communities</li>
-    </ul>
-
-    <h2>Meet Our Team</h2>
-    <div class="team-members">
-        <div class="team-member">
-            <h3>Sagar Khadgi</h3>
-            <p>Supervisor</p>
+    <div class="about-section">
+        <h1>NepalNest</h1>
+        <p>Discover Nepal with ease through our streamlined accommodation booking system.</p>
+        <p> From cozy mountain lodges to luxurious city escapes, find your perfect stay hassle-free.</p>
+      </div>
+      <div class="max-width">
+      <h2 style="text-align:center">Our Team</h2>
+      <div class="row">
+        <div class="column">
+          <div class="card">
+            <img src="static/images/profile.jpg" alt="Sagar" style="max-height: 250px; width:100%">
+            <div class="container">
+              <h2>Sagar Khadgi</h2>
+              <p class="title">Supervisor</p>
+              {% comment %} <p>Some text that describes me lorem ipsum ipsum lorem.</p> {% endcomment %}
+              <p>Sagar@gmail.com</p>
+              <p><button class="button">Contact</button></p>
+            </div>
+          </div>
         </div>
-        <div class="team-member">
-            <h3>Uttam Acharya</h3>
-            <p>Reader</p>
+      
+        <div class="column">
+          <div class="card">
+            <img src="static/images/profile.jpg" alt="Uttam" style="max-height: 250px; width:100%">
+            <div class="container">
+              <h2>Uttam Archarya</h2>
+              <p class="title">Reader</p>
+              {% comment %} <p>Some text that describes me lorem ipsum ipsum lorem.</p> {% endcomment %}
+              <p>Uttam123@gmail.com</p>
+              <p><button class="button">Contact</button></p>
+            </div>
+          </div>
         </div>
-        <div class="team-member">
-            <h3>Mahesh Pun</h3>
-            <p>Developer</p>
+      
+        <div class="column">
+          <div class="card">
+            <img src="static/images/profile.jpg" alt="Mahesh" style="max-height: 250px; width:100%">
+            <div class="container">
+              <h2>Mahesh Pun</h2>
+              <p class="title">Developer</p>
+              {% comment %} <p>Some text that describes me lorem ipsum ipsum lorem.</p> {% endcomment %}
+              <p>Mahesh123@gmail.com</p>
+              <p><button class="button">Contact</button></p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    <h2>Get in Touch</h2>
-    <p>We'd love to hear from you! Feel free to reach out to us at <a href="mailto:contact@nepalnest.com">contact@nepalnest.com</a> or connect with us on social media.</p>
-
-    <div class="social-links">
-        <a href="#">Facebook</a>
-        <a href="#">Twitter</a>
-        <a href="#">Instagram</a>
-    </div>
-</div>
 
 {% endblock content %}

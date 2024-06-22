@@ -5,8 +5,9 @@
   --text-light: #64748b;
   --extra-light: #f8fafc;
   --white: #ffffff;
-  --max-width: 1200px;
-  --header-font: "Playfair Display", serif;
+  --max-width: 1240px;
+  --header-font: "Poppins", sans-serif;
+  ;
 }
 
 * {
@@ -18,33 +19,10 @@
 .section__container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 50px 20px;
+  padding: 30px 20px;
 }
 
-.section_header {
-  text-align: center;
-  padding-bottom: 25px;
-  text-transform: uppercase;
-  font-size: 28px;
-  font-weight: 500;
-}
-.section__header {
-  max-width: var(--max-width);
-  width: 100%;
-  margin: 0 auto;
-  padding-top: 94px;
-  font-size: 3rem;
-  font-weight: 800;
-  font-family: var(--header-font);
-  color: var(--text-dark);
-}
 
-.section__subheader {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-light);
-}
 
 .section__description {
   margin-top: 1rem;
@@ -100,6 +78,7 @@
   height: auto;
 }
 
+
 img,
 video {
   width: 100%;
@@ -107,7 +86,8 @@ video {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
+  font-family: "Poppins", sans-serif;
 }
 
 html,
@@ -171,7 +151,7 @@ nav {
 }
 
 .nav__links a {
-  color: var(--text-light);
+  color: var(--text-light) ;
 }
 
 .nav__links a:hover {
@@ -346,8 +326,8 @@ nav {
   }
 
   .nav__logo a {
-    display: inline-flex;
-    align-items: center;
+    display: inline-flex ;
+    align-items: center ;
     color: #000;
   }
   .nav__menu__btn {
@@ -361,6 +341,7 @@ nav {
     flex-direction: row;
     transform: none;
     background-color: transparent;
+    margin-bottom: 0;
   }
 
   .booking__container form {
@@ -417,7 +398,7 @@ nav {
   }
 
   .footer__container {
-    grid-template-columns: 2fr repeat(2, 1fr);
+    grid-template-columns: 3fr repeat(2, 1fr);
   }
 
   .footer__col:first-child {

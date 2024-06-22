@@ -1,27 +1,14 @@
 function validateRegistrationForm() {
-  var username = document.forms["registrationForm"]["username"].value;
-  var usernameErrorField = document.getElementById("username-error");
+  var email = document.forms["registrationForm"]["email"].value;
+  var emailErrorField = document.getElementById("email-error");
   var fullname = document.forms["registrationForm"]["full_name"].value;
   var NameerrorField = document.getElementById("fullname-error");
   var contact = document.forms["registrationForm"]["contact"].value;
   var contactErrorField = document.getElementById("contact-error");
-  var email = document.forms["registrationForm"]["email"].value;
-  var emailErrorField = document.getElementById("email-error");
   var password = document.forms["registrationForm"]["password1"].value;
   var passwordErrorField = document.getElementById("password-error");
   var confirmPassword = document.forms["registrationForm"]["password2"].value;
   var confirmPasswordErrorField = document.getElementById("confirm-password-error");
-
-  // Validate Username
-  if (username.trim() === "") {
-    usernameErrorField.innerText = "Please enter your username.";
-    return false;
-  } else if (username.length < 5) {
-    usernameErrorField.innerText = "Username must be at least 5 characters long.";
-    return false;
-  } else {
-    usernameErrorField.innerText = "";
-  }
 
   // Validate Email
   if (email.trim() === "") {
@@ -53,7 +40,7 @@ function validateRegistrationForm() {
   if (contact.trim() === "") {
     contactErrorField.innerText = "Please enter your contact number.";
     return false;
-  } else if (contact.length < 10 || isNaN(contact) || contact.startsWith("98")) {
+  } else if (contact.length != 10) {
     contactErrorField.innerText = "Please enter a valid contact number.";
     return false;
   } else {

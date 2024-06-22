@@ -1,58 +1,226 @@
 {% extends "components/base.html" %} 
-{% load static %} 
-{% block content %}
-
+{% load static %}
+{% block style %} 
 <link rel="stylesheet" href="{% static 'css/home.css' %}" type="text/css" />
-<header class="header" id="home">
+{% endblock %}
+
+{% block content %}
+<style>
+  .input__group {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .guest_dropdown_content {
+    display: none; /* Hide the dropdown content by default */
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 213px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .guest_dropdown_content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .input__group:hover .guest_dropdown_content {
+    display: block; 
+  }
+
+  .guest_dropdown_count input{
+    border-radius: 4px;
+    width: auto;
+    height: 30px;
+    border: none;
+
+  }
+  .guest_dropdown_count button{
+    border: none;
+    background: none;
+    font-size: 15px;
+    font-weight: 500;
+
+  }
+  .guest_dropdown_options{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+  }
+  .guest_dropdown_count{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #000;
+    font-size: 12px;
+    padding: 10px;
+  }
+  
+  .mt-15{
+    margin-top:10px;
+  }
+</style>
+
+
+<div class="header" id="home">
+  {% include 'components/messages.html' %}
   <div class="section__header header__container">
     <p class="section__subheader">Your Next Space</p>
     <h1>Discover<br />Nepal</h1>
   </div>
-</header>
+</div>
+
 
 <section class="booking">
   <div class="section__container booking__container">
     <form action="/">
       <div class="input__group">
         <label for="destination">Where To?</label>
-        <input type="text" placeholder="Wher To?" />
+        <input type="text" placeholder="Where To?" />
       </div>
       <div class="input__group">
         <label for="arrival">Arrival Date</label>
-        <input type="date" placeholder="Your Arrival Date"  min="{{ today|date:'Y-m-d' }}" />
+        <input type="date" placeholder="Your Arrival Date" min="{{ today|date:'Y-m-d' }}" />
       </div>
       <div class="input__group">
         <label for="departure">Departure Date</label>
-        <input type="date" placeholder="Your Departure Date"  min="{{ today|date:'Y-m-d' }}" />
+        <input type="date" placeholder="Your Departure Date" min="{{ today|date:'Y-m-d' }}" />
       </div>
       <div class="input__group">
-        <label for="guests">Guests</label>
-        <input type="text" placeholder="No Of Guests" />
-      </div>
+        <label for="Guests">Guests</label>
+        <input type="text" id="guestInput" placeholder="Number of Guest">
+      </div>      
       <button class="btn">Check Availability</button>
     </form>
   </div>
 </section>
 
-<section class="top_destination" id="top_destination">
-  <div class="section__container top__destination">
-    <h2 class="section_header">Top Destinations</h2>
+<section class="section top_destination" id="top_destination">
+  <div class=" top__destination">
+    <h2 class="section_h2">Top Destinations</h2>
   <div class="top_images_top_destination">
+
+<div class="image-container-2">
+    <a href="{% url 'stays_by_city' city_name='Kathmandu' %}"> 
     <img src="{% static 'images/Kathmandu.jpg' %}" alt="">
-    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">Kathmandu</div>
+  </a>
+</div>
+
+<div class="image-container-2">
+  <a href="{% url 'stays_by_city' city_name='Butwal' %}"> 
+  <img src="{% static 'images/Kathmandu.jpg' %}" alt="">
+  <div class="overlay-text">Pokhara</div>
+</a>
+</div>
+
   </div>
   <div class="low_images_top_destination">
+
+    <div class="image-container-3">
+      <a href="{% url 'stays_by_city' city_name='Butwal' %}"> 
+      <img src="{% static 'images/Kathmandu.jpg' %}" alt="">
+      <div class="overlay-text">Butwal</div>
+    </a>
+  </div>
+
+  <div class="image-container-3">
+    <a href="{% url 'stays_by_city' city_name='Butwal' %}"> 
     <img src="{% static 'images/Kathmandu.jpg' %}" alt="">
-    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
-    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">Mustang</div>
+  </a>
+</div>
+
+<div class="image-container-3">
+  <a href="{% url 'stays_by_city' city_name='Butwal' %}"> 
+  <img src="{% static 'images/Kathmandu.jpg' %}" alt="">
+  <div class="overlay-text">Lumbini</div>
+</a>
+</div>
+
   </div>
 </div>
 </section>
+
+<section class="section secton_by_type">
+  <div class=" stay_by_type">
+    <h2 class="section_h2">Browse By Type</h2>
+    <div class="stay_by_type_img">
+
+      <div class="image-container">
+        <a href="{% url 'stays_type' 'House' %}">
+          <img src="{% static 'images/apartment.jpeg' %}" alt="">
+          <div class="overlay-text">House</div>
+        </a>
+      </div>
+
+      <div class="image-container">
+    <a href="{% url 'stays_type' 'Apartment' %}">
+    <img src="{% static 'images/Hotel.jpeg' %}" alt="">
+    <div class="overlay-text">Apartment</div>
+  </a>
+</div>
+
+  <div class="image-container">
+  <a href="{% url 'stays_type' 'Hotels' %}">
+    <img src="{% static 'images/cabin.jpg' %}" alt="">
+    <div class="overlay-text">Hotels</div>
+  </a>
+</div>
+
+
+  <div class="image-container">
+  <a href="{% url 'stays_type' 'Tent' %}">
+    <img src="{% static 'images/Resort.jpeg' %}" alt="">
+    <div class="overlay-text">Tent</div>
+  </a>
+</div>
+
+  <div class="image-container">
+  <a href="{% url 'stays_type' 'Guest House' %}">
+    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">Guest House</div>
+  </a>
+</div>
+
+<div class="image-container">
+  <a href="{% url 'stays_type' 'Bed and Breakfast' %}">
+    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">Bed and Breakfast</div>
+  </a>
+</div>
+
+
+
+<div class="image-container">
+  <a href="{% url 'stays_type' 'HomeStay' %}">
+    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">HomeStay</div>
+  </a>
+</div>
+
+
+<div class="image-container">
+  <a href="{% url 'stays_type' 'Cabin' %}">
+    <img src="{% static 'images/Pokhara.jpg' %}" alt="">
+    <div class="overlay-text">Cabin</div>
+  </a>
+</div>
+
+  <div>
+</div>
+</section>
+
 
 
 <!--ScrollReveal-->
 <script src="https://unpkg.com/scrollreveal"></script>
 
 <script src="{% static 'js/home.js' %}"></script>
+
 
 {% endblock content %}

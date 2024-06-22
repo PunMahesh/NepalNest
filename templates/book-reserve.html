@@ -10,30 +10,78 @@
 <section class="section_book">
 <!-- Main template -->
 <div class="container_main">
-<div class="container_book">
+    <div class="book_wrapper">
+    <div class="container_book">
     <h1>Edit Booking</h1>
-    <div class="container_dates">
-    <h4>Trip Dates: </h4>
-    <p id="checkInDate">{{ booking.check_in_date|date:"M d" }}</span> - <span id="checkOutDate">{{ booking.check_out_date|date:"M d" }}</p>
-    <button onclick="openPopup()">Edit Dates</button>
+        <div class="container_edit">
+            <div>
+            <h4>Trip Dates: </h4>
+            <p id="checkInDate">{{ booking.check_in_date|date:"M d" }}</span> - <span id="checkOutDate">{{ booking.check_out_date|date:"M d" }}</p>
+            </div>
+            <button onclick="openPopup()">Edit</button>
+        </div>
+        <div class="container_edit">
+            <div>
+            <h4>Number of Guests: </h4>
+            <p>{{ booking.num_guests }}</p>
+            </div>
+            <button  type="hidden" onclick="editNumGuests()">Edit</button>
+        </div>
     </div>
-    <div class="container_guests">
-    <p>Number of Guests: {{ booking.num_guests }}</p>
-    <button onclick="editNumGuests()">Edit</button>
+
+        <div class="container_btn">
+            <h1>Pay Now</h1>
+           <div class="payment_btn">
+        <div class="container_payment_esewa">
+            <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
+                <input type="hidden" id="amount" name="amount" value="0" required>
+                <input type="hidden" id="tax_amount" name="tax_amount" value ="0" required>
+                <input type="hidden" id="total_amount" name="total_amount" value="{{ total_amount }}" required>
+                <input type="hidden" id="transaction_uuid" name="uuid" value="{{ transaction_uuid }}"required>
+                <input type="hidden" id="product_code" name="product_code" value="EPAYTEST" required>
+                <input type="hidden" id="product_service_charge" name="product_service_charge" value="0" required>
+                <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
+                <input type="hidden" id="success_url" name="success_url" value="https://esewa.com.np" required>
+                <input type="hidden" id="failure_url" name="failure_url" value="https://google.com" required>
+                <input type="hidden" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
+                <input type="hidden" id="signature" name="signature" value="{{ signature }}"  required>
+                {% comment %} <input class="btn esewa-btn" value="Pay With Esewa" type="submit"> {% endcomment %}
+                </form> 
+        </div>
+        
+        
+        <div class="container_payment_khalti">
+            <form action="{% url 'initiate-khalti' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="purchase_order_id" value="{{ transaction_uuid }}"  id="pid">
+                <input type="hidden" name="amount" value="10000" id="amt">
+                <input type="hidden" name="return_url" value="http://127.0.0.1:8000/return_url/{{ booking_id }}">
+                <input class="btn khalti-btn"  type="submit" value="Pay With Khalti">
+            </form>
+            
+        </div>
+    </div>
+    <h1>Request Reservation</h1>
+
+        <div class = "container_reserve">
+            <form action="{% url 'book'  booking_id=booking_id %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="reservation">  <!-- Add a hidden input for action -->
+                <button type="submit" class="btn reserve">Request to Reserve</button>
+            </form>
+        </div>
     </div>
 </div>
 
 
 <div class="container_price_info">
     <div class="property_info">
-        <div class="property_info_photos">
         <img src="{{ booking.property.property_photo.first.photo.url }}">
-        </div>
         <div class="property_info_details">
         <h3>{{ booking.property.title }}</h3>
         <p>{{ booking.property.location }}</p>
         <ul>
-            <li>{{ booking.property.guest_room|cut:"__"|join:" "|title }}</li>
+            <li>{{ booking.property.guest_room }}</li>
             <li>{{ booking.property.bedrooms }} bedroom</li>
             <li>{{ booking.property.bed }} bed</li>
         </ul>
@@ -47,47 +95,16 @@
     <input type="hidden" name="hidden_service_fee" id="hidden_service_fee" />
     <p class="after_service_price flex">Total cost (Rs):<span id="after_service_price"></span></p> 
     <input type="hidden" name="hidden_after_service_price" id="hidden_after_service_price"/>   
-    <input type="hidden" name="message" value="{{ message }}" id="message"/>   
     </div>
 </div>
-</section>
 
-
-<section class="section_payment">
-    <div class="container_payment_wrapper">
-<div class="container_payment_esewa">
-    <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
-        <input type="text" id="amount" name="amount" value="100" required>
-        <input type="text" id="tax_amount" name="tax_amount" value ="0" required>
-        <input type="text" id="total_amount" name="total_amount" value="100" required>
-        <input type="text" id="transaction_uuid" name="uuid" value="{{ uuid }}"required>
-        <input type="text" id="product_code" name="product_code" value="EPAYTEST" required>
-        <input type="text" id="product_service_charge" name="product_service_charge" value="0" required>
-        <input type="text" id="product_delivery_charge" name="product_delivery_charge" value="0" required>
-        <input type="text" id="success_url" name="success_url" value="https://esewa.com.np" required>
-        <input type="text" id="failure_url" name="failure_url" value="https://google.com" required>
-        <input type="text" id="signed_field_names" name="signed_field_names" value="total_amount,transaction_uuid,product_code" required>
-        <input type="text" id="signature" name="signature" value="{{ signature }}"  required>
-        <p>{{ signature }}</p>
-        <input value="Submit" type="submit">
-        </form>
-</div>
-<p>-------------------------------------OR-----------------------------------------------</p>
-<div class = "container_reserve">
-    <form action="{% url 'book' booking_id=booking.id %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="action" value="reservation">  <!-- Add a hidden input for action -->
-        <button type="submit" class="btn reserve">Request to Reserve</button>
-    </form>
-</div>
-</div>
 </section>
 
 <!-- edit_dates_popup.html -->
 <div id="editDatesPopup" class="popup" style="display: none;">
         <span class="close" onclick="closePopup()">&times;</span>
         <h2 class="margin">Edit Dates</h2>
-    <form method = "POST" action="{% url 'book' booking.id %}">
+    <form method = "POST" action="{% url 'book' booking_id %}">
         {% csrf_token %}
     <div class="popup-content">
         <div class="popup_dates_info">
@@ -101,19 +118,5 @@
         <button class="btn margin" onclick="updateDates()">Update Dates</button>
     </div>
     </form>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
-/crypto-js.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
-/hmac-sha256.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1
-/enc-base64.min.js"></script>
-<script>
-    var message = document.getElementById("message").value;
- var hash = CryptoJS.HmacSHA256(message, "8gBm/:&EnhH.1/q");
- var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
- var signature = document.getElementById("signature");
- signature.value = hashInBase64;
- document.write(document.getElementById("transaction_uuid").value);
-</script>
+</div> 
 {% endblock content %}

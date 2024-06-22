@@ -1,12 +1,14 @@
+/* .section_all_stays {
+  min-height: 100vh;
+} */
 .cards {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   gap: 26px;
-  /* padding-bottom: 50px; */
+  padding-bottom: 50px;
   padding-top: 220px;
   flex-wrap: wrap;
-
 }
 .card {
   /* margin-top: 150px; */
@@ -27,13 +29,29 @@
   padding: 10px;
 }
 
+.info h2 {
+  font-weight: 500;
+  font-size: 21px;
+  margin: 2px 0;
+}
+
+.info p {
+  font-size: 15px;
+  margin: 6px 0;
+}
 .like-icon {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 24px;
 }
-
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show before truncating */
+  -webkit-box-orient: vertical;
+}
 /* For Search Option  */
 
 /* Style the search icon */
@@ -42,12 +60,11 @@
   color: #333;
 }
 
-.search-button{
+.search-button {
   border: none;
   background: transparent;
   cursor: pointer;
 }
-
 
 /* style for filter button */
 .filter {
@@ -58,7 +75,7 @@
 
 #openPopupBtn {
   padding: 5px;
-  background-color: #4d406e;  /* Change this to your preferred color */
+  background-color: #4d406e; /* Change this to your preferred color */
   color: white;
   border: none;
   /* border-radius: 5px; */
@@ -67,13 +84,12 @@
 }
 
 #openPopupBtn:hover {
-  background-color: #0056b3;  /* Change this to your preferred hover color */
+  background-color: #0056b3; /* Change this to your preferred hover color */
 }
 
 #openPopupBtn i {
   margin-right: 5px;
 }
-
 
 /* Style to display properties */
 .cards_search {
@@ -111,9 +127,7 @@
   font-size: 24px;
 }
 
-
 /* For Small Quick Search for property type */
-
 
 .small_nav {
   border-bottom: solid 1px;
@@ -151,6 +165,7 @@
   left: 0;
   top: 0;
   width: 100%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -161,93 +176,117 @@
   margin-top: 20px;
   /* margin-left: 250px; */
   background-color: #fefefe;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
   border: 1px solid #717171;
   border-radius: 2%;
-  max-width: 1200px;
-  /* height: calc(100vh - 100px); */
-  /* overflow-y: auto; */ 
+  max-width: 581px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.popup-content::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.popup-content::-webkit-scrollbar-track {
+  background-color: transparent; /* Background color of the track */
+}
+
+/* Style the scrollbar thumb */
+.popup-content::-webkit-scrollbar-thumb {
+  /* background-color: #888; Color of the scrollbar thumb */
+  background-color: transparent;
+  border-radius: 4px; /* Round the corners of the scrollbar thumb */
+}
+
+/* Change scrollbar thumb on hover */
+.popup-content::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
 }
 
 .button-container {
-  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  position: sticky;
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 20px;
-  background-color: #ffffff; 
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
-  z-index: 999; 
+  padding: 10px 10px 20px 10px;
+  background-color: #ffffff;
+  /* box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); */
+  z-index: 999;
 }
 
-#filterForm{
-  height: calc(100vh - 100px);
-  overflow-y: auto;
-  padding-bottom: 100px;
-}
-.popup-fields{  
+.popup-fields {
   display: flex;
   flex-direction: column;
   gap: 10px;
   font-size: 20px;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
   margin: 50px;
 }
 
-.popup-filter{
+/* .popup-filter {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-}
+  align-items: center;
+} */
 .close {
-  /* float: right; */
+  color: #aaa;
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
 }
 
-input[name="search"]{
-    padding: 4px;
-    height: 25px;
-    border-radius: 5px;
-    font-size: 15px;
-    width: 220px;
-    border: solid 1px rgb(168, 168, 168);
-    outline: none;
-} 
+input[name="search"] {
+  padding: 4px;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 220px;
+  border: solid 1px rgb(168, 168, 168);
+  outline: none;
+}
 
 .a_item {
   color: black;
-
 }
-
 
 .pop-up_room-type input[type="radio"] {
-  display: none;  /* Hide the radio buttons */
+  display: none; /* Hide the radio buttons */
 }
-
 
 .pop-up_room-type .radio-label {
   padding: 10px;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
   cursor: pointer;
   border-radius: 10px;
+  font-size: 15px;
 }
 
 .pop-up_room-type input[type="radio"]:checked + .radio-label {
-  background-color: #000;
-  color: #fff;
+  background-color: #f6ac0f;
+  color: #000;
 }
 
-.pop-up_room{
+.pop-up_room {
   display: flex;
-  gap: 50px;
-  margin: 15px 0;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 5px 0;
 }
-
-
-
 
 .pop-up_rooms_beds input[type="radio"] {
-  display: none;  /* Hide the radio buttons */
+  display: none; /* Hide the radio buttons */
 }
 
 .pop-up_rooms_beds .radio-number-label {
@@ -262,8 +301,189 @@ input[name="search"]{
   color: #fff;
 }
 
-.pop-up_bedrooms{
+.pop-up_bedrooms {
   display: flex;
   gap: 30px;
   margin: 15px 0;
+}
+
+.radio-grp {
+  /* padding: 10px 0; */
+  max-width: 500px;
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-num {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+.radio-num label {
+  margin-right: 10px;
+}
+/* Style the numeric input fields */
+.radio-num input[type="number"] {
+  width: 100px;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Style the numeric input fields on focus */
+.radio-num input[type="number"]:focus {
+  border-color: #007bff; /* Change the border color on focus */
+}
+
+/* Style the buttons to increase/decrease value */
+.radio-num button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Style the buttons on hover */
+.radio-num button:hover {
+  background-color: #0056b3; /* Change the background color on hover */
+}
+
+.title-filter {
+  padding-bottom: 15px;
+  /* margin-bottom: 20px; */
+  /* margin: 20px 0; */
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: 1px solid;
+}
+
+.popup-content h2 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.button {
+  box-sizing: border-box;
+  color: white;
+  font-size: 14px;
+  padding: 9px;
+  border-radius: 7px;
+  border: none;
+  width: 100px;
+  outline: none;
+  background-color: rgb(33, 87, 233);
+  cursor: pointer;
+}
+.clear {
+  box-sizing: border-box;
+  color: white;
+  font-size: 14px;
+  padding: 9px;
+  border-radius: 7px;
+  border: none;
+  width: 100px;
+  outline: none;
+  background-color: rgb(233, 33, 33);
+  cursor: pointer;
+}
+
+.pd-15 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0 10px 0;
+}
+
+.map_container {
+  display: flex;
+  justify-content: center;
+  height: 100vh - 100px;
+  z-index: 999999; 
+} 
+.fixed_btn{
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999; /* Set a high z-index value */
+}
+
+/* .map_container {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  bottom: 20px; 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999; 
+} */
+
+
+#map-canvas {
+  height: 600px;
+  max-width: 1200px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.map_wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0 10px 0;
+  gap: 10px;
+}
+
+.btn_map{
+  background-color: #000;
+  color: #fff;
+}
+
+input[name="location"]{
+  width: 100%;
+  padding: 4px;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  max-width: 500px;
+  border: solid 1px rgb(168, 168, 168);
+  outline: none;
+}
+/* Styles for the popup */
+.search-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+.popup-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }

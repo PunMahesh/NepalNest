@@ -1,0 +1,263 @@
+{% extends "components/base.html" %} {% block content %} {% load static %}
+
+<link
+  rel="stylesheet"
+  href="{% static 'css/myReservation.css' %}"
+  type="text/css"
+/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+<section class="section_reservation_options">
+  
+    <div class="nav_reservation">
+        <ul>
+            <li {% if info_type == 'my_listings' %}class="selected"{% endif %}>
+                <a href="{% url 'Hosting' info_type='my_listings' %}" id="myListingsLink">My Listings</a>
+            </li>
+            <li {% if info_type == 'pending_requests' %}class="selected"{% endif %}>
+                <a href="{% url 'Hosting' info_type='pending_requests' %}" id="pendingRequestsLink">Pending Reservation Requests</a>
+            </li>
+            <li {% if info_type == 'currently_hosting' %}class="selected"{% endif %}>
+                <a href="{% url 'Hosting' info_type='currently_hosting' %}" id="currentlyHostingLink">Currently Hosting</a>
+            </li>
+            <li {% if info_type == 'upcoming_reservation' %}class="selected"{% endif %}>
+                <a href="{% url 'Hosting' info_type='upcoming_reservation' %}" id="upcomingReservationLink">Upcoming Reservations</a>
+            </li>
+        </ul>
+    </div>
+</section>
+{% include 'components/messages.html' %}
+<section class="section_reservation">
+      <div class="container_reservation">
+        <div class="my_listing table-container" id="myListingTable">
+            {% if my_listings %}
+            <!-- Render "My Listings" table if there are listings    table-striped center table-hover -->
+            <table class="table  center table-hover">
+                <!-- Table headers -->
+                <thead class="table-light">
+                    <!-- Header row --> 
+                    <tr>
+                        <!-- Header cells -->
+                        <th scope="col">Property Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price(Rs)</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Booking Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    <!-- Loop through each property in my_listings -->
+                    {% for property in my_listings %}
+                    <!-- Table row for each property -->
+                    <tr>
+                        <!-- Property data cells -->
+                        <td>{{ property.title }}</td>
+                        <td>{{ property.description }}</td>
+                        <td>{{ property.price }}</td>
+                        <td>{{ property.Status }}</td>
+                        <td>{{ property.Booking_Status }}</td>
+                        <td>                      
+                          <!-- Reservation action buttons -->
+                          <div class="reservation_action">
+                            <form method="GET" action="{% url 'edit_property' property_id=property.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="accept" />
+                                <button class="accept-btn edit_btn" type="submit">
+                                    <i class="fas fa-edit"></i> <!-- Font Awesome edit icon -->
+                                </button>
+                            </form>
+                            
+                            <form method="GET" action="{% url 'delete_listing' property.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="decline" />
+                                <button class="decline-btn" type="submit">
+                                    <i class="fas fa-trash-alt"></i> <!-- Font Awesome trash icon -->
+                                </button>
+                            </form>
+                            
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% comment %} <!-- If my_listings is empty -->
+            {% else %}
+            <!-- Show "No pending reservation requests found" message -->
+            <p>You have no listings for now.</p> {% endcomment %}
+            {% endif %}
+        </div>
+    
+        <div class="pending_reservation table-container" id="pendingReservationTable">
+            {% if pending_requests %}
+            <!-- Render "Pending Reservation Requests" table if there are requests -->
+            <table class="table table-striped center table-hover">
+                <!-- Table headers -->
+                <thead>
+                    <!-- Header row -->
+                    <tr>
+                        <!-- Header cells -->
+                        <th scope="col">Property Title</th>
+                        <th scope="col">Check-In</th>
+                        <th scope="col">Check-Out</th>
+                        <th scope="col">Requested by</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    <!-- Loop through each request in pending_requests -->
+                    {% for request in pending_requests %}
+                    <!-- Table row for each request -->
+                    <tr>
+                        <!-- Request data cells -->
+                        <td>{{ request.property.title }}</td>
+                        <td>{{ request.check_in_date }}</td>
+                        <td>{{ request.check_out_date }}</td>
+                        <td>{{ request.user.full_name }}</td>
+                        <td>
+                            <!-- Reservation action buttons -->
+                            <div class="reservation_action">
+                                <form method="post" action="{% url 'accept_reservation' request.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="accept" />
+                                    <button class="accept-btn" type="submit"><i class="fas fa-check"></i></button>
+                                </form>
+                                <form method="post" action="{% url 'decline_reservation' request.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="decline" />
+                                    <button class="decline-btn" type="submit"><i class="fas fa-times"></i></button>
+                                </form>                                
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% comment %} <!-- If pending_requests is empty -->
+            {% else %}
+            <!-- Show "No pending reservation requests found" message -->
+            <p>No pending reservation requests found.</p> {% endcomment %}
+            {% endif %}
+        </div>
+
+        <div class="currently_hosting table-container" id="currentlyHostingLink">
+            {% if currently_hosting %}
+            <!-- Render "Pending Reservation Requests" table if there are requests -->
+            <table class="table table-striped center table-hover">
+                <!-- Table headers -->
+                <thead>
+                    <!-- Header row -->
+                    <tr>
+                        <!-- Header cells -->
+                        <th scope="col">Property Title</th>
+                        <th scope="col">Check-In</th>
+                        <th scope="col">Check-Out</th>
+                        <th scope="col">Currenly hosting</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    <!-- Loop through each request in pending_requests -->
+                    {% for request in currently_hosting %}
+                    <!-- Table row for each request -->
+                    <tr>
+                        <!-- Request data cells -->
+                        <td>{{ request.property.title }}</td>
+                        <td>{{ request.check_in_date }}</td>
+                        <td>{{ request.check_out_date }}</td>
+                        <td>{{ request.user.full_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% comment %} <!-- If pending_requests is empty -->
+            {% else %}
+            <!-- Show "No pending reservation requests found" message -->
+            <p>No pending reservation requests found.</p> {% endcomment %}
+            {% endif %}
+        </div>
+        <div class="upcoming_reservation table-container" id="upcomingReservationLink">
+            {% if upcoming_reservation %}
+            <!-- Render "Pending Reservation Requests" table if there are requests -->
+            <table class="table table-striped center table-hover">
+                <!-- Table headers -->
+                <thead>
+                    <!-- Header row -->
+                    <tr>
+                        <!-- Header cells -->
+                        <th scope="col">Property Title</th>
+                        <th scope="col">Check-In</th>
+                        <th scope="col">Check-Out</th>
+                        <th scope="col">Requested by</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    <!-- Loop through each request in pending_requests -->
+                    {% for request in upcoming_reservation %}
+                    <!-- Table row for each request -->
+                    <tr>
+                        <!-- Request data cells -->
+                        <td>{{ request.property.title }}</td>
+                        <td>{{ request.check_in_date }}</td>
+                        <td>{{ request.check_out_date }}</td>
+                        <td>{{ request.user.full_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% comment %} <!-- If pending_requests is empty -->
+            {% else %}
+            <!-- Show "No pending reservation requests found" message -->
+            <p>No pending reservation requests found.</p> {% endcomment %}
+            {% endif %}
+        </div>
+    </div>
+</section>
+    
+{% comment %} <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    // Get references to navigation links and tables
+    var myListingsLink = document.getElementById('myListingsLink');
+    var pendingRequestsLink = document.getElementById('pendingRequestsLink');
+    var myListingTable = document.getElementById('myListingTable');
+    var pendingReservationTable = document.getElementById('pendingReservationTable');
+
+    // Function to toggle table visibility
+    function toggleTables(showMyListings) {
+        if (showMyListings) {
+            myListingTable.style.display = 'block';
+            pendingReservationTable.style.display = 'none';
+        } else {
+            myListingTable.style.display = 'none';
+            pendingReservationTable.style.display = 'block';
+        }
+    }
+
+    // Add click event listeners to navigation links
+    myListingsLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        toggleTables(true); // Show "My Listings" table
+    });
+
+    pendingRequestsLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        toggleTables(false); // Show "Pending Reservation Requests" table
+    });
+
+    // Initially show "My Listings" table
+    toggleTables(true);
+});
+
+
+</script> {% endcomment %}
+
+
+{% endblock content %}

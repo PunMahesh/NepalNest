@@ -1,0 +1,356 @@
+{% extends "components/base.html" %} 
+{% load static %}
+{% block style %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/propertylist.css' %}"/> 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endblock %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap" async defer></script>
+
+{% block content %} 
+    <div class="form-container">
+      <form id="property_info" method="post" enctype="multipart/form-data" action="{% url 'edit_property' property_id=property_obj.id %}">
+        {% csrf_token %}
+      <section class="section title-section">
+      <div class="form-part" id="startSection">
+        <div class="container_start">
+        <h1>Let's Get Started</h1>
+          <div class="form-part-p">
+        <h2>1 Describe Your Property</h2>
+        <p>Give some basic information about your property.</p>
+        <h2>2 Give More Details</h2>
+        <p>Add more description and features of your property.</p>
+        <h2>3 Confirm and Pricing</h2>
+        <p>Confirm your property details and price.</p>
+          </div>
+        </div>
+            <div class="form-part-b">
+        <a class="startButton" id="startBtn">Let's Get Started</a>
+            </div>
+      </div> 
+
+      <!-- step-1 -->
+      <div class="form-group hide" id="frmgrp">
+      <div class="form-step hide">
+        <h3>What Best Describe Your Property</h3>
+        <div class="radio-grp">
+
+        <input type="radio" id="House" name="property__type" value="House" {% if 'House' in property_obj.property_type %} checked {% endif %}/>
+        <label for="House" class="radio-button"><i class="fas fa-home"></i>House</label>
+
+        <input type="radio" id="Apartment" name="property__type" value="Apartment" {% if 'Apartment' in property_obj.property_type %} checked {% endif %}/>
+        <label for="Apartment" class="radio-button"><i class="fas fa-building"></i>Apartment</label>
+
+        <input type="radio" id="Hotel" name="property__type" value="Hotel" {% if 'Hotel' in property_obj.property_type %} checked {% endif %}/>
+        <label for="Hotel" class="radio-button"><i class="fas fa-hotel"></i>Hotel</label>
+ 
+          <input type="radio" id="Tent" name="property__type" value="Tent" {% if 'Tent' in property_obj.property_type %} checked {% endif %}/>
+          <label for="Tent" class="radio-button"><i class="fas fa-tents"></i>Tent</label>
+ 
+          <input type="radio" id="Guest__House" name="property__type" value="Guest House" {% if 'Guest House' in property_obj.property_type %} checked {% endif %}/>
+          <label for="Guest__House" class="radio-button"><i class="fas fa-guest-house"></i>Guest House</label>
+
+          <input type="radio" id="Bed__and__Breakfast" name="property__type" value="Bed and Breakfast" {% if 'Bed and Breakfast' in property_obj.property_type %} checked {% endif %}/>
+          <label for="Bed__and__Breakfast" class="radio-button"><i class="fas fa-bed"></i>Bed and Breakfast</label>
+
+          <input type="radio" id="HomeStay" name="property__type" value="Homestay" {% if 'Homestay' in property_obj.property_type %} checked {% endif %}/>
+          <label for="HomeStay" class="radio-button"><i class="fas fa-guest-home"></i>HomeStay</label>
+
+          <input type="radio" id="Cabin" name="property__type" value="Cabin" {% if 'Cabin' in property_obj.property_type %} checked {% endif %}/>
+          <label for="Cabin" class="radio-button"><i class="fa-solid fa-cabin"></i>Cabin</label>
+       </div>
+    </div>
+
+    <div class="form-step hide">
+        <h3>What type of place will guests have?</h3>
+        <div class="radio-grp">
+    
+            <input type="radio" id="entire__place" name="guest__room" value="Entire Place" {% if property_obj.guest_room == "Entire Place" %} checked {% endif %}/>
+            <label for="entire__place" class="room-type">
+                <div class="room-type-label">
+                    <h4>Entire Place</h4>
+                    <p>Guests can have the entire place for themselves.</p>
+                </div>
+            </label>
+    
+            <input type="radio" id="a__room" name="guest__room" value="Single Room" {% if property_obj.guest_room == "Single Room" %} checked {% endif %}/>
+            <label for="a__room" class="room-type">
+                <div class="room-type-label">
+                    <h4>A Room</h4>
+                    <p>Guests will have a single room.</p>
+                </div>
+            </label>
+    
+            <input type="radio" id="shared__room" name="guest__room" value="Shared Room" {% if property_obj.guest_room == "Shared Room" %} checked {% endif %}/>
+            <label for="shared__room" class="room-type">
+                <div class="room-type-label">
+                    <h4>Shared Room</h4>
+                    <p>Guests will have to share it with someone.</p>
+                </div>
+            </label>
+        </div>
+    </div>
+    
+
+    
+    <div class="form-step hide">
+        <h3>Share Some Basic information</h3>
+        <div class="radio-grp grp-nums">
+          <div class="radio-num">
+        <label for="guest__number">Number of Guest:</label>
+        <input type="number" id="guest__number" name="guest__number" step="1" min="0" max="10" placeholder="1" value="{{ property_obj.Guest_number }}"/>
+          </div>
+          <div class="radio-num">
+        <label for="bedroom__number">Number of Bedrooms:</label>
+        <input type="number" id="bedroom__number" name="bedroom__number" step="1" min="0" max="10" placeholder="1" value="{{ property_obj.bedrooms }}"/>
+      </div>
+      <div class="radio-num">
+        <label for="bed__number">Number of Beds:</label>
+        <input type="number" id="bed__number" name="bed__number" step="1" min="0" max="10" placeholder="1" value="{{ property_obj.bed }}"/>
+      </div>
+        </div>
+      </div>
+
+      <!-- Step-2 -->
+      <div class="form-step hide">
+        <h3>Tell what your place has to offer</h3>
+        <div class="checkbox-grp">
+          
+          <input type="checkbox" id="wifi" name="amenities" value="wifi" {% if 'wifi' in selected_amenities_names %} checked{% endif %}/>
+          <label for="wifi" class="checkbox-button">
+                <i class="fa fa-wifi"></i> Wifi
+            </label>   
+            <input type="checkbox" id="TV" name="amenities" value="TV"  {% if 'TV' in selected_amenities_names %} checked{% endif %}/>
+            <label for="TV" class="checkbox-button">
+                <i class="fa fa-tv"></i> TV
+            </label>
+            <input type="checkbox" id="Kitchen" name="amenities" value="Kitchen"  {% if 'Kitchen' in selected_amenities_names %} checked{% endif %}/>
+            <label for="Kitchen" class="checkbox-button">
+                <i class="fa fa-kitchen"></i> Kitchen
+            </label>
+            <input type="checkbox" id="Washer" name="amenities" value="Washer"  {% if 'Washer' in selected_amenities_names %} checked{% endif %}/>
+            <label for="Washer" class="checkbox-button">
+                <i class="fa fa-washer"></i> Washer
+            </label>
+            <input type="checkbox" id="FreeParking" name="amenities" value="Free Parking"  {% if 'Free Parking' in selected_amenities_names %} checked{% endif %}/>
+            <label for="FreeParking" class="checkbox-button">
+                <i class="fa fa-parking"></i> Free parking
+            </label>
+            <input type="checkbox" id="PaidParking" name="amenities" value="Paid Parking"  {% if 'Paid Parking' in selected_amenities_names %} checked{% endif %}/>
+            <label for="PaidParking" class="checkbox-button">
+                <i class="fa fa-money"></i> Paid parking
+            </label>
+            <input type="checkbox" id="AirConditioning" name="amenities" value="Air Conditioning"  {% if 'Air Conditioning' in selected_amenities_names %} checked{% endif %}/>
+            <label for="AirConditioning" class="checkbox-button">
+                <i class="fa fa-a/c"></i> Air Conditioning
+            </label>
+            <input type="checkbox" id="Workspace" name="amenities" value="Workspace"  {% if 'Workspace' in selected_amenities_names %} checked{% endif %}/>
+            <label for="Workspace" class="checkbox-button">
+                <i class="fa fa-workshop"></i> Workspace
+            </label>
+        </div>
+        
+    </div>
+
+      <div class="form-step hide">
+        <h3>Do you have other ammenities ?</h3>
+        <div class="checkbox-grp">
+            <input type="checkbox" id="Pool" value="Pool" name="other_amenities" {% if 'Pool' in selected_other_amenities_names %} checked{% endif %}/>
+            <label for="Pool" class="checkbox-button">
+            <i class="fa fa-pool"></i>Pool
+          </label>
+          <input type="checkbox" id="Hottub" value="Hottub" name="other_amenities" {% if 'Hottub' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="Hottub" class="checkbox-button">
+            <i class="fa fa-hottube"></i>Hot Tub
+          </label>
+          <input type="checkbox" id="Patio" value="Patio" name="other_amenities" {% if 'Patio' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="Patio" class="checkbox-button">
+            <i class="fa fa-patio"></i>Patio
+          </label>
+          <input type="checkbox" id="BBQGrill" value="BBQGrill" name="other_amenities" {% if 'BBQGrill' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="BBQGrill" class="checkbox-button">
+            <i class="fa fa-grill"></i>BBQ Grill
+          </label>
+          <input type="checkbox" id="OutdoorDiningArea" value="Outdoor Dining Area" name="other_amenities" {% if 'Outdoor Dining Area' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="OutdoorDiningArea" class="checkbox-button">
+            <i class="fa fa-dinning"></i>Outdoor Dining
+          </label>
+          <input type="checkbox" id="FirePit" value="Fire Pit" name="other_amenities" {% if 'Fire Pit' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="FirePit" class="checkbox-button">
+            <i class="fa fa-fire"></i>Fire Pits
+          </label>
+          <input type="checkbox" id="PoolTable" value="Pool Table" name="other_amenities" {% if 'Pool Table' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="PoolTable" class="checkbox-button">
+            <i class="fa fa-pooltable"></i>Pool Table
+          </label>
+          <input type="checkbox" id="IndoorFirePlace" value="Indoor Fire Place" name="other_amenities" {% if 'Indoor Fire Place' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="IndoorFirePlace" class="checkbox-button">
+            <i class="fa fa-woodfire"></i>Indoor Fire Place
+          </label>
+          <input type="checkbox" id="ExcersieEquiment" value="Excersie Equiment" name="other_amenities" {% if 'Excersie Equiment' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="ExcersieEquiment" class="checkbox-button">
+            <i class="fa fa-exercise"></i>Excersie Equiment
+          </label>
+          <input type="checkbox" id="LakeAccess" value="Lake Access" name="other_amenities" {% if 'Lake Access' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="LakeAccess" class="checkbox-button">
+            <i class="fa fa-lake"></i>Lake Access
+          </label>
+          <input type="checkbox" id="Ski"  value="Ski" name="other_amenities" {% if 'Ski' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="Ski" class="checkbox-button">
+            <i class="fa fa-ski"></i>Ski-in/Ski-out
+          </label>
+          <input type="checkbox" id="OutdoorShower" value="Outdoor Shower" name="other_amenities" {% if 'Outdoor Shower' in selected_other_amenities_names %} checked{% endif %}/>
+          <label for="OutdoorShower" class="checkbox-button">
+            <i class="fa fa-shower"></i>Outdoor Shower
+          </label>
+        </div>
+      </div>
+
+      <div class="form-step hide">
+        <h3>Do you have these safety items ?</h3>
+        <div class="checkbox-grp">
+          <input type="checkbox" id="SmokeAlaram"  value="Smoke Alaram" name="safety_items" {% if 'Smoke Alaram' in selected_safety_items_names %} checked{% endif %}/>
+          <label for="SmokeAlaram" class="checkbox-button">
+            <i class="fa fa-smoke"></i>Smoke Alaram
+          </label>
+          <input type="checkbox" id="FirstAid"  value="First Aid" name="safety_items" {% if 'First Aid' in selected_safety_items_names %} checked{% endif %}/>
+          <label for="FirstAid" class="checkbox-button">
+            <i class="fa fa-firstaid"></i>First Aid Kit
+          </label>
+          <input type="checkbox" id="FireExtinguisher" value="Fire Extinguisher" name="safety_items" {% if 'Fire Extinguisher' in selected_safety_items_names %} checked{% endif %}/>
+          <label for="FireExtinguisher" class="checkbox-button">
+            <i class="fa fa-extinguisher"></i>Fire Extinguisher
+          </label>
+          <input type="checkbox" id="CarbonMono"  value="Carbon Monodioxide Alaram" name="safety_items" {% if 'Carbon Monodioxide Alaram' in selected_safety_items_names %} checked{% endif %}/>
+          <label for="CarbonMono" class="checkbox-button">
+            <i class="fa fa-alaram"></i>Carbon Monooxide Alaram
+          </label>
+        </div>
+      </div>
+
+        <div class="form-step hide">
+          <h3>Add some photos here</h3>
+          <div class="image-grp">
+            <label for="imageUpload">Upload Images (at least 5):</label>
+            <input type="file" multiple id="imageUpload" name="PropertyPhoto" class="images"/>
+          </div>
+          <div class="image-preview">
+            {% for photo in property_obj.property_photo.all %}
+            <img src="{{ photo.photo.url }}" alt="Property Photo">
+        {% endfor %}
+          </div>
+        </div>
+
+      <div class="form-step hide">
+        <h3>Let's give your property a title</h3>
+        <div class="title-grp">
+          <label for="title">Give a short title. You can always update it later.</label>
+          <textarea id="property-title" name="title" rows="3" cols="50" class="title-textarea">{{ property_obj.title }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-step hide">
+        <h3>Now, lets describe your property</h3>
+        <div class="title-grp">
+          <label for="description">Share about your property to guest.</label>
+          <textarea id="description" name="description" rows="5" cols="50" class="description-textarea">{{ property_obj.description }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-step hide">
+        <h3>Where's your place located?</h3>
+        <div class="location_wrapper">
+        {% comment %} <input type="text" id="country" name="country" value="Nepal" readonly /> {% endcomment %}
+        <input type="text" id="street_address_id" name="street_address" placeholder="Street Address" class="address-input" value="{{ property_obj.street_address }}" />
+        <input type="text" id="city_id" name="city" placeholder="City/Town/Village" class="address-input" value="{{ property_obj.city }}" />
+        <input type="text" id="province_id" name="province" placeholder="Province" class="address-input" value="{{ property_obj.province }}" />
+        <input type="text" id="postal_code_id" name="postal_code" placeholder="Postal Code" class="address-input" value="{{ property_obj.postal_code }}" />
+        <input type="hidden"  id="latitude" name="latitude"  value="{{ property_obj.latitude }}">
+        <input type="hidden" id="longitude" name="longitude" value="{{ property_obj.longitude }}">
+        </div>
+        <div id="map-canvas" style="height: 300px;"></div>
+    </div>
+    
+    
+
+      <!-- Step-3 -->
+      <div class="form-step price-container">
+        <h3>What is the price of your property?</h3>
+        {% comment %} <label>Set Your Price</label>  {% endcomment %}
+        <div class="price-grp">
+          <div class="input-group price_container">
+            <span class="input-group-addon">Rs.</span>
+            <input class="price" type="number" id="price" name="price" step="1" min="0" max="10000" value="{% if property_obj.price %}{{ property_obj.price }}{% else %}500{% endif %}"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-step hide">
+        <h3>Does your property have any of these ?</h3>
+        <div class="checkbox-grp">
+          <input type="checkbox" id="camera" value="Camera" name="extra_items" {% if 'Camera' in selected_extra_items_names %} checked{% endif %}/>
+          <label for="camera" class="checkbox-button">Security Camera</label> 
+          <input type="checkbox" id="Weapons" value="Weapons" name="extra_items" {% if 'Weapons' in selected_extra_items_names %} checked{% endif %}/>
+          <label for="Weapons" class="checkbox-button">Weapons</label>
+          <input type="checkbox" id="Animals" value="Dangerous Animals" name="extra_items" {% if 'Dangerous Animals' in selected_extra_items_names %} checked{% endif %}/>
+          <label for="Animals" class="checkbox-button">Dangerous Animals</label>
+        </div>
+      </div>
+
+      <div class="form-step hide">
+        <h3>Review Your Listing</h3>
+        <p class="preview_P">Make sure everything looks good.</p>
+        <div class="form-field render-data card">
+          <p><span class="field-value" id="images_preview"></span></p>
+          <img id="pp_photo" src="https://via.placeholder.com/150" alt="Profile Picture" />
+
+              <div class="info"> 
+                <h2><span class="field-value" id="title_preview"></span></h2>
+                <p>location: <span class="field-value" id="location_preview"></span></p>
+                <p>Price: <strong><span class="field-value" id="price_preview"></span></strong>/night</p>
+              </div>
+            {% comment %} <div class="like-icon_search"></div> {% endcomment %}
+          </div>
+      </div>
+      </div>
+    </div>
+    <div class="button-container hide" id="nextprevbtn">
+    <button id="prevBtn" class="hide" type="button">&laquo; Previous</button>
+    <button id="nextBtn" class="hide" type="button">Next &raquo;</button>
+    <button id="submitBtn" style="display: none;" type="submit" >Submit</button>  
+    </div>  
+</form> 
+</section>
+
+<script src="{%static 'js/propertylist.js'%}"></script>
+<script src="{%static 'js/input_maps.js'%}"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFJzkQFxGAFP4gzTZ32Fs_4xd5Cfo1s9c&callback=initMap" async defer></script>
+
+{% comment %} <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.querySelector('.image-preview');
+  
+    // Function to handle file input change event
+    function handleFileInputChange() {
+      const files = imageUpload.files;
+      imagePreview.innerHTML = ''; // Clear previous preview
+  
+      // Iterate through each selected file
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith('image/')) continue; // Skip non-image files
+  
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file); // Set image source to the file URL
+        img.alt = file.name; // Set alt text to the file name
+        imagePreview.appendChild(img); // Append image to the preview container
+      }
+    }
+  
+    // Add event listener to the file input
+    imageUpload.addEventListener('change', handleFileInputChange);
+  });
+
+</script> {% endcomment %}
+{% endblock content %}
