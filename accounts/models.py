@@ -27,7 +27,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_user = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)  # Add the is_staff attribute
+    is_staff = models.BooleanField(default=False)
+    is_host = models.BooleanField(default=False)
+    verified = models.BooleanField(default=False)
 
     # Add any additional fields you need for your user model
 
@@ -37,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['full_name', 'contact']
 
     def __str__(self):
-        return self.email
+        return self.full_name
 class Profile(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE)
     forget_password_token = models.CharField(max_length=100)

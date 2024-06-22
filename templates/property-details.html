@@ -1,10 +1,20 @@
-{% extends "components/base.html" %} {% block content %} {% load static %}
+{% extends "components/base.html" %} {% block content %} 
+{% load custom_tags %}
+{% load static %}
 
 <link
   rel="stylesheet"
   href="{% static 'css/property-details.css' %}"
   type="text/css"
 />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://kit.fontawesome.com/6be4c2899d.js" crossorigin="anonymous"></script>
+<style>
+  h1, span {
+      display: inline;
+  }
+</style>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="{% static 'js/property-details.js' %}"></script>
 <section class="section__property_info">
@@ -29,12 +39,17 @@
       </div>
     </div>
 
+    <div class="view_all_images">
+      <div class="all_images">
+        <button type="button" id="openModalBtn">All Images</button>
+      </div>
+    </div>
     <div class="info_book">
 
       <div class="all_info">
 
     <div class="basic_info">
-      <h3>At </h3>{% comment %}<span>{{ property.location }}</span> {% endcomment %}
+      <h1>At </h1><span> {{ property.street_address }},{{ property.city }}</span>
       <p>{{ property.Guest_number }} Guest. {{ property.bedrooms }} Rooms. {{ property.bed }} Bed  </p>
       {% comment %} <div class"By_user"> {% endcomment %}
       <h5>By <span class="username">{{ property.user.full_name }}</span></h5>
@@ -42,53 +57,64 @@
 
 
       <div class="additional_info">
+        <div class="additional_info_box">
         <h1>What this Place Offers?</h1>
-      <ul class="amenity">
+      <ul class="amenity ad_box">
         {% for amenity in property.ammenities.all %}
-        <li>{{ amenity.name }}</li>
-        {% endfor %}
-      </ul>
-      <h1>What more are there?</h1>
-      <ul class="other_amenity">
-        {% for other_amenity in property.other_ammenities.all %}
-        <li>{{ other_amenity.name }}</li>
-        {% endfor %}
-      </ul>
-      <h1>Seafety features that are available?</h1>
-      <ul class="safety_item">
-        {% for safety_item in property.safety_items.all %}
-        <li>{{ safety_item.name }}</li>
-        {% endfor %}
-      </ul>
-        <h1>Be mindeful of!</h1>
-      <ul class="extra_item">
-        {% for extra_item in property.extra_items.all %}
-        <li>{{ extra_item.name }}
+        <li>
+          <i class="fa {{ icons|get_icon:amenity.name }}"></i>{{ amenity.name }}</li>
         {% endfor %}
       </ul>
     </div>
+    <div class="additional_info_box">
+      <h1>What more are there?</h1>
+      <ul class="other_amenity ad_box">
+        {% for other_amenity in property.other_ammenities.all %}
+        <li>
+          <i class="fa {{ icons|get_icon:other_amenity.name }}"></i>{{ other_amenity.name }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+<!-- property-details.html -->
+<div class="additional_info_box">
+  <h1>Safety features that are available?</h1>
+  <ul class="safety_item ad_box">
+      {% for safety_item in property.safety_items.all %}
+          <li>
+              <i class="fa {{ icons|get_icon:safety_item.name }}"></i> {{ safety_item.name }}
+          </li>
+      {% endfor %}
+  </ul>
+</div>
 
-    <div class="review_rating">
+      
+      <div class="additional_info_box">
+        <h1>Be mindeful of!</h1>
+      <ul class="extra_item ad_box">
+        {% for extra_item in property.extra_items.all %}
+        <li>
+          <i class="fa {{ icons|get_icon:extra_item.name }}"></i>{{ extra_item.name }}
+        {% endfor %}
+      </ul>
+    </div>
+      <div class="additional_info_box">
+        <h1>More from Host</h1>
 
-      {% comment %} <div class="review">
-        <h3>Review</h3>
+        <p>{{ property.description }}
 
-        <ul>
-          {% for review in reviews %}
-              <li>
-                  <strong>{{ review.user.full_name }}</strong>
-                  <p>{{ review.text }}</p>
-              </li>
-          {% empty %}
-              <li>No reviews yet.</li>
-          {% endfor %}
-      </ul> {% endcomment %}
+    </div>
+  </div>
+  
+  <div class="review_rating">
+    
+      {% comment %} {% include "components/messages.html" %}  {% endcomment %}
       <form method="post" action="{% url 'submit_review' property.id %}">
         {% csrf_token %}
-          <div>
-            <label>How do you rate this product?</label>
+          <div class="rate_review">
+            <label>How do you rate this place?</label>
             <div class="rate">
-            <input type="radio" name="rating" id="rating10" value="5"/><label for="rating10" title="5"></label>
+            <input type="radio" name="rating" id="rating10" value="5" /><label for="rating10" title="5"></label>
             <input type="radio" name="rating" id="rating9" value="4.5"/><label for="rating9" title="4.5" class="half"></label>
             <input type="radio" name="rating" id="rating8" value="4"/><label for="rating8" title="4"></label>
             <input type="radio" name="rating" id="rating7" value="3.5"/><label for="rating7" title="3.5" class="half"></label>
@@ -99,17 +125,39 @@
             <input type="radio" name="rating" id="rating2" value="1"/><label for="rating2" title="1"></label>
             <input type="radio" name="rating" id="rating1" value="0.5"/><label for="rating1" title="0.5" class="half"></label>
             </div>
-            <h5>Write Your Review</h5>
-            <textarea name="review" rows="4"></textarea>
+            <div class="review">
+            <label>Write Your Review</label>
+            <textarea name="review" rows="4" required></textarea>
+            </div>
 
           </div>
           {% if user.is_authenticated %}
-          <input type="submit" value="Submit Review" class="btn"/>
+          <input type="submit" value="Submit Review" class="review_btn btn"/>
           {% else %}
           <p>You must be logged in to post a review. <span><a href="{% url 'login' %}">Login now</a></span></p>
           {% endif %}
-          {% comment %} {% include "include/alerts.html" %} {% endcomment %}
-          </form>
+        </form>
+
+        {% if review %}
+        <h3>Your Review:</h3>
+        <p>Rating: {{ review.rating }}</p>
+        <p>Comment: {{ review.review }}</p>
+      {% endif %}
+      
+      <div class="show_reviews_container">
+        <h3>All Reviews:</h3>
+        {% for review in all_reviews %}
+          <div class="review">
+            <p><strong>{{ review.user.username }}</strong> rated <strong>{{ review.rating }}</strong></p>
+            <p>{{ review.review }}</p>
+            <p><small>Reviewed on: {{ review.created_at }}</small></p>
+          </div>
+        {% empty %}
+          <p>No reviews yet.</p>
+        {% endfor %}
+      </div>
+        {% comment %} <div class="show_reviews_container">
+            {{ property.obj}} {% endcomment %}
 
       {% comment %} </div> {% endcomment %}
     </div>
@@ -123,14 +171,14 @@
         <div class="book_date">
             <div class="dates">
                 <label for="arrival">Check-in Date</label>
-                <input type="date" id="arrival" name="arrival" placeholder="Your Check In Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()"/>
+                <input type="date" id="arrival" name="arrival" placeholder="Your Check In Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()" required/>
                 
                 <label for="departure">Check-out Date</label>
-                <input type="date" id="departure" name="departure" placeholder="Your Check Out Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()"/>
+                <input type="date" id="departure" name="departure" placeholder="Your Check Out Date" min="{{ today|date:'Y-m-d' }}" onchange="calculateDays()" required/>
             </div>
             <div class="guests">
                 <label for="num_guests">Guests</label>
-                <input type="text" id="num_guests" name="num_guests" placeholder="No Of Guests" />
+                <input type="text" id="num_guests" name="num_guests" placeholder="No Of Guests" required/>
             </div>
             <p class="numOfdays flex">Number of days: <span id="num_days"></span></p>
             <input type="hidden" id="num_of_days" name="num_of_days">
@@ -151,6 +199,60 @@
 
   </div>
 
-  </div>
+</div>
 </section>
+
+<div class="view_all_images">
+  <!-- Modal Structure -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <h3 class="title-filter">All Images</h3>
+      <span class="close">&times;</span>
+      <div class="image_gallery_container">
+      <div class="image_gallery">
+        {% for photo in property.property_photo.all %}
+          <img src="{{ photo.photo.url }}" alt="Property Photo">
+        {% endfor %}
+      </div>
+      </div>
+    </div>
+  </div>
+  
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.querySelector("form");
+      const ratingInputs = document.querySelectorAll("input[name='rating']");
+
+      form.addEventListener("submit", function(event) {
+        let ratingSelected = false;
+        ratingInputs.forEach(input => {
+          if (input.checked) {
+            ratingSelected = true;
+          }
+        });
+
+        if (!ratingSelected) {
+          alert("Please provide a rating before submitting.");
+          event.preventDefault();
+        }
+      });
+    });
+    var btn = document.getElementById("openModalBtn");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 {% endblock content %}

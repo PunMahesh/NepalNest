@@ -35,6 +35,24 @@ ScrollReveal().reveal(".header__container .btn", {
   delay: 1000,
 });
 
+// room container
+ScrollReveal().reveal(".room__card", {
+  ...scrollRevealOption,
+  interval: 500,
+});
+
+// feature container
+ScrollReveal().reveal(".feature__card", {
+  ...scrollRevealOption,
+  interval: 500,
+});
+
+// news container
+ScrollReveal().reveal(".news__card", {
+  ...scrollRevealOption,
+  interval: 500,
+});
+
 // // room container
 // ScrollReveal().reveal(".room__card", {
 //   ...scrollRevealOption,
@@ -55,18 +73,19 @@ ScrollReveal().reveal(".header__container .btn", {
 
 
 
-// Get all input fields
-var inputFields = document.querySelectorAll('.input-field input');
+// // Get all input fields
+// var inputFields = document.querySelectorAll('.input-field input');
 
-// Add event listeners to each input field
-inputFields.forEach(function(input) {
-    input.addEventListener('input', function() {
-        // If input field is not empty, hide its label
-        if (input.value.trim() !== '') {
-            input.parentNode.querySelector('label').style.display = 'none';
-        } else {
-            // If input field is empty, show its label
-            input.parentNode.querySelector('label').style.display = 'block';
-        }
-    });
-});
+// // Add event listeners to each input field
+// inputFields.forEach(function(input) {
+//     input.addEventListener('input', function() {
+//         // If input field is not empty, hide its label
+//         if (input.value.trim() !== '') {
+//             input.parentNode.querySelector('label').style.display = 'none';
+//         } else {
+//             // If input field is empty, show its label
+//             input.parentNode.querySelector('label').style.display = 'block';
+//         }
+//     });
+// });
+

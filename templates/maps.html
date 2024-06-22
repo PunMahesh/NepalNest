@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Property Search</title>
+    <!-- Include Google Maps API script -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFJzkQFxGAFP4gzTZ32Fs_4xd5Cfo1s9c&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+    <style>
+      #map-canvas {
+        height: 400px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="searchForm" action="{% url 'search_properties' %}" method="GET">
+      <input
+        id="searchInput"
+        name="location"
+        type="text"
+        placeholder="Search for location..."
+      />
+      <button type="submit">Search</button>
+    </form>
+    <div id="map-canvas"></div>
+
+    <script>
+      var map; // Define map variable globally
+      var mapMarkers = []; // Define array to store markers
+      var infoWindow; // Declare infoWindow variable globally
+
+      function initMap() {
+        // Initialize map with default location
+        map = new google.maps.Map(document.getElementById("map-canvas"), {
+          center: { lat: 27.7172, lng: 85.324 }, // Default center (Kathmandu)
+          zoom: 12, // Default zoom level
+        });
+
+        // Initialize infoWindow
+        infoWindow = new google.maps.InfoWindow();
+
+        // Add event listener to the form for location search
+        document
+          .getElementById("searchForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+            var location = document.getElementById("searchInput").value.trim();
+            if (location) {
+              // Perform search and update map
+              searchLocation(location);
+            }
+          });
+      }
+
+      function searchLocation(location) {
+        // Make a request to the backend to fetch properties near the specified location
+        fetch(`/search_properties?location=${encodeURIComponent(location)}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.length > 0) {
+              // Process the response data and display property markers on the map
+              displayPropertyMarkers(data);
+            } else {
+              // No properties found, center the map on the searched location without markers
+              geocodeLocation(location);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching properties:", error);
+          });
+      }
+
+      function displayPropertyMarkers(properties) {
+        // Clear existing property markers from the map
+        mapMarkers.forEach((marker) => {
+          marker.setMap(null);
+        });
+
+        // Initialize an array to store markers
+        var markers = [];
+
+        // Modify the marker creation section in the displayPropertyMarkers function
+        properties.forEach((property) => {
+          // Create a marker for each property
+          const marker = new google.maps.Marker({
+            position: {
+              lat: parseFloat(property.latitude),
+              lng: parseFloat(property.longitude),
+            },
+            map: map,
+            title: property.name, // Set the title of the marker to property name
+          });
+
+          // Add click event listener to marker to redirect to property detail page
+          marker.addListener("click", function () {
+            window.location.href = `/property/${property.id}/`; // Redirect to property detail page
+          });
+
+          // Create HTML content for info window
+          var content = `
+        <div>
+            <h3>${property.name}</h3>
+            <img src="${property.photo_url}" alt="Property Photo" style="max-width: 100px; width: 100%; height: auto;">
+            <p>Price (Rs.): ${property.price}</p>
+            <p>${property.property_type}</p>
+        </div>
+    `;
+
+          // Initialize an info window for each marker
+          var infoWindow = new google.maps.InfoWindow({
+            content: content,
+          });
+
+          // Add mouseover event listener to marker to display property info
+          marker.addListener("mouseover", function () {
+            infoWindow.open(map, marker);
+          });
+
+          // Add mouseout event listener to close the info window when not hovering
+          marker.addListener("mouseout", function () {
+            infoWindow.close();
+          });
+
+          // Add marker to markers array
+          markers.push(marker);
+        });
+
+        // Update the global mapMarkers array
+        mapMarkers = markers;
+
+        // Adjust map bounds to fit all markers
+        var bounds = new google.maps.LatLngBounds();
+        markers.forEach((marker) => {
+          bounds.extend(marker.getPosition());
+        });
+        map.fitBounds(bounds);
+      }
+      function showPropertyInfo(property) {
+        // Create HTML content for info window
+        var content = `
+            <div>
+                <h3>${property.title}</h3>
+                <img src="${property.photo_url}" alt="Property Photo" style="max-width: 100%; height: auto;">
+                <p>Price: ${property.price}</p>
+                <p>Property Type: ${property.property_type}</p>
+                <p>Latitude: ${property.latitude}</p>
+                <p>Longitude: ${property.longitude}</p>
+                <p>Other Property Information...</p>
+            </div>
+            `;
+        console.log(property.price); // Log the property object to the console to check its structure
+
+        // Set content to infoWindow and open it at marker position
+        infoWindow.setContent(content);
+        infoWindow.open(map, this);
+      }
+
+      function closeInfoWindow() {
+        // Close the info window
+        if (infoWindow) {
+          infoWindow.close();
+        }
+      }
+
+      function geocodeLocation(location) {
+        // Use Google Geocoding API to convert location to coordinates
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: location }, function (results, status) {
+          if (status === "OK" && results.length > 0) {
+            var locationCoords = results[0].geometry.location;
+            map.setCenter(locationCoords);
+            map.setZoom(12); // Adjust the zoom level as needed
+          } else {
+            console.error("Geocoding failed:", status);
+          }
+        });
+      }
+
+      // Call initMap function to initialize the map
+      initMap();
+    </script>
+  </body>
+</html>

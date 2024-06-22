@@ -7,8 +7,11 @@
 }
 
 .container_book{
-    display: flex;
-    flex-direction: column;
+    width: 500px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+
+
 }
 .overlay {
     /* Position and size */
@@ -110,8 +113,6 @@
 
 
 
-
-
 /* for price info box */
 .container_price_info {
     position: sticky;
@@ -125,7 +126,7 @@
     box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
     display: block;
     width: 400px;
-    height: 300px;
+    height: 297px;
     top: 140px;
   }
 
@@ -146,4 +147,77 @@
 .property_info{
     display: flex;
     justify-content: space-between;
+}
+.container_price_info h3{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.container_edit{
+    display: flex;
+    flex-direction: row;
+    max-width: 500px;
+    justify-content: space-between;
+}
+.container_edit h4{
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+.container_edit p{
+    padding-bottom: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+.container_edit button{
+    border: 0;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.reserve{
+    background-color: #0335f4;
+  
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+
+img{
+    width: 40%;
+}
+
+
+.esewa-btn{
+    background-color: #2aaf02
+}
+
+.khalti-btn{
+    background-color: #582898;
+}
+
+.container_btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 20px;
+
+}
+
+.payment_btn{
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+/* .book_wrapper{
+    padding-bottom: 10px;
+} */
+
+.container_btn h1{
+    margin: 20px 0;
 }

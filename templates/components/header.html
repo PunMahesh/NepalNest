@@ -1,17 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/base.css'%}" type="text/css" />
-    <title>NepalNest</title>
-  </head>
-  <body>
     <header>
       <nav>
         <div class="nav__bar">
@@ -26,17 +13,30 @@
             </div>
           </div>
           <ul class="nav__links" id="nav-links">
+            {% if user.is_host %}
             <li><a href="{% url 'stays' %}">Stays</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'Property_list' %}">List Your Property</a></li>
-            {% if user.is_authenticated %}
+            <li><a href="{% url 'Hosting' info_type='my_listings' %}">Hosting</a></li>
+            {% elif user.is_superuser %}
+              <li><a href="{% url 'stays' %}">Stays</a></li>
+              <li><a href="{% url 'about' %}">About</a></li>
+              <li><a href="{% url 'Property_list' %}">List Your Property</a></li>
+              <li><a href="/admin/">Admin Panel</a></li>
+              {% else %}
+              <li><a href="{% url 'stays' %}">Stays</a></li>
+              <li><a href="{% url 'about' %}">About</a></li>
+              <li><a href="{% url 'Property_list' %}">List Your Property</a></li>
+              {% endif %}
+      {% if user.is_authenticated %}
     <li class="dropdown">
       <a href="#" class="dropbtn icon profile" style="background-image: url({% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}{% static 'images/default_profile_pic.jpg' %}{% endif %})"></a>
       {% comment %} {{ user.full_name|slice:":1" }}       {% endcomment %}
       <div class="dropdown-content">
             <a href="{% url 'update_profile' %}">My Account</a>
-            <a href="{% url 'myProperty' %}">My Property</a>
-            {% comment %} <a href="#">Settings</a> {% endcomment %}
+            <a href="{% url 'my_booking' %}">My Booking</a>
+            {% comment %} <a href="{% url 'search_map' %}">Maps</a> {% endcomment %}
+            {% comment %} <a href="{% url 'pending_requests' %}">My Reservation</a> {% endcomment %}
             <a href="{% url 'logout' %}">Logout</a>
         </div>
     </li>
@@ -61,6 +61,5 @@
         </div>
       </nav>
     </header>
-  </body>
-</html>
+  
 

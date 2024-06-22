@@ -1,86 +1,86 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap");
-
-:root {
-  --primary-color: #0f1a2c;
-  --secondary-color: #f6ac0f;
-  --text-dark: #0f172a;
-  --text-light: #64748b;
-  --extra-light: #f8fafc;
-  --white: #ffffff;
-  --max-width: 1200px;
-  --header-font: "Playfair Display", serif;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
 .form-step {
-  /* display: none; */
+  display: none;
 }
 
+.button-container {
+  display: none;
+}
+
+/* .btt{
+  display: none;
+} */
 .form-step,
 #prevBtn,
 #nextBtn {
-  /* display: none; */
+  display: none;
 }
 
-/* .form-part {
+.form-part {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 75px;
+}
+
+.form-part-b {
+  display: flex;
+  justify-content: flex-end;
+}
+.title-section {
+  padding: 150px 20px 20px;
+  max-width: 1240px;
+  min-height: calc(100vh - 100px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container_start {
+  display: flex;
   justify-content: space-between;
-  align-items: flex-start;
 }
-.form-part p {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--text-dark);
-  flex-direction: column;
-} */
-body,html {
-  font-family: "Poppins", sans-serif;
-    height: 100%;
-    margin: 0;
+.container_start h1 {
+  font-size: 40px;
+  font-weight: 400;
 }
-body {
+.container_start h2 {
+  font-size: 30px;
+  font-weight: 400;
+  /* padding-bottom: 10px; */
+}
+
+.container_start p {
+  font-size: 20px;
+  font-weight: 300;
+  color: #717171;
+  padding-bottom: 30px;
+  /* border-bottom: solid 1px; */
+}
+
+.steps{
   display: flex;
   flex-direction: column;
-}
-#startSection {
-  width: 100%;
-  height: 100%;
-  margin: auto;
-  text-align: center;
-  padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: row;
+  align-content: center;
   /* align-items: center; */
+  justify-content: center;
 }
 
-#startSection h1 {
-  color: #333;
-  font-size: 3.5rem;
-  margin-bottom: 20px;
- 
+.steps_images p{
+  font-size: 16px;
 }
-
-.form-part-p {
-  display: flex;
-  flex-direction: column;
-  color: #666;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  justify-content: space-between;
+.rightAlign{
+  justify-content: flex-end !important;
+}
+.button-container {
+  max-width: 500px;
   width: 100%;
+  margin: 0 auto;
+  justify-content: space-between;
+  padding: 25px 0;
+  align-items: center;
 }
-
 #startBtn {
   background-color: #ff6347;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -88,7 +88,413 @@ body {
   cursor: pointer;
   font-size: 1em;
 }
+#prevBtn {
+  background-color: #ff4747;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+#nextBtn {
+  background-color: #4763ff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+#submitBtn {
+  background-color: #99a2d4;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+/* CSS for button hover effect */
+.button-container button:hover {
+  background-color: lightblue; /* Change to whatever color you want */
+}
 
-.form-part-b {
-  margin-top: auto;
+/* .form-step{
+  height: 100%;
+  padding-bottom: 30px;
+} */
+.form-step h3 {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.form-group {
+  display: none;
+  justify-content: center;
+  min-height: 500px;
+  height: 100%;
+}
+.form-group-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/* Button syle for radio style */
+.radio-grp {
+  padding: 40px 0;
+  max-width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.radio-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  width: 145px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 17px;
+}
+
+input[type="radio"]:checked + .radio-button {
+  border-color: #f6ac0f;
+  background-color: #f6ac0f;
+  color: black;
+}
+.room-type {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  width: 500px;
+  height: 65px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+input[type="radio"]:checked + .room-type {
+  border-color: #f6ac0f;
+  background-color: #f6ac0f;
+  color: black;
+}
+
+.room-type-label {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.room-type-label h4 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.radio-num {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgb(235, 235, 235);
+}
+.radio-grp.grp-nums {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-num label {
+  margin-right: 10px;
+}
+/* Style the numeric input fields */
+.radio-num input[type="number"] {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Style the numeric input fields on focus */
+.radio-num input[type="number"]:focus {
+  border-color: #007bff; /* Change the border color on focus */
+}
+
+/* Style the buttons to increase/decrease value */
+.radio-num button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Style the buttons on hover */
+.radio-num button:hover {
+  background-color: #0056b3; /* Change the background color on hover */
+}
+.checkbox-grp {
+  padding: 40px 0;
+  max-height: 400px;
+  max-width: 514px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  overflow-y: auto;
+}
+/* Target the scrollbar and its track */
+.checkbox-grp::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.checkbox-grp::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Background color of the track */
+}
+
+/* Style the scrollbar thumb */
+.checkbox-grp::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Round the corners of the scrollbar thumb */
+}
+
+/* Change scrollbar thumb on hover */
+.checkbox-grp::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
+}
+
+.checkbox-button {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  width: 145px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 17px;
+}
+input[type="checkbox"]:checked + .checkbox-button {
+  border-color: #f6ac0f;
+  background-color: #f6ac0f;
+  color: black;
+}
+input[type="checkbox"] {
+  display: none;
+}
+
+.title-grp {
+  padding-top: 40px;
+  max-width: 500px;
+}
+
+.title-textarea {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-top: 25px;
+  resize: none;
+  font-size: 20px;
+}
+
+.description-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-top: 25px;
+  resize: none;
+  font-size: 20px;
+}
+
+.image-grp {
+  padding-top: 40px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-grp label {
+  font-size: 20px;
+  font-weight: 200;
+}
+
+.price-grp {
+  padding-top: 100px;
+  /* max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center; */
+}
+
+.price {
+  /* height: 300px; */
+  /* width: fit-content; */
+  border: none;
+  font-size: 64px;
+  color: black;
+  display: inline;
+}
+.input-group-addon {
+  font-size: 60px;
+}
+.price-container label {
+  padding-top: 40px;
+  font-size: 20px;
+}
+/* CSS for image Preview */
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  justify-content: center;
+  gap: 10px;
+  padding: 25px 0 0 0;
+  max-height: 350px;
+  overflow-y: auto;
+
+}
+.image-preview img {
+  max-width: 117px;
+  max-height: 117px;
+}
+
+/* Target the scrollbar and its track */
+.image-preview::-webkit-scrollbar {
+  width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.image-preview::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Background color of the track */
+}
+
+/* Style the scrollbar thumb */
+.image-preview::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Round the corners of the scrollbar thumb */
+}
+
+/* Change scrollbar thumb on hover */
+.image-preview::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the scrollbar thumb on hover */
+}
+
+.price_container{
+  text-align: center;
+  margin: 0 auto;
+  /* display: flex; */
+  align-items: center;
+  /* justify-content: space-evenly; */
+}
+
+
+
+
+.cards {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 26px;
+  padding-bottom: 50px;
+  padding-top: 220px;
+  flex-wrap: wrap;
+}
+.card {
+  /* margin-top: 150px; */
+  position: relative;
+  width: calc(300px - 20px);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+}
+
+.info {
+  padding: 10px;
+}
+
+
+.info h2 {
+  font-weight: 500;
+  font-size: 21px;
+  margin: 2px 0;
+}
+
+.info p {
+  font-size: 15px;
+  margin: 6px 0;
+}
+.like-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+}
+
+.field-value {
+  display: inline;
+}
+
+
+.preview_P{
+  margin: 15px 0;
+}
+
+.location_wrapper{
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.location_wrapper input{
+  width: 100%;
+  height: 28px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  /* margin-top: 25px; */
+  resize: none;
+  font-size: 12px;
+}
+
+.map{
+  max-width: 800px;
+  width: 100%;
+  height: 300px;
 }

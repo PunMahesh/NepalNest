@@ -36,16 +36,16 @@ class PropertyInfo(models.Model):
         ('Apartment', 'Apartment'),
         ('Hotel', 'Hotel'),
         ('Tent', 'Tent'),
-        ('Guest_House', 'Guest House'),
-        ('Bed_and_Breakfast', 'Beds and Breakfast'),
-        ('HomeStay', 'HomeStay'),
+        ('Guest House', 'Guest House'),
+        ('Bed and Breakfast', 'Beds and Breakfast'),
+        ('Homestay', 'HomeStay'),
         ('Cabin', 'Cabin'),
     ]
     property_type = models.CharField(max_length=20, choices=PROPERTY_TYPES, null=True, blank=True, default=None)
     GUEST_ROOM_CHOICES = [
-        ('entire_place', 'Entire Place'),
-        ('a_room', 'A Room'),
-        ('shared_room', 'Shared Room'),
+        ('Entire Place', 'Entire Place'),
+        ('Single Room', 'A Room'),
+        ('Shared Room', 'Shared Room'),
     ]
     guest_room = models.CharField(max_length=20, choices=GUEST_ROOM_CHOICES, null=True, blank=True, default=None)
     Guest_number = models.IntegerField(default=None, null=True)
@@ -64,8 +64,26 @@ class PropertyInfo(models.Model):
     description = models.TextField(blank=True, null=True)
     price = models.IntegerField(default=0, null=True)
     extra_items = models.ManyToManyField(Extra_Items)
-    booked = models.BooleanField(default=False, null=True)
-    reserved = models.BooleanField(default=False, null=True)
+    Status_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Verified', 'Verified'),
+    ]
+    Status = models.CharField(max_length=20, choices=Status_CHOICES,default="Pending")
+    Booking_Status_CHOICES = [
+        ('Listing', 'Listing'),
+        ('Booked', 'Booked'),
+        ('Reserved', 'Reserved'),
+    ]
+    Booking_Status = models.CharField(max_length=20, choices=Booking_Status_CHOICES,default="Listing")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    street_address = models.CharField(max_length=100, null=True, blank=True)
+    city = models.CharField(max_length=100, null=True, blank=True)
+    province = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 class PropertyPhoto(models.Model):
     property_info = models.ForeignKey(PropertyInfo, related_name="property_photo", on_delete=models.CASCADE)
@@ -99,7 +117,7 @@ class Booking(models.Model):
         ('accepted', 'Accepted'),
         ('declined', 'Declined'),
     ]
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES,  ='pending')
 
     def __str__(self):  
         return f"{self.property.title} - {self.check_in_date} to {self.check_out_date}"

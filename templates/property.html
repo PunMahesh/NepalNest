@@ -1,300 +1,525 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="static/css/propertylist.css" />
-    <link />
+{% extends "components/base.html" %} 
+{% load static %}
+{% block style %} 
+<link rel="stylesheet" href="static/css/propertylist.css"/> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://kit.fontawesome.com/6be4c2899d.js" crossorigin="anonymous"></script>
+{% endblock %}
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap" async defer></script>
 
-    <title>Property</title>
-  </head>
-  <body>
+{% block content %} 
     <div class="form-container">
       <form id="property_info"  method="post" enctype="multipart/form-data" action="{% url 'Property_list' %}">
       {% csrf_token %}
+      <section class="section title-section">
       <div class="form-part" id="startSection">
-        <h1>Let's Get Started</h1>
-        <div class="form-part-p">
-        <p>No.1 Describe Your Property</p>
-        <p>No.2 Give More Details</p>
-        <p>No.3 Confirm and Pricing</p>
+        <div class="container_start">
+        <div class="steps">
+        <h1>Let's get started</h1>
+        <h1>Publish in three easy steps</h1>
         </div>
-        <div class="form-part-b">
-        <button class="startButton" id="startBtn">Let's Get Started</button>
+          <div class="form-part-p">
+            <div class="steps_images">
+                <h2>Describe Your Property</h2>
+                <p>Give some basic information about your property.</p>
+        <h2>Give More Details</h2>
+        <p>Add more description and features of your property.</p>
+        <h2>Confirmation and Pricing</h2>
+        <p>Confirm your property details and price.</p>
+      </div>
+          </div>
         </div>
+            <div class="form-part-b">
+        <a class="startButton" id="startBtn">Let's Get Started</a>
+            </div>
       </div> 
 
       <!-- step-1 -->
-      <div class="form-step hide">
-        <h1>Step 1</h1>
-        <p>Let's Get Started</p>
-      </div>
-
+      <div class="form-group hide" id="frmgrp">
       <div class="form-step hide">
         <h3>What Best Describe Your Property</h3>
-        <label>
-          <input type="radio" name="property__type" value="House" />
-          House </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="Apartment" />
-          Apartment </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="Hotel" />
-          Hotel </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="Tent" />
-          Tent </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="Guest__House" />
-          Guest House </label
-        ><br />
-        <label>
-          <input
-            type="radio"
-            name="property__type"
-            value="Bed__and__Breakfast"
-          />
-          Beds and Breakfast </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="HomeStay" />
-          HomeStay </label
-        ><br />
-        <label>
-          <input type="radio" name="property__type" value="Cabin" />
-          Cabin </label
-        ><br />
-      </div>
+        <div class="radio-grp">
+
+          <input type="radio" id="House" name="property__type" value="House"/>
+          <label for="House" class="radio-button"><i class="fas fa-home"></i> House</label>
+          
+          <input type="radio" id="Apartment" name="property__type" value="Apartment"/>
+          <label for="Apartment" class="radio-button"><i class="fas fa-building"></i> Apartment</label>
+          
+          <input type="radio" id="Hotel" name="property__type" value="Hotel"/>
+          <label for="Hotel" class="radio-button"><i class="fas fa-hotel"></i> Hotel</label>
+          
+          <input type="radio" id="Tent" name="property__type" value="Tent"/>
+          <label for="Tent" class="radio-button"><i class="fas fa-campground"></i> Tent</label>
+          
+          <input type="radio" id="Guest__House" name="property__type" value="Guest House"/>
+          <label for="Guest__House" class="radio-button"><i class="fas fa-home"></i> Guest House</label>
+          
+          <input type="radio" id="Bed__and__Breakfast" name="property__type" value="Bed and Breakfast"/>
+          <label for="Bed__and__Breakfast" class="radio-button"><i class="fas fa-bed"></i> Bed and Breakfast</label>
+          
+          <input type="radio" id="HomeStay" name="property__type" value="Homestay"/>
+          <label for="HomeStay" class="radio-button"><i class="fas fa-home-alt"></i> Homestay</label>          
+          
+          <input type="radio" id="Cabin" name="property__type" value="Cabin"/>
+          <label for="Cabin" class="radio-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M14 2L4 12h4v8h12v-8h4L14 2zm0 4.83L17.17 10H10.83L14 6.83zM6.83 12H14l3.29-3.29A1 1 0 0 0 16.71 8H11.29l1.88-1.88A1 1 0 1 0 12.3 4.3L6.83 10zM20 20H4v-2.17l8-8 8 8V20z"/>
+          </svg>
+              Cabin
+          </label>
+       </div>
+    </div>
 
       <div class="form-step hide">
         <h3>What type of place will guest have?</h3>
-        <label>
-          <input type="radio" name="guest__room" value="entire__place" />
-          Entire Place
-        </label>
-        <p>Guest can have the entire place for themselves.</p>
-        <br />
-        <label>
-          <input type="radio" name="guest__room" value="a__room" />
-          A Room
-        </label>
-        <p>Guest will have a sing le room.</p>
-        <br />
-        <label>
-          <input type="radio" name="guest__room" value="shared__room" />
-          Shared Room
-        </label>
-        <p>Guest will have to share it with someone.</p>
-        <br />
-      </div>
+        <div class="radio-grp">
 
+        <input type="radio" id="entire__place" name="guest__room" value="Entire Place"/>
+        <label for="entire__place" class="room-type">
+          <div class="room-type-label">
+          <h4>Entire Place</h4>
+          <p>Guest can have the entire place for themselves.</p>
+          </div>
+        </label>
+
+        <input type="radio" id="a__room" name="guest__room" value="Single Room"/>
+        <label for="a__room" class="room-type">
+          <div class="room-type-label">
+          <h4>A Room</h4>
+          <p>Guest will have a single room.</p>
+          </div>
+        </label>
+
+        <input type="radio" id="shared__room" name="guest__room" value="Shared Room"/>
+        <label for="shared__room" class="room-type">
+          <div class="room-type-label">
+          <h4>Shared Room</h4>
+          <p>Guest will have to share it with someone.</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    
       <div class="form-step hide">
-        <h3>How many guest can stay ?</h3>
-        <label for="guest__number">Number of Guest:</label><br />
-        <input
-          type="number"
-          id="guest__number"
-          name="guest__number"
-          step="1"
-          min="0"
-          max="10"
-        />
-
-        <h3>How many bedrooms are available ?</h3>
-        <label for="bedroom__number">Number of Bedrooms:</label><br />
-        <input
-          type="number"
-          id="bedroom__number"
-          name="bedroom__number"
-          step="1"
-          min="0"
-          max="10"
-        />
-
-        <h3>How many beds are available ?</h3>
-        <label for="bed__number">Number of Beds:</label><br />
-        <input
-          type="number"
-          id="bed__number"
-          name="bed__number"
-          step="1"
-          min="0"
-          max="10"
-        />
+        <h3>Share Some Basic information</h3>
+        <div id="notification" style="display: none;"></div>
+        <div class="radio-grp grp-nums">
+          <div class="radio-num">
+        <label for="guest__number">Number of Guest:</label>
+        <input type="number" id="guest__number" name="guest__number" step="1" min="0" max="10" placeholder="1" required/>
+          </div>
+          <div class="radio-num">
+        <label for="bedroom__number">Number of Bedrooms:</label>
+        <input type="number" id="bedroom__number" name="bedroom__number" step="1" min="0" max="10" placeholder="1" required/>
       </div>
-
-      <div class="form-step hide">
-        <h3>What type of bathroom are available to guest ?</h3>
-        <label>
-          <input
-            type="radio"
-            name="guest__bathroom"
-            value="private__bathroom"
-          />
-          Private and Attached
-        </label>
-        <p>There is attached bathroom only for guest to use.</p>
-        <br />
-        <label>
-          <input
-            type="radio"
-            name="guest__bathroom"
-            value="dedicated__bathroom"
-          />
-          Dedicated
-        </label>
-        <p>Bathroom is accessible through a common area like hall.</p>
-        <br />
-        <label>
-          <input type="radio" name="guest__bathroom" value="shared__bathroom" />
-          Shared
-        </label>
-        <p>Guest will have to share it with someone.</p>
-        <br />
+      <div class="radio-num">
+        <label for="bed__number">Number of Beds:</label>
+        <input type="number" id="bed__number" name="bed__number" step="1" min="0" max="10" placeholder="1" required/>
       </div>
-      <!-- </div> -->
+        </div>
+      </div>
 
       <!-- Step-2 -->
       <div class="form-step hide">
-        <h1>Step 2</h1>
-        <p>Give More Details</p>
-      </div>
-
-      <div class="form-step hide">
         <h3>Tell what your place has to offer</h3>
-        <p>You can add more ammenities after you published your listing.</p>
+        <div class="checkbox-grp">
           <input type="checkbox" id="wifi" name="amenities" value="wifi"/>
-          <label for="wifi">Wifi</label><br />
+          <label for="wifi" class="checkbox-button">
+              <i class="fa fa-wifi"></i> Wifi
+          </label>
           <input type="checkbox" id="TV" name="amenities"  value="TV"/>
-          <label for="TV">TV</label><br />
+          <label for="TV" class="checkbox-button">
+              <i class="fa fa-television"></i> TV
+          </label>
           <input type="checkbox" id="Kitchen" name="amenities" value="Kitchen"/>
-          <label for="Kitchen">Kitchen</label><br />
+          <label for="Kitchen" class="checkbox-button">
+              <i class="fa fa-cutlery"></i> Kitchen
+          </label>
           <input type="checkbox" id="Washer" name="amenities"  value="Washer"/>
-          <label for="Washer">Washer</label><br />
-          <input type="checkbox" id="FreeParking" value="FreeParking" name="amenities"/>
-          <label for="FreeParking">Free parking on premises</label><br />
-          <input type="checkbox" id="PaidParking" value="PaidParking" name="amenities"/>
-          <label for="PaidParking">Paid parking on premises</label><br />
-          <input type="checkbox" id="AirConditioning" value="AirConditioning" name="amenities"/>
-          <label for="AirConditioning">Air Conditioning</label><br />
+          <label for="Washer" class="checkbox-button">
+            <i class="fa fa-bath"></i> Washer
+          </label>
+          <input type="checkbox" id="FreeParking" value="Free Parking" name="amenities"/>
+          <label for="FreeParking" class="checkbox-button">
+              <i class="fa fa-parking"></i> Free parking
+          </label>
+          <input type="checkbox" id="PaidParking" value="Paid Parking" name="amenities"/>
+          <label for="PaidParking" class="checkbox-button">
+              <i class="fa fa-parking"></i> Paid parking
+          </label>
+          <input type="checkbox" id="AirConditioning" value="A/C" name="amenities"/>
+          <label for="AirConditioning" class="checkbox-button">
+              <i class="fa fa-snowflake"></i> A/C
+          </label>
           <input type="checkbox" id="Workspace" value="Workspace" name="amenities"/>
-          <label for="Workspace">Workspace</label><br />
+          <label for="Workspace" class="checkbox-button">
+              <i class="fa fa-laptop"></i> Workspace
+          </label>
+      </div>
+      
       </div>
 
       <div class="form-step hide">
-        <p>Do you have other ammenities ?</p>
+        <h3>Do you have other ammenities ?</h3>
+        <div class="checkbox-grp">
           <input type="checkbox" id="Pool" value="Pool" name="other_amenities" />
-          <label for="Pool">Pool</label><br />
+          <label for="Pool" class="checkbox-button">
+              <i class="fa fa-swimming-pool"></i>Pool
+          </label>
           <input type="checkbox" id="Hottub" value="Hottub" name="other_amenities"/>
-          <label for="Hottub">Hot Tub</label><br />
+          <label for="Hottub" class="checkbox-button">
+              <i class="fa fa-hot-tub"></i>Hot Tub
+          </label>
           <input type="checkbox" id="Patio" value="Patio" name="other_amenities" />
-          <label for="Patio">Patio</label><br />
+          <label for="Patio" class="checkbox-button">
+              <i class="fa fa-umbrella-beach"></i>Patio
+          </label>
           <input type="checkbox" id="BBQGrill" value="BBQGrill" name="other_amenities"/>
-          <label for="BBQGrill">BBQ Grill</label><br />
-          <input type="checkbox" id="OutdoorDiningArea" value="OutdoorDiningArea" name="other_amenities"/>
-          <label for="OutdoorDiningArea">Outdoor Dining Area</label><br />
-          <input type="checkbox" id="FirePit" value="FirePit" name="other_amenities"/>
-          <label for="FirePit">Fire Pits</label><br />
-          <input type="checkbox" id="PoolTable" value="PoolTable" name="other_amenities"/>
-          <label for="PoolTable">Pool Table</label><br />
-          <input type="checkbox" id="IndoorFirePlace" value="IndoorFirePlace" name="other_amenities"/>
-          <label for="IndoorFirePlace">Indoor Fire Place</label><br />
-          <input type="checkbox" id="Piano"  value="Piano" name="other_amenities" />
-          <label for="Piano">Piano</label><br />
-          <input type="checkbox" id="ExcersieEquiment" value="ExcersieEquiment" name="other_amenities"/>
-          <label for="ExcersieEquiment">Excersie Equiment</label><br />
-          <input type="checkbox" id="LakeAccess" value="LakeAccess" name="other_amenities"/>
-          <label for="LakeAccess">Lake Access</label><br />
+          <label for="BBQGrill" class="checkbox-button">
+              <i class="fa fa-fire-alt"></i>BBQ Grill
+          </label>
+          <input type="checkbox" id="OutdoorDiningArea" value="Outdoor Dining Area" name="other_amenities"/>
+          <label for="OutdoorDiningArea" class="checkbox-button">
+              <i class="fa fa-utensils"></i>Outdoor Dining
+          </label>
+          <input type="checkbox" id="FirePit" value="Fire Pit" name="other_amenities"/>
+          <label for="FirePit" class="checkbox-button">
+              <i class="fa fa-fire"></i>Fire Pits
+          </label>
+          <input type="checkbox" id="PoolTable" value="Pool Table" name="other_amenities"/>
+          <label for="PoolTable" class="checkbox-button">
+              <i class="fa fa-gamepad"></i>Pool Table
+          </label>
+          <input type="checkbox" id="IndoorFirePlace" value="Indoor Fire Place" name="other_amenities"/>
+          <label for="IndoorFirePlace" class="checkbox-button">
+              <i class="fa fa-fire"></i>Indoor Fire Place
+          </label>          
+          <input type="checkbox" id="ExcersieEquiment" value="Excersie Equiment" name="other_amenities"/>
+          <label for="ExcersieEquiment" class="checkbox-button">
+              <i class="fa fa-dumbbell"></i>Exercise Equipment
+          </label>
+          <input type="checkbox" id="LakeAccess" value="Lake Access" name="other_amenities"/>
+          <label for="LakeAccess" class="checkbox-button">
+              <i class="fa fa-water"></i>Lake Access
+          </label>
           <input type="checkbox" id="Ski"  value="Ski" name="other_amenities"/>
-          <label for="Ski">Ski-in/Ski-out</label><br />
-          <input type="checkbox" id="OutdoorShower" value="OutdoorShower" name="other_amenities"/>
-          <label for="OutdoorShower">Outdoor Shower</label><br />
+          <label for="Ski" class="checkbox-button">
+              <i class="fa fa-skiing"></i>Ski-in/Ski-out
+          </label>
+          <input type="checkbox" id="OutdoorShower" value="Outdoor Shower" name="other_amenities"/>
+          <label for="OutdoorShower" class="checkbox-button">
+              <i class="fa fa-shower"></i>Outdoor Shower
+          </label>
+      </div>
+      
       </div>
 
       <div class="form-step hide">
-        <p>Do you have these safety items ?</p>
-          <input type="checkbox" id="SmokeAlaram"  value="SmokeAlaram" name="safety_items"/>
-          <label for="SmokeAlaram">Smoke Alaram</label><br />
-          <input type="checkbox" id="FirstAid"  value="FirstAid" name="safety_items"/>
-          <label for="FirstAid">First Aid Kit</label><br />
-          <input type="checkbox" id="FireExtinguisher" value="FireExtinguisher" name="safety_items"/>
-          <label for="FireExtinguisher">Fire Extinguisher</label><br />
-          <input type="checkbox" id="CarbonMono"  value="CarbonMono" name="safety_items"/>
-          <label for="CarbonMono">Carbon Monooxide Alaram</label><br />
+        <h3>Do you have these safety items ?</h3>
+        <div class="checkbox-grp">
+          <input type="checkbox" id="SmokeAlaram"  value="Smoke Alarm" name="safety_items"/>
+          <label for="SmokeAlaram" class="checkbox-button">
+              <i class="fa fa-exclamation-triangle"></i>Smoke Alarm
+          </label>
+          <input type="checkbox" id="FirstAid"  value="First Aid" name="safety_items"/>
+          <label for="FirstAid" class="checkbox-button">
+              <i class="fa fa-medkit"></i>First Aid
+          </label>
+          <input type="checkbox" id="FireExtinguisher" value="Fire Ext" name="safety_items"/>
+          <label for="FireExtinguisher" class="checkbox-button">
+              <i class="fa fa-fire-extinguisher"></i>Fire Ext
+          </label>
+          <input type="checkbox" id="CarbonMono"  value="CO Alarm" name="safety_items"/>
+          <label for="CarbonMono" class="checkbox-button">
+              <i class="fa fa-biohazard"></i>CO Alarm
+          </label>
+      </div>
+      
       </div>
 
       <div class="form-step hide">
         <h3>Add some photos here</h3>
+        {% comment %} <div id="notification" style="display: none;"></div> {% endcomment %}
+        <div class="image-grp">
           <label for="imageUpload">Upload Images (at least 5):</label>
           <input type="file" multiple id="imageUpload" name="PropertyPhoto" class="images" />
+        </div>
+        <div class="image-preview"></div>
       </div>
 
       <div class="form-step hide">
         <h3>Let's give your property a title</h3>
-          <label for="title"
-            >Give a short title. You can always update it later.</label
-          ><br />
-          <input type="text" name="title" maxlength="40" />
+        <div id="notification" style="display: none;"></div>
+        <div class="title-grp">
+          <label for="title">Give a short title. You can always update it later.</label>
+          <textarea id="property-title" name="title" rows="3" cols="50" class="title-textarea" value="{{ property_obj.title }}" required></textarea>
+        </div>
       </div>
 
       <div class="form-step hide">
         <h3>Now, lets describe your property</h3>
-          <label for="description">Share about your property to guest.</label
-          ><br />
-          <input type="text" id="description" name="description" maxlength="500" />
+        <div class="title-grp">
+          <label for="description">Share about your property to guest.</label>
+          <textarea id="description" name="description" rows="5" cols="50" class="description-textarea" value="{{ property_obj.description }}" required></textarea>
+        </div>
       </div>
+
+      <div class="form-step hide">
+        <h3>Where's your place located?</h3>
+        <div class="location_wrapper">
+        {% comment %} <input type="text" id="country" name="country" value="Nepal" readonly /> {% endcomment %}
+        <input type="text" id="street_address_id" name="street_address" placeholder="Street Address" class="address-input" required />
+        <input type="text" id="city_id" name="city" placeholder="City/Town/Village" class="address-input" />
+        <input type="text" id="province_id" name="province" placeholder="Province" class="address-input" />
+        <input type="text" id="postal_code_id" name="postal_code" placeholder="Postal Code" class="address-input" />
+        <input type="hidden" value="" id="latitude" name="latitude">
+        <input type="hidden" value="" id="longitude" name="longitude">
+        </div>
+        <div id="map-canvas" class="map"></div>
+      </div>
+    
+    
 
       <!-- Step-3 -->
-
-      <div class="form-step hide">
-        <h1>Step 3</h1>
-        <p>Let's finish up and publish</p>
-      </div>
-
-      <div class="form-step hide">
+      <div class="form-step price-container">
         <h3>What is the price of your property?</h3>
-          <label for="price">Price:</label><br />
-          <div class="input-group">
-            <span class="input-group-addon">$</span>
-            <input class="price" type="number" id="price" name="price" step="1" min="0" max="10000"/>
+        {% comment %} <label>Set Your Price</label>  {% endcomment %}
+        <div class="price-grp">
+          <div class="input-group price_container">
+            <span class="input-group-addon">Rs.</span>
+            <input class="price" type="number" id="price" name="price" step="1" min="0" max="10000" placeholder="500" required/>
           </div>
+        </div>
       </div>
 
       <div class="form-step hide">
-        <h3>Just One Step</h3>
-        <p>Does your property have any of these ?</p>
-          <input type="checkbox" id="camera" value="camera" name="extra_items"/>
-          <label for="camera">Security Camera</label><br/> 
-          <input type="checkbox" id="Weapons" value="Weapons" name="extra_items"/>
-          <label for="Weapons">Weapons</label><br /> 
-          <input type="checkbox" id="Animals" value="Animals" name="extra_items"/>
-          <label for="Animals">Dangerous Animals</label><br />
+        <h3>Does your property have any of these ?</h3>
+        <div class="checkbox-grp">
+          <input type="checkbox" id="camera" value="Camera" name="extra_items"/>
+          <label for="camera" class="checkbox-button"> <i class="fa fa-camera"></i>Cameras</label> 
+          <input type="checkbox" id="Weapons" value="Firearms" name="extra_items"/>
+          <label for="Weapons" class="checkbox-button"><i class="fa fa-gun"></i>Firearms</label>
+          <input type="checkbox" id="Animals" value="Pet" name="extra_items"/>
+          <label for="Animals" class="checkbox-button"><i class="fa fa-paw"></i>Pet</label>
+        </div>
       </div>
 
       <div class="form-step hide">
         <h3>Review Your Listing</h3>
-        <p>Make sure everything looks good.</p>
-        <div class="form-field render-data">
-          <h3 class="label">Title</h3>
-          <p><span class="field-value" id="title_preview"></span></p>
-          <h3 class="label">Description</h3>
-          <p><span class="field-value" id="description_preview"></span></p>
-          <p><span class="field-value" id="images_preview"></p>
+        <p class="preview_P">Make sure everything looks good.</p>
+        <div class="form-field render-data card">
+          <p><span class="field-value" id="images_preview"></span></p>
           <img id="pp_photo" src="https://via.placeholder.com/150" alt="Profile Picture" />
-          <h5 class="label">Price</h5>
-          <p><span class="field-value" id="price_preview"></span></p>
-      </div>
+
+              <div class="info"> 
+                <h2><span class="field-value" id="title_preview"></span></h2>
+                <p>location: <span class="field-value" id="location_preview"></span></p>
+                <p>Price: <strong><span class="field-value" id="price_preview"></span></strong>/night</p>
+              </div>
+            {% comment %} <div class="like-icon_search"></div> {% endcomment %}
+          </div>
       </div>
     </div>
-    <button id="prevBtn" class="hide" type="button">Previous</button>
-    <button id="nextBtn" class="hide" type="button">Next</button>
-    <button id="submitBtn" style="" type="Submit" >Submit</button>    
+    <div class="button-container hide" id="nextprevbtn">
+    <button id="prevBtn" class="hide" type="button">&laquo; Previous</button>
+    <button id="nextBtn" class="hide" type="button">Next &raquo;</button>
+    <button id="submitBtn" style="display: none;" type="submit" >Submit</button>  
+    </div>  
 </form> 
+</section>
 
-    <script src="static/js/propertylist.js"></script>
-  </body>
-</html>
+<script src="static/js/propertylist.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFJzkQFxGAFP4gzTZ32Fs_4xd5Cfo1s9c&callback=initMap" async defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const imageUpload = document.getElementById('imageUpload');
+    const imagePreview = document.querySelector('.image-preview');
+  
+    // Function to handle file input change event
+    function handleFileInputChange() {
+      const files = imageUpload.files;
+      imagePreview.innerHTML = ''; // Clear previous preview
+  
+      // Iterate through each selected file
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (!file.type.startsWith('image/')) continue; // Skip non-image files
+  
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file); // Set image source to the file URL
+        img.alt = file.name; // Set alt text to the file name
+        imagePreview.appendChild(img); // Append image to the preview container
+      }
+    }
+  
+    // Add event listener to the file input
+    imageUpload.addEventListener('change', handleFileInputChange);
+
+    var typingTimer;                // Timer identifier
+    var doneTypingInterval = 1000;  // Time in milliseconds (3 seconds)
+
+    // Function to initialize Google Maps
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: { lat: 27.7172, lng: 85.3240 }, // Default center (Kathmandu)
+            zoom: 12 // Default zoom level
+        });
+
+        // Initialize marker with draggable property
+        var marker = new google.maps.Marker({
+            map: map,
+            draggable: true
+        });
+
+        // Add event listener for marker dragend event
+        google.maps.event.addListener(marker, 'dragend', function() {
+            // Get new marker position
+            var newPosition = marker.getPosition();
+
+            // Reverse geocode the new marker position to obtain address components
+            var geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'location': newPosition }, function(results, status) {
+                if (status === 'OK') {
+                    // Update input fields with new address components
+                    updateAddressFields(results);
+
+                    // Update hidden fields with latitude and longitude
+                    document.getElementById('latitude').value = newPosition.lat();
+                    document.getElementById('longitude').value = newPosition.lng();
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        });
+    }
+
+    // Function to update the map based on the address entered by the user
+    function updateMap(address) {
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status === 'OK') {
+                var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    center: results[0].geometry.location,
+                    zoom: 12 // Adjust the zoom level as needed
+                });
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location,
+                    draggable: true
+                });
+
+                // Update hidden fields with latitude and longitude
+                document.getElementById('latitude').value = results[0].geometry.location.lat();
+                document.getElementById('longitude').value = results[0].geometry.location.lng();
+
+                // Update marker position and hidden fields when marker is dragged
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    document.getElementById('latitude').value = marker.getPosition().lat();
+                    document.getElementById('longitude').value = marker.getPosition().lng();
+
+                    // Reverse geocode the new marker position to obtain address components
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({ 'location': marker.getPosition() }, function(results, status) {
+                        if (status === 'OK') {
+                            // Update input field with new street address
+                            updateAddressFields(results);
+                        } else {
+                            alert('Geocode was not successful for the following reason: ' + status);
+                        }
+                    });
+                });
+
+                // Extract city, province, and postal code from geocoding results
+                var address_components = results[0].address_components;
+                var city = '';
+                var province = '';
+                var postal_code = '';
+                for (var i = 0; i < address_components.length; i++) {
+                    var component = address_components[i];
+                    if (component.types.includes('locality')) {
+                        city = component.long_name;
+                    } else if (component.types.includes('administrative_area_level_1')) {
+                        province = component.long_name;
+                    } else if (component.types.includes('postal_code')) {
+                        postal_code = component.long_name;
+                    }
+                }
+
+                // Update input fields with city, province, and postal code
+                document.getElementById('city_id').value = city;
+                document.getElementById('province_id').value = province;
+                document.getElementById('postal_code_id').value = postal_code;
+
+                // Update street address field if it's empty
+                if (document.getElementById('street_address_id').value.trim() === '') {
+                    updateAddressFields(results);
+                }
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    // Function to update the input fields with address components
+    function updateAddressFields(results) {
+        // Find address components from geocoding results
+        var address_components = results[0].address_components;
+
+        // Initialize variables for address components
+        var street_address = '';
+
+        // Loop through address components to find relevant information
+        for (var i = 0; i < address_components.length; i++) {
+            var component = address_components[i];
+            if (component.types.includes('street_number') || component.types.includes('route')) {
+                street_address += component.long_name + ' ';
+            }
+        }
+
+        // If street address is empty, construct it from other components
+        if (street_address.trim() === '') {
+            var city = '';
+            var province = '';
+            var postal_code = '';
+
+            // Loop through address components to find city, province, and postal code
+            for (var i = 0; i < address_components.length; i++) {
+                var component = address_components[i];
+                if (component.types.includes('locality')) {
+                    city = component.long_name;
+                } else if (component.types.includes('administrative_area_level_1')) {
+                    province = component.long_name;
+                } else if (component.types.includes('postal_code')) {
+                    postal_code = component.long_name;
+                }
+            }
+
+            // Assemble street address from city, province, and postal code
+            street_address = city + ', ' + province + ', ' + postal_code;
+        }
+
+        // Update input field with new street address
+        document.getElementById('street_address_id').value = street_address.trim();
+    }
+
+    // Add event listener to the address input field for manual address entry
+    document.getElementById('street_address_id').addEventListener('input', function() {
+        clearTimeout(typingTimer);
+        var address = document.getElementById('street_address_id').value;
+        if (address) {
+            typingTimer = setTimeout(function() {
+                updateMap(address);
+            }, doneTypingInterval);
+        }
+    });
+
+    // Call initMap function to initialize the map
+    initMap();
+});
+</script>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "components/base.html" %} 
+{% block content %}
+{% load static %} 
+
+<link rel="stylesheet" href="{% static 'css/myReservation.css' %}" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>  
+
+
+<section class="section_heading">
+    <div class="heading">
+        <h1>Welcome {{ first_name }},</h1>
+    </div>
+</section>
+
+{% include 'components/messages.html' %}
+
+
+<section class="section_bookings">
+            <table class="table table-striped center table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Property Title</th>
+                        <th scope="col">Check-In</th>
+                        <th scope="col">Check-Out</th>
+                        <th scope="col">Booked by</th>
+                        {% comment %} <th scope="col">Status</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                    {% if booking %}
+                    <tr>
+                        <td>{{ booking.property.title }}</td>
+                        <td>{{ booking.check_in_date }}</td>
+                        <td>{{ booking.check_out_date }}</td>
+                        <td>{{ booking.user.full_name }}</td>
+                    </tr> 
+                </tbody>
+                {% else %}
+                <p>No pending reservation requests found.</p>   
+                {% endif %}
+                {% endfor %}
+            </table>
+</section>
+
+
+
+{% endblock content %}

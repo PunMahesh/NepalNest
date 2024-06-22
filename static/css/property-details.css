@@ -10,7 +10,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   /* grid-gap: 20px; */
-  padding-bottom: 50px;
+  padding-bottom: 15px;
 }
 
 .first_image {
@@ -20,6 +20,7 @@
 }
 
 .first_image img {
+  max-height: 440px;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -32,6 +33,7 @@
 }
 
 .grid_image img {
+  max-height: 215px;
   width: 100%;
   height: 100%;
 }
@@ -48,13 +50,14 @@
   box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
   display: block;
   width: 400px;
-  height: 500px;
+  height: 560px;
   top: 140px;
 }
 
 .info_book {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 25px;
 }
 
 .basic_info{
@@ -68,8 +71,8 @@
 }
 
 .basic_info h5{
-  border-top: solid 1px;
-  border-bottom: solid 1px;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
   font-size: 20px;
   font-weight: 600;
   padding: 15px 0;
@@ -97,6 +100,33 @@
   list-style: none;
 }
 
+.additional_info {
+  padding-bottom: 15px;
+  border-bottom: 2px solid #ccc;
+}
+.additional_info li{
+  padding: 5px;
+}
+
+.additional_info li{
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  /* width: 145px;
+  height: 100px; */
+  border: 1px solid #000000;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  flex-direction: column;
+  gap: 17px;
+}
+.ad_box{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 551px;
+  gap: 15px;
+}
 .give_review {
   width: 100%;
   font-size: 1rem;
@@ -199,6 +229,7 @@
 .rate{
   display: inline-block;
   border: 0;
+  width: 150px;
 }
 
 .rate > label {
@@ -209,7 +240,7 @@
 
 .rate > label:before{
   display: inline-block;
-  font-size: 1.1rem;
+  font-size: 25px;
   font-family: FontAwesome;
   content: "\f005";
   margin: 0;
@@ -238,4 +269,137 @@ label:hover ~ input:checked ~ label{
   color: #cc9000;
 }
 
- 
+.rate_review{
+  display: flex;
+  flex-direction: column;
+}
+
+.rate_review label{
+  font-size: 21px;
+  font-weight: 200;
+  margin: 10px 0 10px 0;
+}
+
+.review{
+  display: flex;
+  flex-direction: column;
+}
+
+.review_rating{
+  padding: 15px 0 15px 0;
+}
+
+.review_rating textarea{
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  resize: none;
+  font-size: 16px;
+}
+
+.review_btn{
+  background-color: #0f34f6;
+}
+
+h1{
+  font-size: 25px;
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+
+
+
+.all_images{
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+}
+
+.all_images button{
+  border: none;
+  color: #1e00ff;
+  font-size: 20px;
+  background: none;
+  cursor: pointer;
+}
+
+
+
+
+ /* Basic styling for the modal */
+ .modal {
+  /* margin-top: 20px; */
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4);
+ }
+
+.modal-content {
+  background-color: #fff;
+  padding: 24px;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  margin: 5% auto;
+  padding: 20px;
+  width: 48%;
+  z-index: 9999;
+
+}
+
+.title-filter {
+  padding-bottom: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  border-bottom: 1px solid;
+  margin-bottom: 20px;
+}
+
+
+
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 95px;
+  right: 410px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.image_gallery_container {
+  max-height: 565px; 
+  overflow-y: auto; 
+  
+}
+
+.image_gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px); 
+  gap: 20px;
+  max-width: 650px;
+  margin: 0 auto; 
+}
+
+.image_gallery img {
+  max-height: 300px;
+  max-width: 300px; 
+  width: 100%; 
+  height: 100%; 
+}
+

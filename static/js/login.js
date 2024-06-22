@@ -26,9 +26,9 @@ function login()
 // Validate User and Password in Login
 
 function validateLoginForm() {
-    var email = document.forms["loginForm"]["email"].value;
+    var email = document.forms["loginForm"]["email1"].value;
     var emailErrorField = document.getElementById("email-error");
-    var password = document.forms["loginForm"]["password"].value;
+    var password = document.forms["loginForm"]["password1"].value;
     var passwordErrorField = document.getElementById("password-error");
   
     // Validate Username
