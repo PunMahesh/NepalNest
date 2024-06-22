@@ -117,7 +117,7 @@ class Booking(models.Model):
         ('accepted', 'Accepted'),
         ('declined', 'Declined'),
     ]
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES,  ='pending')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):  
         return f"{self.property.title} - {self.check_in_date} to {self.check_out_date}"
