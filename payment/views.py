@@ -65,7 +65,7 @@ def return_url(request,booking_id):
         
             messages.success(request, 'Payment Successful!')
         
-            return render(request, "home.html")
+            return render(request, "index.html")
 
 
         return redirect('/')

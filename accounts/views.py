@@ -16,7 +16,7 @@ import os
 
 def home(request):
     today = date.today()
-    return render(request,'home.html',{'today':today})
+    return render(request,'index.html',{'today':today})
 
 # check if string is email
 def is_email(string):
