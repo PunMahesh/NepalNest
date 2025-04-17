@@ -1,0 +1,6 @@
+Django
+mysqlclient
+Pillow
+googlemaps
+django-jazzmin
+python-dotenv

@@ -24,7 +24,7 @@ def return_url(request,booking_id):
     if request.method == 'GET':
         url = "https://a.khalti.com/api/v2/epayment/lookup/"
         headers = {
-            'Authorization': 'key da1df4697e5641269658ee47ed1e0114',
+            'Authorization': f'key {config("KHALTI_SECRET_KEY")}',
             'Content-Type': 'application/json',
         }
         pidx = request.GET.get('pidx')
@@ -98,7 +98,7 @@ def initiate_khalti(request):
         }
     })
     headers = {
-        'Authorization': 'key da1df4697e5641269658ee47ed1e0114',
+        'Authorization': f'key {config("KHALTI_SECRET_KEY")}',
         'Content-Type': 'application/json',
     }
 
