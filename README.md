@@ -1,6 +1,6 @@
 # 🏡 NepalNest
 
-NepalNest is an accommodation booking platform built with Django, inspired by Airbnb. It allows users to list properties, book stays, and manage reservations with ease. Integrated with local payment gateways like eSewa and Khalti, it's designed to meet the needs of Nepali users while remaining scalable and extensible.
+NepalNest is an accommodation booking platform built with Django, inspired by Airbnb. It allows users to list properties, book stays, and manage reservations with ease. Integrated with local payment gateways Khalti, it's designed to meet the needs of Nepali users while remaining scalable and extensible.
 
 ---
 
@@ -9,7 +9,7 @@ NepalNest is an accommodation booking platform built with Django, inspired by Ai
 - 🔐 User registration, login, and profile management
 - 🏠 Property listing with images, details, pricing, etc.
 - 🔍 Search and filter properties by category, location, and date
-- 💳 Payment integration (eSewa & Khalti)
+- 💳 Payment integration (Khalti)
 - 📍 Google Maps integration for location display
 - 📧 Email notifications
 - 📊 Admin panel with [Jazzmin](https://github.com/farridav/django-jazzmin) for UI enhancements
@@ -22,7 +22,7 @@ NepalNest is an accommodation booking platform built with Django, inspired by Ai
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap
 - **Authentication**: Django Auth
 - **Maps**: Google Maps API
-- **Payment**: eSewa API, Khalti API
+- **Payment**: Khalti API
 - **Admin UI**: Jazzmin
 
 ---
@@ -32,7 +32,7 @@ NepalNest is an accommodation booking platform built with Django, inspired by Ai
 ### Key Directories and Files
 
 - **`accounts/`**: Handles user authentication and profile management.
-- **`payment/`**: Manages payment integrations (e.g., eSewa, Khalti).
+- **`payment/`**: Manages payment integrations (Khalti).
 - **`property/`**: Manages property listings and related functionality.
 - **`NepalNest/`**: Contains project-level settings, URLs, and configurations.
 - **`templates/`**: HTML templates for rendering frontend views.
@@ -90,11 +90,10 @@ pip install -r requirements.txt
   ```
 - Use the key in your templates or JavaScript files where required.
 
-### 6. Configure eSewa and Khalti Payment Gateways
-- Obtain API credentials for eSewa and Khalti.
+### 6. Configure Khalti Payment Gateways
+- Obtain API credentials for Khalti.
 - Add them to your `settings.py`:
   ```python
-  ESEWA_MERCHANT_ID = 'your_esewa_merchant_id'
   KHALTI_PUBLIC_KEY = 'your_khalti_public_key'
   KHALTI_SECRET_KEY = 'your_khalti_secret_key'
   ```
